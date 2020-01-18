@@ -52,16 +52,6 @@ body {
     font-size: 1.2em;
   }
   
-  /* Mobile */
-  .tablet.mobile.only .header, .ui.icon.button > .icon {
-    color: #fff;
-  }
-  
-  .tablet.mobile.only .header:hover {
-    background-color: #6311aa !important;
-    color: #fff !important;
-    border-bottom: 1px solid #fff;
-  }
   
   .ui.basic.button:hover {
      background: #6311aa !important;
