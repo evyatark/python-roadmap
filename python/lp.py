@@ -85,7 +85,7 @@ courses = [
     , ['https://www.freetutorials.ca/course/learn-redis-and-utilize-jedis-with-spring-data-redis', 'Udemy - Learn Redis And Utilize Jedis With Spring Data Redis', 'redis1']
     , ['https://www.freetutorials.ca/course/http-basics', 'Treehouse - HTTP Basics', 'http0']
     , ['https://www.freetutorials.ca/course/nginx-web-server-deep-dive', 'Linux Academy - NGINX Web Server Deep Dive', 'ngnx']
-    # , ['', '', '']
+    , ['https://www.freetutorials.ca/course/zero-to-production-nodejs-on-amazon-web-services', 'Frontend Masters - Zero to Production Node.js on Amazon Web Services', 'node0']
     # , ['', '', '']
     # , ['', '', '']
 ]

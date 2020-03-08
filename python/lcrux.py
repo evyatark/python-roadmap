@@ -1,14 +1,58 @@
 from lp import save_to_file, add, BASE_DIR, fix_chars
 from selenium1 import selenium_bs
-from urllib.request import urlopen, Request
-from bs4 import BeautifulSoup
 
 
 courses = [
-     ['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dud', 'dud']
-    # , ['', '', '']
-    # , ['', '', '']
-    # , ['', '', '']
+     ['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dummy', 'crux_kafka_stream']
+    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-2', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-3', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-4-oop', 'dummy', 'crux_']
+    #, ['https://www.learningcrux.com/course/beginner-react-2019-create-a-movie-web-app', 'dummy', 'crux_react0']
+    #, ['https://www.learningcrux.com/course/apache-kafka-series-learn-apache-kafka-for-beginners-v2', 'dummy', 'crux_kafka0']
+    # , ['https://www.learningcrux.com/course/apache-kafka-series-kafka-connect-handson-learning', 'dummy', 'crux_kafka_connect']
+    # , ['https://www.learningcrux.com/course/apache-kafka-series-ksql-on-ksqldb-for-stream-processing', 'dummy', 'crux_kafka_ksql']
+    # , ['https://www.learningcrux.com/course/modern-react-with-redux-2019-update', 'dummy', 'crux_react_redux0']
+    # , ['https://www.learningcrux.com/course/build-a-slack-chat-app-with-react-redux-and-firebase', 'dummy', 'crux_react_firebase0']
+    # , ['https://www.learningcrux.com/course/complete-react-developer-in-2019-w-redux-hooks-graphql', 'dummy', 'crux_react_complete']
+    # , ['https://www.learningcrux.com/course/universal-react-with-nextjs-the-ultimate-guide', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/full-stack-project-spring-boot-20-reactjs-redux', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/vue-js-2-the-complete-guide-incl-vue-router-vuexs', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/advanced-react-and-redux-2018-edition', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/react-nodejs-express-mongodb-the-mern-fullstack-guide', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/understanding-npm-nodejs-package-manager', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/nodejs-the-complete-guide-incl-mvc-rest-apis-graphqls', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-for-data-science-and-machine-learning-bootcamp', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/spark-and-python-for-big-data-with-pyspark', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/django-2-build-deploy-fully-featured-web-application', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-for-statistical-analysis', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/python-and-django-full-stack-web-developer-bootcamp-2', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/django-python-complete-bundle-django-real-project-2020', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/the-complete-python-programmer-bootcamp-2020', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/importing-financial-data-with-python-from-free-web-sources', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/manage-finance-data-with-python-pandas-unique-masterclass', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/ultimate-aws-certified-sysops-administrator-associate-2019', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/ultimate-aws-certified-solutions-architect-associate-2019', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/aws-lambda-and-the-serverless-framework-hands-on-learning', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/aws-cloudformation-master-class', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/amazon-eks-starter-docker-on-aws-eks-with-kubernetes', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/aws-dynamodb-the-complete-guide-build-18-hands-on-demos', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/the-complete-developers-guide-to-mongodb', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/apache-spark-for-java-developers', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/apache-maven-beginner-to-guru', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/introduction-to-apache-nifi-hortonworks-dataflow-hdf-20', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/docker-and-kubernetes-the-complete-guide', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/automated-software-testing-with-cypress-2020-update', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/r-programming-for-absolute-beginners', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/introduction-to-data-science', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/the-modern-javascript-bootcamp-2019', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/canary-deployments-to-kubernetes-using-istio-and-friends', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/vue-js-2-the-complete-guide-incl-vue-router-vuexs', 'dummy', 'crux_']
+    # , ['https://www.learningcrux.com/course/the-complete-deep-web-course-2018-become-an-expert', 'dummy', 'crux_']
+    # , ['', 'dummy', 'crux_']
+    # , ['', 'dummy', 'crux_']
+    # , ['', 'dummy', 'crux_']
+    # , ['', 'dummy', 'crux_']
 ]
 
 
@@ -23,12 +67,6 @@ def name_from_link(link):
 def readAndProcess(url, dir_name):
     result = ''
     print("loading", url, '...')
-    # user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    # request = Request(url, headers= {'User-Agent': user_agent})
-    # response = urlopen(request)
-    # html = response.read()
-    # print("souping...")
-    # bs = BeautifulSoup(html, 'html.parser')
     bs = selenium_bs(url, 1)
     try:
         title = bs.find(name='h1', class_='content-h1')
@@ -39,13 +77,6 @@ def readAndProcess(url, dir_name):
     section_titles = [header.text.rstrip().replace(':\n',' - ') for header in bs.find_all(name='h2', class_='h6')]
     all_chapter_links = [a.attrs['href'] for a in bs.find_all(name='a', class_='accOpener')]
     all_chapter_names = [fix_chars(x.span.text.replace('Video', '').rstrip().lstrip()) for x in bs.find_all(name='a', class_='accOpener')]
-    # linksToAllParts = [x.div.a.attrs['href'] for x in all]
-    #names = [name_from_link(x) for x in all_links]
-    #sourceLines = [x.div.a.sourceline for x in all]
-    # dl = bs.find_all(name='a', class_='download-link')
-    # download_link = ''
-    # if (len(dl) > 0):
-    #     download_link = dl[0].attrs['href']
 
     result = ''
     for command in ['#!/bin/sh',
@@ -53,15 +84,6 @@ def readAndProcess(url, dir_name):
                     'mkdir ' + "'" + dir_name + "'" ,
                     'cd ' + "'" + dir_name+ "'" ]:
         result = add(command, result)
-
-    # download sources
-    # if len(download_link) > 0:
-    #     name = 'exercise_files.zip'
-    #     sindex = download_link.rindex('git.ir') + len('git.ir')
-    #     name = download_link[sindex:]
-    #     name = fix_chars(name)
-    #     command = "curl '" + download_link + "' -o '" + name + "'"
-    #     result = add(command, result)
 
     current_section = ''
     for i in range(0,len(all_chapter_links)):
@@ -78,7 +100,7 @@ def readAndProcess(url, dir_name):
             result = add("cd '" + title + "'", result)
             current_section = title
         #name = title + '-' + str(i).rjust(3, '0') + ' ' + all_chapter_names[i]
-        name = str(i).rjust(3, '0') + ' ' + all_chapter_names[i]
+        name = str(i).rjust(3, '0') + ' ' + all_chapter_names[i] + '.mp4'
         command = "curl '" + all_chapter_links[i] + "' -o '" + name + "'"
         result = add(command, result)
     return result
