@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8600704.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8600704.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8601309.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8601309.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8601773.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8601773.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8614784.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8614784.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8615145.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8615145.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8616507.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8616507.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8616516.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8616516.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8616536.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8616536.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8616540.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8616540.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8616817.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8616817.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8618551.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8618551.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8624415.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8624415.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8625207.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8625207.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8625402.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8625402.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8625819.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8625819.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8625943.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8625943.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8625998.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8625998.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8627889.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8627889.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8627908.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8627908.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8627911.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8627911.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628035.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628035.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628122.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628122.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628189.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628189.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628442.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628442.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628509.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628509.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628733.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628733.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8628946.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8628946.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8629138.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8629138.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8629265.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8629265.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8629502.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8629502.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8630214.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8630214.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631165.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631165.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631607.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631607.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631900.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631900.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631990.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631990.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632012.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632012.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632093.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632093.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632147.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632147.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632229.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632229.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632350.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632350.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632382.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632382.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632420.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632420.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632435.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632435.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632475.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632475.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632662.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632662.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632727.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632727.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632758.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632758.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632768.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632768.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632871.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632871.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632908.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632908.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632992.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632992.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633202.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633202.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633233.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633233.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633244.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633244.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633411.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633411.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633440.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633440.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633447.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633447.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633605.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633605.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633613.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633613.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633685.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633685.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633715.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633715.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633740.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633740.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633744.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633744.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633749.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633749.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633758.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633758.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633822.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633822.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633842.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633842.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633844.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633844.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633941.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633941.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633948.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633948.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8633983.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8633983.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634214.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634214.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634427.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634427.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634459.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634459.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634511.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634511.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634519.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634519.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634597.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634597.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634616.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634616.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634768.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634768.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634896.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634896.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8634997.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8634997.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635033.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635033.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635107.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635107.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635111.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635111.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635172.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635172.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635351.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635351.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635358.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635358.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635387.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635387.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635402.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635402.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635410.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635410.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8635475.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8635475.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../haaretz/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitir.py" beforeDir="false" afterPath="$PROJECT_DIR$/gitir.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1583664916150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583663353662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1583648049821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
+      <file leaf-file-name="gitir.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gitir.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="645">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1849">
+              <caret line="254" column="41" lean-forward="true" selection-start-line="254" selection-start-column="41" selection-end-line="254" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lp.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1677">
+              <caret line="40" selection-start-line="35" selection-end-line="40" />
+              <folding>
+                <element signature="e#77#120#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/lp.py" />
+        <option value="$PROJECT_DIR$/gitir.py" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="39" />
+    <option name="width" value="1600" />
+    <option name="height" value="864" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="python" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="python" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.6 (venv) &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.gitir">
+    <configuration name="bs" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bs.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="gitir" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gitir.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="lp" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.lp" />
+      <item itemvalue="Python.bs" />
+      <item itemvalue="Python.gitir" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.gitir" />
+        <item itemvalue="Python.bs" />
+        <item itemvalue="Python.lp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="" />
+      <created>1583569899398</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583569899398</updated>
+    </task>
+    <task id="LOCAL-00001" summary="python beautiful soup">
+      <created>1583569992595</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583569992596</updated>
+    </task>
+    <task id="LOCAL-00002" summary="python beautiful soup LearningPath FreeTutorials">
+      <created>1583648621951</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583648621951</updated>
+    </task>
+    <task id="LOCAL-00003" summary="python beautiful soup git.ir">
+      <created>1583653201493</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583653201493</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="35" width="3840" height="2015" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" weight="0.32896653" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.45945945" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4945371" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="python beautiful soup" />
+    <MESSAGE value="python beautiful soup LearningPath FreeTutorials" />
+    <MESSAGE value="python beautiful soup git.ir" />
+    <option name="LAST_COMMIT_MESSAGE" value="python beautiful soup git.ir" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gitir.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gitir.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gitir.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="22" />
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>str(link)[76:103]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link).rindex('git')</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link).find('git')</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link)[76:(link.find('git'))]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link)[76:(link.find('git.ir'))]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link)[76:]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link).substring(3,5)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>str(link).find('/')</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>all[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/gitir.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="42" selection-start-column="42" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1677">
+          <caret line="40" lean-forward="true" selection-start-line="35" selection-end-line="40" />
+          <folding>
+            <element signature="e#77#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9288">
+          <caret line="219" column="62" selection-start-line="218" selection-start-column="4" selection-end-line="219" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/urllib/request.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27907">
+          <caret line="649" selection-start-line="649" selection-end-line="649" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13244">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4171">
+          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+          <folding>
+            <element signature="e#77#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/urllib/request.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26832">
+          <caret line="649" selection-start-line="649" selection-end-line="649" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13244">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1677">
+          <caret line="40" selection-start-line="35" selection-end-line="40" />
+          <folding>
+            <element signature="e#77#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1849">
+          <caret line="254" column="41" lean-forward="true" selection-start-line="254" selection-start-column="41" selection-end-line="254" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gitir.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

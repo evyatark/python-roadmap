@@ -5,6 +5,15 @@ from bs4 import BeautifulSoup
 
 courses = [
     ['https://git.ir/linkedin-learn-apache-kafka-for-beginners/', 'Apache Kafka Training for Beginners', 'kafka1']
+    ,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
+    , ['https://git.ir/codewithmosh-the-complete-nodejs-course/', 'Codewithmosh - The Complete Node.js Course', 'moshnode0']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
 ]
 
 
@@ -33,12 +42,24 @@ def readAndProcess(url, dir_name):
     linksToAllParts = [x.div.a.attrs['href'] for x in all]
     names = [name_from_link(x) for x in linksToAllParts]
     #sourceLines = [x.div.a.sourceline for x in all]
+    dl = bs.find_all(name='a', class_='download-link')
+    download_link = ''
+    if (len(dl) > 0):
+        download_link = dl[0].attrs['href']
 
     result = ''
     for command in ['#!/bin/sh',
                     'cd ' + "'" + BASE_DIR + "'" ,
                     'mkdir ' + "'" + dir_name + "'" ,
                     'cd ' + "'" + dir_name+ "'" ]:
+        result = add(command, result)
+
+    # download sources
+    if len(download_link) > 0:
+        name = 'exercise_files.zip'
+        sindex = download_link.rindex('git.ir_') + len('git.ir_')
+        name = download_link[sindex:]
+        command = "curl '" + download_link + "' -o '" + name + "'"
         result = add(command, result)
 
     for i in range(0,len(linksToAllParts)):
