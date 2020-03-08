@@ -1,4 +1,4 @@
-from lp import save_to_file, add, BASE_DIR
+from lp import save_to_file, add, BASE_DIR, fix_chars
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 courses = [
     ['https://git.ir/linkedin-learn-apache-kafka-for-beginners/', 'Apache Kafka Training for Beginners', 'kafka1']
     ,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
-    , ['https://git.ir/codewithmosh-the-complete-nodejs-course/', 'Codewithmosh - The Complete Node.js Course', 'moshnode0']
-    # , ['', '', '']
-    # , ['', '', '']
-    # , ['', '', '']
+    #, ['https://git.ir/codewithmosh-the-complete-nodejs-course/', 'Codewithmosh - The Complete Node.js Course', 'moshnode0']
+    # , ['https://git.ir/skillshare-scrapy-python-web-scraping-crawling-for-beginners/', 'SkillShare - Scrapy Python Web Scraping and Crawling for Beginners', '']
+    , ['https://git.ir/linkedin-introducing-jupyter/', 'Linkedin Learning - Introducing Jupyter', 'jup1']
+    , ['https://git.ir/linkedin-cloud-native-development-with-node-js-docker-and-kubernetes/', 'Linkedin Learning - Cloud Native Development with Node.js Docker and Kubernetes', 'nodek8s']
     # , ['', '', '']
     # , ['', '', '']
     # , ['', '', '']
@@ -20,7 +20,7 @@ courses = [
 def name_from_link(link):
     sindex = 1 + str(link).rindex('/')
     bindex = str(link).rindex('git') - 1
-    result = link[sindex:bindex]
+    result = link[sindex:bindex] + '.mp4'
     return result
 
 
@@ -57,8 +57,9 @@ def readAndProcess(url, dir_name):
     # download sources
     if len(download_link) > 0:
         name = 'exercise_files.zip'
-        sindex = download_link.rindex('git.ir_') + len('git.ir_')
+        sindex = download_link.rindex('git.ir') + len('git.ir')
         name = download_link[sindex:]
+        name = fix_chars(name)
         command = "curl '" + download_link + "' -o '" + name + "'"
         result = add(command, result)
 
