@@ -32,10 +32,6 @@ def readAndProcess(url, dir_name):
     all = bs.find_all(name='a', class_='list-brief__item__content')
     linksToAllParts = [fix(x.attrs['href']) for x in all]
     names = [x.text.rstrip().lstrip() for x in all]
-    sourceLines = [x.sourceline for x in all]
-    modules = bs.find_all(name='div', class_='list-brief__top__section')
-    module_names = bs.find_all(name='div', class_='list-brief__top__title')
-    module_dir_names = [x.text for x in module_names]
     # add lines in beginning of sh file:
     for command in ['#!/bin/sh',
                     'cd ' + "'" + BASE_DIR + "'" ,
@@ -46,29 +42,14 @@ def readAndProcess(url, dir_name):
     currentModule = -1
     last_module = False
     for i in range(0, len(names)):
-        if (not last_module):
-            # print(currentModule)
-            # print(modules[currentModule+1])
-            # print(modules[currentModule+1].sourceline)
-            if (modules[currentModule+1].sourceline is None) or (modules[currentModule+1].sourceline < sourceLines[i]):
-                currentModule = currentModule + 1
-                if currentModule == len(modules) - 1:
-                    last_module = True
-                proto_dir_name = "'" + str(currentModule+1).rjust(2,'0') + ' ' + module_dir_names[currentModule] + "'"
-                dir_name = fix_chars(proto_dir_name)
-                if currentModule > 0:
-                    result = add ('cd ..', result)
-                result = add('mkdir ' + dir_name, result)
-                result = add('cd ' + dir_name, result)
-        if (currentModule <= len(modules)):
-            # if we have 10 files, width is 2. if we have 100 files, width is 3.
-            width = len(str(len(names)))
-            # pad 0 to str(i)
-            chapter_number = str(i).rjust(width, '0')
-            # remove problematic chars from name (?, :, /, etc)
-            name = fix_chars(names[i])
-            command = 'curl ' + linksToAllParts[i] + " '" + chapter_number + ' ' + name + ".mp4'"
-            result = add(command, result)
+        # if we have 10 files, width is 2. if we have 100 files, width is 3.
+        width = len(str(len(names)))
+        # pad 0 to str(i)
+        chapter_number = str(i).rjust(width, '0')
+        # remove problematic chars from name (?, :, /, etc)
+        name = fix_chars(names[i])
+        command = 'curl ' + linksToAllParts[i] + "' -o " + name
+        result = add(command, result)
     result = add('cd ' + "'" + BASE_DIR + "'", result)
     return result
 
@@ -125,5 +106,6 @@ def process(num):
     save_to_file(readAndProcess(courses[num][0], courses[num][1]), file_name)
 
 
-for i in range(0, len(courses)):
-    process(i)
+if __name__ == "__main__":
+    for i in range(0, len(courses)):
+        process(i)
