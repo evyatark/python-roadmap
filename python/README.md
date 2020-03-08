@@ -8,6 +8,7 @@ WARNING: This is only to exercise web scraping. Entering these sites is dangerou
 
 If you like any tutorial, buy it from the official source!
 
+The bs.py script demonstrates web scraping of haaretz.co.il site (bypassing the paywall...)
 
 ## LearningCrux
 
