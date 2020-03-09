@@ -1,0 +1,80 @@
+1583698322288	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile5rK73P"
+*** You are running in headless mode.
+1583698323056	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1583698323056	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1583698325522	Marionette	INFO	Listening on port 45635
+1583698325632	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://mahimeta.com/networks/vast_tag.js?cache=1583698327, line 11: TypeError: document.body is null
+JavaScript error: , line 0: uncaught exception: Invalid action name, may only include "A-Za-z/_". Do not include user-specific information.
+1583698336434	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileu23vJf"
+*** You are running in headless mode.
+1583698337498	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1583698337498	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1583698340987	Marionette	INFO	Listening on port 40885
+1583698341097	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://mahimeta.com/networks/vast_tag.js?cache=1583698342, line 11: TypeError: document.body is null
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+JavaScript error: , line 0: uncaught exception: Invalid action name, may only include "A-Za-z/_". Do not include user-specific information.
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+1583699108435	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileKXL9Ug"
+*** You are running in headless mode.
+1583699108999	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1583699108999	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1583699111514	Marionette	INFO	Listening on port 44207
+1583699112427	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://mahimeta.com/networks/vast_tag.js?cache=1583699115, line 11: TypeError: document.body is null
+JavaScript error: , line 0: uncaught exception: Invalid action name, may only include "A-Za-z/_". Do not include user-specific information.
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+1583699251975	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile0VXh7l"
+*** You are running in headless mode.
+1583699252529	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1583699252530	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1583699254311	Marionette	INFO	Listening on port 41375
+1583699254387	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://mahimeta.com/networks/vast_tag.js?cache=1583699256, line 11: TypeError: document.body is null
+JavaScript error: , line 0: uncaught exception: Invalid action name, may only include "A-Za-z/_". Do not include user-specific information.
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+
+1583704761495	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileehJXGB"
+*** You are running in headless mode.
+1583704762035	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: resource://pdf.js/
+1583704762035	addons.webextension.screenshots@mozilla.org	WARN	Loading extension 'screenshots@mozilla.org': Reading manifest: Invalid host permission: about:reader*
+1583704763774	Marionette	INFO	Listening on port 33075
+1583704763808	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://mahimeta.com/networks/vast_tag.js?cache=1583704765, line 11: TypeError: document.body is null
+JavaScript error: , line 0: uncaught exception: Invalid action name, may only include "A-Za-z/_". Do not include user-specific information.
+console.error: BroadcastService: 
+  receivedBroadcastMessage: handler for
+  remote-settings/monitor_changes
+  threw error:
+  Message: Error: Polling for changes failed: NetworkError when attempting to fetch resource..
+  Stack:
+    remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
+

@@ -3,8 +3,9 @@ from selenium1 import selenium_bs
 
 
 courses = [
-     ['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dummy', 'crux_kafka_stream']
-    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_']
+     #['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dummy', 'crux_kafka_stream']
+    #, ['https://www.learningcrux.com/course/splunk-2019-beginner-to-architect', 'dummy', 'crux_splunk']
+     ['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_pythonDeepDive1']
     # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-2', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-3', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-4-oop', 'dummy', 'crux_']
@@ -52,7 +53,6 @@ courses = [
     # , ['', 'dummy', 'crux_']
     # , ['', 'dummy', 'crux_']
     # , ['', 'dummy', 'crux_']
-    # , ['', 'dummy', 'crux_']
 ]
 
 
@@ -61,6 +61,7 @@ def name_from_link(link):
     sindex = 1 + str(link).rindex('/')
     bindex = str(link).rindex('git') - 1
     result = link[sindex:bindex] + '.mp4'
+    # https://www.learningcrux.com/video/splunk-2019-beginner-to-architect/0/0
     return result
 
 
@@ -101,7 +102,8 @@ def readAndProcess(url, dir_name):
             current_section = title
         #name = title + '-' + str(i).rjust(3, '0') + ' ' + all_chapter_names[i]
         name = str(i).rjust(3, '0') + ' ' + all_chapter_names[i] + '.mp4'
-        command = "curl '" + all_chapter_links[i] + "' -o '" + name + "'"
+        link = all_chapter_links[i].replace('/video', 'https://www.learningcrux.com/play')
+        command = "curl '" + link + "?type=hard' -L -o '" + name + "'"
         result = add(command, result)
     return result
 
