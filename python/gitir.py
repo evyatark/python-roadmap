@@ -2,16 +2,17 @@ from lp import save_to_file, add, BASE_DIR, fix_chars
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 
+# TODO implement creating separate dir for each module (same as lcrux)
 
 courses = [
-    ['https://git.ir/linkedin-learn-apache-kafka-for-beginners/', 'Apache Kafka Training for Beginners', 'kafka1']
-    ,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
+    #['https://git.ir/linkedin-learn-apache-kafka-for-beginners/', 'Apache Kafka Training for Beginners', 'kafka1']
+    #,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
     #, ['https://git.ir/codewithmosh-the-complete-nodejs-course/', 'Codewithmosh - The Complete Node.js Course', 'moshnode0']
     # , ['https://git.ir/skillshare-scrapy-python-web-scraping-crawling-for-beginners/', 'SkillShare - Scrapy Python Web Scraping and Crawling for Beginners', '']
-    , ['https://git.ir/linkedin-introducing-jupyter/', 'Linkedin Learning - Introducing Jupyter', 'jup1']
-    , ['https://git.ir/linkedin-cloud-native-development-with-node-js-docker-and-kubernetes/', 'Linkedin Learning - Cloud Native Development with Node.js Docker and Kubernetes', 'nodek8s']
-    # , ['', '', '']
-    # , ['', '', '']
+    # Yandex-as03 , ['https://git.ir/linkedin-introducing-jupyter/', 'Linkedin Learning - Introducing Jupyter', 'jup1']
+    #, ['https://git.ir/linkedin-cloud-native-development-with-node-js-docker-and-kubernetes/', 'Linkedin Learning - Cloud Native Development with Node.js Docker and Kubernetes', 'nodek8s']
+    #ek3011 , ['https://git.ir/linkedin-introducing-postman/', '', '']
+     ['https://git.ir/teamtreehouse-user-authentication-with-express-and-mongo/', 'TreeHouse - User Authentication with Express and Mongo', 'mongo1']
     # , ['', '', '']
     # , ['', '', '']
 ]

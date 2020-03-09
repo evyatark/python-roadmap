@@ -139,10 +139,10 @@ def doSomeIds(ids, existing_body):
             time = articleObject.updatedAt
             if (time == ''):
                 time = articleObject.publishedAt
-            articleObject.link = '<p><b>' + articleObject.updatedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
+            articleObject.link = '<p><b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
             body = body + articleObject.link
-            if (articleObject.updatedAt.startswith(str(today))):
-                articles[articleObject.updatedAt + articleObject.id] = articleObject
+            if (articleObject.publishedAt.startswith(str(today))):
+                articles[articleObject.publishedAt + articleObject.id] = articleObject
                 counter = counter + 1
                 if counter > LIMIT:
                     break

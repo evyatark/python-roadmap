@@ -1,14 +1,19 @@
 from lp import save_to_file, add, BASE_DIR, fix_chars
 from selenium1 import selenium_bs
 
+WAIT_EVERY_X_DOWNLOADS = 5
+WAIT_INTERVAL_AFTER_DOWNLOADS = 10
+WAIT_AFTER_SECTION = True
+WAIT_INTERVAL_AFTER_SECTION = 30
+
 
 courses = [
      #['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dummy', 'crux_kafka_stream']
-    #, ['https://www.learningcrux.com/course/splunk-2019-beginner-to-architect', 'dummy', 'crux_splunk']
-     ['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_pythonDeepDive1']
-    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-2', 'dummy', 'crux_']
-    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-3', 'dummy', 'crux_']
-    # , ['https://www.learningcrux.com/course/python-3-deep-dive-part-4-oop', 'dummy', 'crux_']
+     ['https://www.learningcrux.com/course/splunk-2019-beginner-to-architect', 'dummy', 'crux_splunk']
+     #,['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_pythonDeepDive1']
+    #,['https://www.learningcrux.com/course/python-3-deep-dive-part-2', 'dummy', 'crux_pythonDeepDive2']
+    #, ['https://www.learningcrux.com/course/python-3-deep-dive-part-3', 'dummy', 'crux_pythonDeepDive3']
+      #,['https://www.learningcrux.com/course/python-3-deep-dive-part-4-oop', 'dummy', 'crux_pythonDeepDive4']
     #, ['https://www.learningcrux.com/course/beginner-react-2019-create-a-movie-web-app', 'dummy', 'crux_react0']
     #, ['https://www.learningcrux.com/course/apache-kafka-series-learn-apache-kafka-for-beginners-v2', 'dummy', 'crux_kafka0']
     # , ['https://www.learningcrux.com/course/apache-kafka-series-kafka-connect-handson-learning', 'dummy', 'crux_kafka_connect']
@@ -88,6 +93,8 @@ def readAndProcess(url, dir_name):
 
     current_section = ''
     for i in range(0,len(all_chapter_links)):
+        if i%WAIT_EVERY_X_DOWNLOADS==0:
+            result = sleep(WAIT_INTERVAL_AFTER_DOWNLOADS, result)
         # assuming all links look like:
         #'/video/apache-kafka-series-kafka-streams-for-data-processing/0/0'
         # extract the section number:
@@ -99,12 +106,19 @@ def readAndProcess(url, dir_name):
                 result = add("cd ..", result)
             result = add("mkdir '" + title + "'", result)
             result = add("cd '" + title + "'", result)
+            if WAIT_AFTER_SECTION:
+                result = sleep(WAIT_INTERVAL_AFTER_SECTION, result)
             current_section = title
         #name = title + '-' + str(i).rjust(3, '0') + ' ' + all_chapter_names[i]
         name = str(i).rjust(3, '0') + ' ' + all_chapter_names[i] + '.mp4'
         link = all_chapter_links[i].replace('/video', 'https://www.learningcrux.com/play')
         command = "curl '" + link + "?type=hard' -L -o '" + name + "'"
         result = add(command, result)
+    return result
+
+def sleep(seconds, result):
+    result = add("echo waiting " + str(seconds) + " seconds...", result)
+    result = add("sleep " + str(seconds), result)
     return result
 
 
