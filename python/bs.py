@@ -39,9 +39,7 @@ def readAndProcess(id, url):
     except:
         header = "@@@"
 
-    #print(header)
-    #print(bs.html.prettify)
-    # sections = bs.article.findAll(name='section', class_='c-article-entry', attrs='{"class":"b-entry"}')
+    print("processing...", end=' ')
     sections = bs.article.findAll(name='section', class_='b-entry')
     if len(sections) == 0:
         return Article(id, header, '', '', '')
@@ -49,51 +47,65 @@ def readAndProcess(id, url):
     publishedAt = ""
     updatedAt = ""
     try:
+        print("1", end=' ')
         published = bs.article.find(name='meta', attrs={"property": "article:published"})
         if (published is not None):
+            print("1.1", end=' ')
             publishedAt = bs.article.find(name='meta', attrs={"property": "article:published"}).attrs['content']
         if bs.article.find(name='meta', attrs={"property": "article:modified"}) is not None:
+            print("1.2", end=' ')
             updatedAt = bs.article.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
     except:
-        dummy=0
+        pass
     if (publishedAt=='' and updatedAt==''):
         try:
+            print("1.3", end=' ')
             updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
             publishedAt = updatedAt
         except:
-            dummy = 0
+            pass
 
     #sections[0].replace_with(omit('section 0'))
+    print("2", end=' ')
     if first.find(class_='c-quick-nl-reg') is not None:
         first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
+    print("3", end=' ')
     if first.find(class_='c-related-article-text-only-wrapper') is not None:
         first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
+    print("4", end=' ')
     all_figures = first.find_all(name='figure')
     while (len(all_figures) > 0):
         first.find(name='figure').replace_with(omit('figure'))
         all_figures = first.find_all(name='figure')
 
+    print("5", end=' ')
     while (first.find(class_="c-dfp-ad") is not None):
         first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
+    print("6", end=' ')
     bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
     bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
     #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
+    print("7", end=' ')
     bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
     while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
         bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
 
 # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
 # to     <section amp-access="TRUE">
+    print("8", end=' ')
     list_of_sections = bs.html.findAll(
         lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
     for section in list_of_sections:
+        print(".", end='')
         section.attrs['amp-access'] = "TRUE"
 
+    print("9", end=' ')
     bs.html.body.attrs['style'] = "border:2px solid"
     # assuming that 3rd child of <head> is not needed and can be changed...
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
+    print("!")
     return Article(id, header, publishedAt, updatedAt, htmlText)
 
 
@@ -127,12 +139,16 @@ def generate_index(articles):
 def doSomeIds(ids, existing_body):
     articles = {}
     counter = 0
+    so_far = 0
     body = ''
     today = date.today()
+    numberOfIds = len(ids)
     for id in ids:
         try:
             url = 'https://www.haaretz.co.il/amp/' + id
             articleObject = readAndProcess(id, url)
+            so_far = so_far + 1
+            print("completed", so_far, "out of", numberOfIds)
             if articleObject.fullHtml=='':
                 continue
             file_relative_path, file_full_path = saveToFile(articleObject.id, counter, articleObject.fullHtml)
@@ -143,6 +159,7 @@ def doSomeIds(ids, existing_body):
             body = body + articleObject.link
             if (articleObject.publishedAt.startswith(str(today))):
                 articles[articleObject.publishedAt + articleObject.id] = articleObject
+                print("article added to index of today")
                 counter = counter + 1
                 if counter > LIMIT:
                     break
@@ -216,13 +233,13 @@ def find_existing_articles(path):
 def process_page(url):
     print("loading url", url, '...')
     try:
-        html = urlopen(url, )
+        user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+        request = Request(url, headers={'User-Agent': user_agent})
+        response = urlopen(request)
+        html = response.read()
     except:
+        print("some exception when trying to retrieve URL", url)
         return []
-    user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    request = Request(url, headers={'User-Agent': user_agent})
-    response = urlopen(request)
-    html = response.read()
     print("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     #bs.find_all("article")
