@@ -2,12 +2,16 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from datetime import date
 import glob
+import logging
+from time import time
 
 LIMIT = 500
 HTML_START = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
 HTML_END = '</body></html>'
 base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class Article:
     def __init__(self, id, header, publishedAt, updatedAt, fullHtml, subject, sub_subject):
@@ -32,11 +36,14 @@ def omit(tag):
 
 
 def readAndProcess(id, url):
+    ts = time()
     print("loading", url, '...')
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
     html = response.read()
+    logging.info('loading completed in %s seconds', time() - ts)
+    ts = time()
     print("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     try:
@@ -44,6 +51,8 @@ def readAndProcess(id, url):
     except:
         header = "@@@"
 
+    logging.info('souping completed in %s seconds', time() - ts)
+    ts = time()
     print("processing...", end=' ')
     sections = bs.article.findAll(name='section', class_='b-entry')
     if len(sections) == 0:
@@ -120,6 +129,7 @@ def readAndProcess(id, url):
     # assuming that 3rd child of <head> is not needed and can be changed...
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
+    logging.info('processing completed in %s seconds', time() - ts)
     print("!")
     return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 

@@ -9,7 +9,7 @@ WAIT_INTERVAL_AFTER_SECTION = 30
 
 courses = [
      #['https://www.learningcrux.com/course/apache-kafka-series-kafka-streams-for-data-processing', 'dummy', 'crux_kafka_stream']
-     ['https://www.learningcrux.com/course/splunk-2019-beginner-to-architect', 'dummy', 'crux_splunk']
+     #,['https://www.learningcrux.com/course/splunk-2019-beginner-to-architect', 'dummy', 'crux_splunk']
      #,['https://www.learningcrux.com/course/python-3-deep-dive-part-1', 'dummy', 'crux_pythonDeepDive1']
     #,['https://www.learningcrux.com/course/python-3-deep-dive-part-2', 'dummy', 'crux_pythonDeepDive2']
     #, ['https://www.learningcrux.com/course/python-3-deep-dive-part-3', 'dummy', 'crux_pythonDeepDive3']
@@ -25,7 +25,7 @@ courses = [
     # , ['https://www.learningcrux.com/course/full-stack-project-spring-boot-20-reactjs-redux', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/vue-js-2-the-complete-guide-incl-vue-router-vuexs', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/advanced-react-and-redux-2018-edition', 'dummy', 'crux_']
-    # , ['https://www.learningcrux.com/course/react-nodejs-express-mongodb-the-mern-fullstack-guide', 'dummy', 'crux_']
+      ['https://www.learningcrux.com/course/react-nodejs-express-mongodb-the-mern-fullstack-guide', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/understanding-npm-nodejs-package-manager', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/nodejs-the-complete-guide-incl-mvc-rest-apis-graphqls', 'dummy', 'crux_']
     # , ['https://www.learningcrux.com/course/python-for-data-science-and-machine-learning-bootcamp', 'dummy', 'crux_']
@@ -93,7 +93,7 @@ def readAndProcess(url, dir_name):
 
     current_section = ''
     for i in range(0,len(all_chapter_links)):
-        if i%WAIT_EVERY_X_DOWNLOADS==0:
+        if (i != 0) and (i%WAIT_EVERY_X_DOWNLOADS==0):
             result = sleep(WAIT_INTERVAL_AFTER_DOWNLOADS, result)
         # assuming all links look like:
         #'/video/apache-kafka-series-kafka-streams-for-data-processing/0/0'
@@ -106,7 +106,7 @@ def readAndProcess(url, dir_name):
                 result = add("cd ..", result)
             result = add("mkdir '" + title + "'", result)
             result = add("cd '" + title + "'", result)
-            if WAIT_AFTER_SECTION:
+            if (i != 0) and WAIT_AFTER_SECTION:
                 result = sleep(WAIT_INTERVAL_AFTER_SECTION, result)
             current_section = title
         #name = title + '-' + str(i).rjust(3, '0') + ' ' + all_chapter_names[i]
