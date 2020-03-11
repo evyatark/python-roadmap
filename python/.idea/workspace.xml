@@ -14,7 +14,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1583765586186" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583840355330" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583922799044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1583823469326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583763574280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -56,8 +56,8 @@
       <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="240" column="63" selection-start-line="240" selection-start-column="63" selection-end-line="240" selection-end-column="63" />
+            <state relative-caret-position="1114">
+              <caret line="302" column="47" lean-forward="true" selection-start-line="302" selection-start-column="47" selection-end-line="302" selection-end-column="47" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -68,8 +68,8 @@
       <file leaf-file-name="lp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="590">
-              <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
+            <state relative-caret-position="246">
+              <caret line="136" lean-forward="true" selection-start-line="135" selection-end-line="136" />
             </state>
           </provider>
         </entry>
@@ -91,6 +91,10 @@
       <find>fix</find>
       <find>WAIT_EVERY_X_DOWNLOADS</find>
       <find>loading</find>
+      <find>now reading</find>
+      <find>existing_body</find>
+      <find>Article</find>
+      <find>link</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -340,23 +344,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1600" height="820" extended-state="6" />
+    <frame x="0" y="81" width="3840" height="1969" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.58660847" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21628372" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16924067" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49945533" visible="true" weight="0.06931998" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Structure" order="1" sideWeight="0.50054467" side_tool="true" visible="true" weight="0.06931998" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.49344978" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5138282" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -411,11 +415,6 @@
           <line>71</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>145</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -424,7 +423,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="33" />
+      <option name="time" value="37" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -795,15 +794,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
+        <state relative-caret-position="246">
+          <caret line="136" lean-forward="true" selection-start-line="135" selection-end-line="136" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="240" column="63" selection-start-line="240" selection-start-column="63" selection-end-line="240" selection-end-column="63" />
+        <state relative-caret-position="1114">
+          <caret line="302" column="47" lean-forward="true" selection-start-line="302" selection-start-column="47" selection-end-line="302" selection-end-column="47" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

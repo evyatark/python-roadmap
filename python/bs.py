@@ -6,19 +6,25 @@ import glob
 LIMIT = 500
 HTML_START = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
 HTML_END = '</body></html>'
+base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
 
-def construct_html(body, existing_body):
-    return HTML_START + body + existing_body + HTML_END
 
 class Article:
-    def __init__(self, id, header, publishedAt, updatedAt, fullHtml):
+    def __init__(self, id, header, publishedAt, updatedAt, fullHtml, subject, sub_subject):
         self.id = id
         self.header = header
         self.publishedAt = publishedAt
         self.updatedAt = updatedAt
         self.fullHtml = fullHtml
+        self.subject = subject
+        self.sub_subject = sub_subject
 
-base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
+    # other fields: subject
+
+
+def construct_html(body, existing_body):
+    return HTML_START + body + existing_body + HTML_END
+
 
 def omit(tag):
     omitted = BeautifulSoup("<div>omitted " + tag + "</div>", "html.parser")
@@ -27,7 +33,6 @@ def omit(tag):
 
 def readAndProcess(id, url):
     print("loading", url, '...')
-    html = urlopen(url, )
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
@@ -42,7 +47,7 @@ def readAndProcess(id, url):
     print("processing...", end=' ')
     sections = bs.article.findAll(name='section', class_='b-entry')
     if len(sections) == 0:
-        return Article(id, header, '', '', '')
+        return Article(id, header, '', '', '', '', '')
     first = sections[0]
     publishedAt = ""
     updatedAt = ""
@@ -66,6 +71,16 @@ def readAndProcess(id, url):
             pass
 
     #sections[0].replace_with(omit('section 0'))
+
+    header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
+    header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
+    subject = ''
+    sub_subject = ''
+    if len(header_crumbs) > 0:
+        subject = header_crumbs[0].text.rstrip().lstrip()
+    if len(header_crumbs) > 1:
+        sub_subject = header_crumbs[1].text.rstrip().lstrip()
+
     print("2", end=' ')
     if first.find(class_='c-quick-nl-reg') is not None:
         first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
@@ -106,7 +121,7 @@ def readAndProcess(id, url):
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
     print("!")
-    return Article(id, header, publishedAt, updatedAt, htmlText)
+    return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 
 
 
@@ -136,7 +151,7 @@ def generate_index(articles):
         body = body + articleObject.link
     return construct_html(body, "")
 
-def doSomeIds(ids, existing_body):
+def doSomeIds(ids):
     articles = {}
     counter = 0
     so_far = 0
@@ -155,10 +170,11 @@ def doSomeIds(ids, existing_body):
             time = articleObject.updatedAt
             if (time == ''):
                 time = articleObject.publishedAt
-            articleObject.link = '<p><b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
+            articleObject.link = '<p>['+articleObject.subject+'/'+articleObject.sub_subject +']<b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
             body = body + articleObject.link
             if (articleObject.publishedAt.startswith(str(today))):
-                articles[articleObject.publishedAt + articleObject.id] = articleObject
+                key = generate_key(articleObject)
+                articles[key] = articleObject
                 print("article added to index of today")
                 counter = counter + 1
                 if counter > LIMIT:
@@ -174,17 +190,18 @@ def doSomeIds(ids, existing_body):
     f.write(html)
     f.close()
 
+def generate_key(articleObject):
+    return articleObject.subject + articleObject.sub_subject + articleObject.publishedAt + articleObject.id
+
 def first_page():
     url = 'https://www.haaretz.co.il'
     print("loading first page", url, '...')
-    html = urlopen(url, )
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
     html = response.read()
     print("souping...")
     bs = BeautifulSoup(html, 'html.parser')
-    #bs.find_all("article")
     list_of_articles = bs.html.findAll(
         lambda tag: tag.name == "article" and "id" in tag.attrs['class'])
     links = {"1"}
@@ -224,10 +241,8 @@ def find_existing_articles(path):
         if name=="":
             continue
         relative_path = name.lstrip(path)
-        #print("file", relative_path, "header", header)
         link = '<p><a href="h' + relative_path + '">' + str(header) + '</a></p>'
         body = body + link
-    #html = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>' + body + '</body></html>'
     return body
 
 def process_page(url):
@@ -242,17 +257,11 @@ def process_page(url):
         return []
     print("souping...")
     bs = BeautifulSoup(html, 'html.parser')
-    #bs.find_all("article")
     list_of_articles = bs.html.find_all(
         lambda tag: (tag.name == "a") and ('href' in tag.attrs.keys()) and ("1.86" in tag.attrs['href']), recursive=True)
     links = {"1"}
     for href in list_of_articles:
-        #print(href)
         links.add(href.attrs["href"])
-        #hrefs = div.find_all("a")
-        #for href in hrefs:
-        #    print (href.attrs["href"])
-        #    links.add(href.attrs["href"])
     links.remove("1")
     #print("links:")
     ids = []
@@ -267,11 +276,20 @@ def process_page(url):
     return ids
 
 
-existing_body = ""
-#existing_body = find_existing_articles('/home/evyatar/GitHub/github-pages-hello-world/haaretz')
-article_ids = first_page()
-#print(len(article_ids))
-urls = ['https://www.haaretz.co.il/news'
+def remove_duplicates(article_ids):
+    set = {'0'}
+    for id in article_ids:
+        if ('#' in id):
+            id = id[:id.find('#')]
+        if ('?' in id):
+            id = id[:id.find('?')]
+        set.add(id)
+    set.remove('0')
+    return list(set)
+
+
+def urls():
+    return ['https://www.haaretz.co.il/news'
     , 'https://www.themarker.com/allnews'
     , 'https://www.themarker.com/wallstreet'
     , 'https://www.themarker.com/misc/all-headlines'
@@ -293,23 +311,15 @@ urls = ['https://www.haaretz.co.il/news'
     ,'https://www.haaretz.co.il/captain'
     , 'https://www.haaretz.co.il/science'
     , 'https://www.haaretz.co.il/literature'
-        ]
+       ]
 
+if __name__ == "__main__":
+    article_ids = first_page()
+    #print(len(article_ids))
 
-def remove_duplicates(article_ids):
-    set = {'0'}
-    for id in article_ids:
-        if ('#' in id):
-            id = id[:id.find('#')]
-        if ('?' in id):
-            id = id[:id.find('?')]
-        set.add(id)
-    set.remove('0')
-    return list(set)
-
-for url in urls:
-    more_article_ids = process_page(url)
-    article_ids.extend(more_article_ids)
-    article_ids = remove_duplicates(article_ids)
-print("now reading",len(article_ids),"articles")
-doSomeIds(article_ids, existing_body)
+    for url in urls():
+        more_article_ids = process_page(url)
+        article_ids.extend(more_article_ids)
+        article_ids = remove_duplicates(article_ids)
+    print("now reading",len(article_ids),"articles")
+    doSomeIds(article_ids)

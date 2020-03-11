@@ -206,3 +206,6 @@ Sandbox: Unexpected EOF, op 0 flags 02400302 path /dev/shm/org.mozilla.ipc.23329
 [Child 23329, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-DVGW0d/firefox-65.0.1+build2/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 718
 [Child 23329, Chrome_ChildThread] WARNING: pipe error: Broken pipe: file /build/firefox-DVGW0d/firefox-65.0.1+build2/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 718
 Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
