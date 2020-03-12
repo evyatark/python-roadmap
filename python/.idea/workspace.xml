@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/geckodriver.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gitir.py" beforeDir="false" afterPath="$PROJECT_DIR$/gitir.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,17 +15,29 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1583933946497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583993386933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1584028564439" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1583823469326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="lcrux.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lcrux.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lcrux.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
+            <state relative-caret-position="590">
               <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gitir.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gitir.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="368">
+              <caret line="22" column="77" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="77" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
@@ -41,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bs.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="589">
-              <caret line="131" column="28" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
+            <state relative-caret-position="176">
+              <caret line="8" column="93" selection-start-line="8" selection-start-column="93" selection-end-line="8" selection-end-column="93" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -56,7 +69,7 @@
       <file leaf-file-name="lp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5805">
+            <state relative-caret-position="2970">
               <caret line="136" selection-start-line="135" selection-end-line="136" />
             </state>
           </provider>
@@ -83,6 +96,10 @@
       <find>existing_body</find>
       <find>Article</find>
       <find>link</find>
+      <find>maga</find>
+      <find>8662884</find>
+      <find>logger</find>
+      <find>2884</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -93,10 +110,10 @@
       <list>
         <option value="$PROJECT_DIR$/selenium.py" />
         <option value="$PROJECT_DIR$/selenium1.py" />
-        <option value="$PROJECT_DIR$/gitir.py" />
         <option value="$PROJECT_DIR$/lp.py" />
-        <option value="$PROJECT_DIR$/bs.py" />
         <option value="$PROJECT_DIR$/lcrux.py" />
+        <option value="$PROJECT_DIR$/gitir.py" />
+        <option value="$PROJECT_DIR$/bs.py" />
       </list>
     </option>
   </component>
@@ -176,7 +193,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.lcrux">
+  <component name="RunManager" selected="Python.bs">
     <configuration name="bs" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -332,20 +349,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-21" width="1600" height="866" extended-state="6" />
+    <frame x="0" y="25" width="1600" height="820" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info anchor="bottom" id="Run" order="2" weight="1.0" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.57787484" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49830508" visible="true" weight="0.1739418" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49655172" visible="true" weight="0.17631918" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.5016949" side_tool="true" visible="true" weight="0.1739418" />
+      <window_info id="Structure" order="1" sideWeight="0.50344825" side_tool="true" weight="0.17631918" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5138282" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -375,17 +392,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/gitir.py</url>
-          <line>42</line>
+          <line>57</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/gitir.py</url>
-          <line>38</line>
+          <line>53</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/gitir.py</url>
-          <line>24</line>
+          <line>39</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -403,6 +420,11 @@
           <line>71</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bs.py</url>
+          <line>189</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -411,59 +433,93 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="37" />
+      <option name="time" value="42" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>str(section_number).rjust(2,'0') + ' ' + section_title</expression-string>
+        <expression-string>articleObject.publishedAt</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[x.text for x in bs.find_all(name='div', class_='list-brief__top__title')]</expression-string>
+        <expression-string>today.day - parser.parse(articleObject.publishedAt).day</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[x for x in bs.find_all(name='div', class_='list-brief__top__title')]</expression-string>
+        <expression-string>'2020-' + str(today.month)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.find_all(name='div', class_='list-brief__top__title')</expression-string>
+        <expression-string>'2020-' + today.month</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.html.contents[3]</expression-string>
+        <expression-string>parser.parse(articleObject.publishedAt).day</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.html.contents</expression-string>
+        <expression-string>parser.parse(articleObject.publishedAt)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.html</expression-string>
+        <expression-string>dateutil.pa</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>link</expression-string>
+        <expression-string>strptime(articleObject.publishedAt[0:10],'%YYYY-%MM-%dd')</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>section_titles</expression-string>
+        <expression-string>strptime(articleObject.publishedAt[0:10],'%YYYY-%mm-%dd')</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/lcrux.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2354">
+          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/selenium1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2772">
+          <caret line="131" column="28" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2970">
+          <caret line="136" selection-start-line="135" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gitir.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="129">
@@ -806,37 +862,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5805">
+        <state relative-caret-position="2970">
           <caret line="136" selection-start-line="135" selection-end-line="136" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bs.py">
+    <entry file="file://$PROJECT_DIR$/lcrux.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="131" column="28" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
+        <state relative-caret-position="590">
+          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
           <folding>
-            <element signature="e#0#43#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gitir.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="14" column="127" selection-start-line="14" selection-start-column="95" selection-end-line="14" selection-end-column="127" />
+        <state relative-caret-position="368">
+          <caret line="22" column="77" selection-start-line="22" selection-start-column="77" selection-end-line="22" selection-end-column="77" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lcrux.py">
+    <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+        <state relative-caret-position="176">
+          <caret line="8" column="93" selection-start-line="8" selection-start-column="93" selection-end-line="8" selection-end-column="93" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#43#0" expanded="true" />
           </folding>
         </state>
       </provider>

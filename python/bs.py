@@ -1,10 +1,12 @@
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
-from datetime import date
+from datetime import date,timedelta
 import glob
 import logging
-from time import time
+from time import time,strptime
+from dateutil import parser
 
+DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 500
 HTML_START = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
 HTML_END = '</body></html>'
@@ -182,7 +184,11 @@ def doSomeIds(ids):
                 time = articleObject.publishedAt
             articleObject.link = '<p>['+articleObject.subject+'/'+articleObject.sub_subject +']<b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
             body = body + articleObject.link
-            if (articleObject.publishedAt.startswith(str(today))):
+            logger.info("published at %s, updated at: %s", articleObject.publishedAt, articleObject.updatedAt)
+
+            # delta = today.day - parser.parse(articleObject.publishedAt).day
+            if (articleObject.publishedAt.startswith('2020-') and
+                    today.day - parser.parse(articleObject.publishedAt).day < DELTA):
                 key = generate_key(articleObject)
                 articles[key] = articleObject
                 print("article added to index of today")
@@ -299,28 +305,28 @@ def remove_duplicates(article_ids):
 
 
 def urls():
-    return ['https://www.haaretz.co.il/news'
-    , 'https://www.themarker.com/allnews'
-    , 'https://www.themarker.com/wallstreet'
-    , 'https://www.themarker.com/misc/all-headlines'
-    , 'https://www.themarker.com/realestate'
-    , 'https://www.themarker.com/technation'
-    , 'https://www.themarker.com/magazine'
-    ,'https://www.haaretz.co.il/magazine'
-    ,'https://www.haaretz.co.il/sport'
-    ,'https://www.haaretz.co.il/news/elections'
-    ,'https://www.haaretz.co.il/news/world'
-    ,'https://www.haaretz.co.il/news/education'
-    ,'https://www.haaretz.co.il/news/politics'
-    ,'https://www.haaretz.co.il/news/law'
-    ,'https://www.haaretz.co.il/news/health'
-    ,'https://www.haaretz.co.il/news/local'
-    ,'https://www.haaretz.co.il/gallery'
-    ,'https://www.haaretz.co.il/gallery/television'
-    ,'https://www.haaretz.co.il/opinions'
-    ,'https://www.haaretz.co.il/captain'
-    , 'https://www.haaretz.co.il/science'
-    , 'https://www.haaretz.co.il/literature'
+    return [    'https://www.haaretz.co.il/magazine'
+    # ,   'https://www.haaretz.co.il/news'
+    # , 'https://www.themarker.com/allnews'
+    # , 'https://www.themarker.com/wallstreet'
+    # , 'https://www.themarker.com/misc/all-headlines'
+    # , 'https://www.themarker.com/realestate'
+    # , 'https://www.themarker.com/technation'
+    # , 'https://www.themarker.com/magazine'
+    # ,'https://www.haaretz.co.il/sport'
+    # ,'https://www.haaretz.co.il/news/elections'
+    # ,'https://www.haaretz.co.il/news/world'
+    # ,'https://www.haaretz.co.il/news/education'
+    # ,'https://www.haaretz.co.il/news/politics'
+    # ,'https://www.haaretz.co.il/news/law'
+    # ,'https://www.haaretz.co.il/news/health'
+    # ,'https://www.haaretz.co.il/news/local'
+    # ,'https://www.haaretz.co.il/gallery'
+    # ,'https://www.haaretz.co.il/gallery/television'
+    # ,'https://www.haaretz.co.il/opinions'
+    # ,'https://www.haaretz.co.il/captain'
+    # , 'https://www.haaretz.co.il/science'
+    # , 'https://www.haaretz.co.il/literature'
        ]
 
 if __name__ == "__main__":
