@@ -2,40 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8629356.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8629356.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8629502.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8629502.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8630556.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8630556.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631014.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631014.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8631476.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8631476.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8637688.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8637688.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8638526.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8638526.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8638670.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8638670.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8640300.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8640300.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8640307.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8640307.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8641884.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8641884.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657089.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657089.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657126.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657126.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657205.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657205.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657345.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657345.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657469.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657469.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8657487.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8657487.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8658252.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8658252.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8658261.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8658261.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8658279.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8658279.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8659023.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8659023.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8659275.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8659275.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8659276.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8659276.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8659463.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8659463.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8660379.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8660379.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8660513.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8660513.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8660517.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8660517.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8660926.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8660926.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8660981.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8660981.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8661544.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8661544.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/geckodriver.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lcrux.py" beforeDir="false" afterPath="$PROJECT_DIR$/lcrux.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +14,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1583933946497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583932387870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1583993386933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1583823469326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -142,7 +109,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="39" />
     <option name="width" value="1600" />
     <option name="height" value="864" />
@@ -314,9 +281,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.bs" />
         <item itemvalue="Python.lcrux" />
         <item itemvalue="Python.gitir" />
-        <item itemvalue="Python.bs" />
         <item itemvalue="Python.lp" />
         <item itemvalue="Python.selenium" />
       </list>
@@ -365,20 +332,20 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="35" width="3840" height="2015" extended-state="7" />
+    <frame x="0" y="-21" width="1600" height="866" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4836113" />
+      <window_info anchor="bottom" id="Run" order="2" weight="1.0" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4988864" visible="true" weight="0.07009595" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49830508" visible="true" weight="0.1739418" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.5011136" side_tool="true" visible="true" weight="0.07009595" />
+      <window_info id="Structure" order="1" sideWeight="0.5016949" side_tool="true" visible="true" weight="0.1739418" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5138282" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
