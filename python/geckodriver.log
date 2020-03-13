@@ -249,3 +249,4 @@ console.error: BroadcastService:
   Stack:
     remoteSettingsFunction/remoteSettings.pollChanges@resource://services-settings/remote-settings.js:188:13
 
+JavaScript error: , line 0: uncaught exception: Timeout
