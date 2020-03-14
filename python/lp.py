@@ -56,7 +56,7 @@ def readAndProcess(url, dir_name):
     last_module = False
     current_section = ''
     for i in range(0, len(names)):
-        if i%WAIT_EVERY_X_DOWNLOADS==0:
+        if (i != 0) and i%WAIT_EVERY_X_DOWNLOADS==0:
             result = sleep(WAIT_INTERVAL_AFTER_DOWNLOADS, result)
         # if we have 10 files, width is 2. if we have 100 files, width is 3.
         width = len(str(len(names)))
@@ -72,7 +72,7 @@ def readAndProcess(url, dir_name):
             dir_name = str(section_number).rjust(2,'0') + ' ' + section_title
             result = add("mkdir '" + dir_name + "'", result)
             result = add("cd '" + dir_name + "'", result)
-            if WAIT_AFTER_SECTION:
+            if (i != 0) and WAIT_AFTER_SECTION:
                 result = sleep(WAIT_INTERVAL_AFTER_SECTION, result)
             current_section = section_title
         command = 'curl ' + linksToAllParts[i] + "-L -o '" + name + "'"
@@ -88,9 +88,11 @@ def add(command, result):
 
 
 courses = [
-    ['https://www.freetutorials.ca/course/creating-web-applications-with-go-2', 'Pluralsight - Creating Web Applications with Go', 'go2.sh']
-    ,['https://www.freetutorials.ca/course/advanced-javascript-2', 'Pluralsight - Advanced JavaScript', 'js2.sh']
-    # ,['https://www.freetutorials.ca/course/kotlin-fundamentals-2', 'Pluralsight - Kotlin Fundamentals', 'kf.sh']
+    #as03 ['https://www.freetutorials.ca/course/creating-web-applications-with-go-2', 'Pluralsight - Creating Web Applications with Go', 'go2.sh']
+    #a9 , ['https://www.freetutorials.ca/course/objectoriented-python', 'Treehouse - Object Oriented Python', 'oop']
+    #e3001 , ['https://www.freetutorials.ca/course/unit-testing-in-java', 'Treehouse - Unit Testing in Java', 'utj']
+    #ek3045['https://www.freetutorials.ca/course/advanced-javascript-2', 'Pluralsight - Advanced JavaScript', 'js2.sh']
+    #['https://www.freetutorials.ca/course/kotlin-fundamentals-2', 'Pluralsight - Kotlin Fundamentals', 'kf.sh']
     # ,['https://www.freetutorials.ca/course/shifting-javascript-into-high-gear-with-web-workers-2','Pluralsight - Shifting JavaScript into High Gear with Web Workers', 'jsww2.sh']
     # ,['https://www.freetutorials.ca/course/getting-started-with-kubernetes-2','Pluralsight - Getting Started with Kubernetes','k8s.sh']
     # , ['https://www.freetutorials.ca/course/creating-offline-first-mobile-apps-with-html5-pluralsight-2', 'Pluralsight - Creating Offline first Mobile Apps with HTML5', 'off.sh']
@@ -100,9 +102,7 @@ courses = [
     # , ['https://www.freetutorials.ca/course/ux-driven-software-design-2', 'Pluralsight - UX driven Software Design', 'uxd.sh']
     # , ['https://www.freetutorials.ca/course/windows-how-its-hacked-how-to-protect-2', 'Pluralsight - Windows How Its Hacked How to Protect It', 'win.sh']
     # , ['https://www.freetutorials.ca/course/realtime-web-with-nodejs', 'Frontend Masters - Real Time Web with Node.js', 'fm1.sh']
-    # a9 , ['https://www.freetutorials.ca/course/objectoriented-python', 'Treehouse - Object Oriented Python', 'oop']
     # , ['https://www.freetutorials.ca/course/learning-amazon-web-services-aws-for-developers', 'Linkedin Learning - Learning AWS for Developers', 'aws1']
-    # e3001 , ['https://www.freetutorials.ca/course/unit-testing-in-java', 'Treehouse - Unit Testing in Java', 'utj']
     # , ['https://www.freetutorials.ca/course/implementing-ai-to-play-games-video', 'Packt - Implementing AI to Play Games', 'ai1']
     # , ['https://www.freetutorials.ca/course/docker-deep-dive', 'Linux Academy - Docker Deep Dive', 'ddd']
     # , ['https://www.freetutorials.ca/course/go-the-complete-bootcamp-course-golang', 'Udemy - Go The Complete Bootcamp Course', 'go3']
@@ -113,6 +113,13 @@ courses = [
     # , ['https://www.freetutorials.ca/course/http-basics', 'Treehouse - HTTP Basics', 'http0']
     # , ['https://www.freetutorials.ca/course/nginx-web-server-deep-dive', 'Linux Academy - NGINX Web Server Deep Dive', 'ngnx']
     # , ['https://www.freetutorials.ca/course/zero-to-production-nodejs-on-amazon-web-services', 'Frontend Masters - Zero to Production Node.js on Amazon Web Services', 'node0']
+    # , ['https://www.freetutorials.ca/course/web-app-hacking-password-reset-functionality-2', 'Pluralsight - Web App Hacking Hacking Password Reset Functionality', 'hack1']
+    # , ['https://www.freetutorials.ca/course/sensitive-data-exposure-web-app-2', 'Pluralsight - Web App Hacking Sensitive Data Exposure', 'hack2']
+    #,  ['https://www.freetutorials.ca/course/functionallite-javascript', 'Frontend Masters - Functional Lite JavaScript', 'fe1']
+      ['https://www.freetutorials.ca/course/data-science-basics', 'Treehouse - Data Science Basics', 'ds1']
+    # , ['', '', '']
+    # , ['', '', '']
+    # , ['', '', '']
     # , ['', '', '']
     # , ['', '', '']
 ]

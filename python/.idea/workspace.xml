@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/geckodriver.log" beforeDir="false" afterPath="$PROJECT_DIR$/geckodriver.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gitir.py" beforeDir="false" afterPath="$PROJECT_DIR$/gitir.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lp.py" beforeDir="false" afterPath="$PROJECT_DIR$/lp.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +16,8 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1584031201637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1584079139449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1583823469326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1584211759543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1584165354149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
@@ -37,11 +37,11 @@
       <file leaf-file-name="gitir.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gitir.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="66" column="77" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="77" />
+            <state relative-caret-position="242">
+              <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
-                <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+                <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
               </folding>
             </state>
           </provider>
@@ -59,8 +59,8 @@
       <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="326" column="40" lean-forward="true" selection-start-line="326" selection-start-column="40" selection-end-line="326" selection-end-column="40" />
+            <state relative-caret-position="-1302">
+              <caret line="200" column="67" selection-start-line="200" selection-start-column="67" selection-end-line="200" selection-end-column="67" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -71,8 +71,8 @@
       <file leaf-file-name="lp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
-              <caret line="136" selection-start-line="135" selection-end-line="136" />
+            <state relative-caret-position="392">
+              <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -88,14 +88,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>update</find>
-      <find>fix</find>
-      <find>WAIT_EVERY_X_DOWNLOADS</find>
-      <find>loading</find>
-      <find>now reading</find>
-      <find>existing_body</find>
-      <find>Article</find>
-      <find>link</find>
       <find>maga</find>
       <find>8662884</find>
       <find>logger</find>
@@ -118,6 +110,14 @@
       <find>python1</find>
       <find>python2</find>
       <find>python3</find>
+      <find>node1</find>
+      <find>node</find>
+      <find>fe1</find>
+      <find>ds1</find>
+      <find>lo</find>
+      <find>logg</find>
+      <find>printlo</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -128,9 +128,9 @@
       <list>
         <option value="$PROJECT_DIR$/selenium.py" />
         <option value="$PROJECT_DIR$/selenium1.py" />
-        <option value="$PROJECT_DIR$/lp.py" />
         <option value="$PROJECT_DIR$/lcrux.py" />
         <option value="$PROJECT_DIR$/gitir.py" />
+        <option value="$PROJECT_DIR$/lp.py" />
         <option value="$PROJECT_DIR$/bs.py" />
       </list>
     </option>
@@ -317,9 +317,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.bs" />
+        <item itemvalue="Python.lp" />
         <item itemvalue="Python.gitir" />
         <item itemvalue="Python.lcrux" />
-        <item itemvalue="Python.lp" />
         <item itemvalue="Python.selenium" />
       </list>
     </recent_temporary>
@@ -375,7 +375,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.40756914" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.55167395" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49655172" visible="true" weight="0.17631918" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -540,7 +540,7 @@
           <caret line="5" selection-start-line="4" selection-end-line="5" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -585,7 +585,7 @@
           <caret line="5" lean-forward="true" selection-start-line="4" selection-end-line="5" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -630,7 +630,7 @@
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -675,7 +675,7 @@
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -720,7 +720,7 @@
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -765,7 +765,7 @@
           <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -810,7 +810,7 @@
           <caret column="42" selection-start-column="42" selection-end-column="42" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
         </state>
       </provider>
@@ -881,13 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="136" selection-start-line="135" selection-end-line="136" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lcrux.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
@@ -900,19 +893,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gitir.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="66" column="77" selection-start-line="66" selection-start-column="77" selection-end-line="66" selection-end-column="77" />
+        <state relative-caret-position="242">
+          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
           <folding>
             <element signature="e#0#53#0" expanded="true" />
-            <marker date="1584050613596" expanded="true" signature="10577:10740" ph="..." />
+            <marker date="1584099705697" expanded="true" signature="10581:10744" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/logging/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="993" selection-start-line="993" selection-end-line="993" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="326" column="40" lean-forward="true" selection-start-line="326" selection-start-column="40" selection-end-line="326" selection-end-column="40" />
+        <state relative-caret-position="-1302">
+          <caret line="200" column="67" selection-start-line="200" selection-start-column="67" selection-end-line="200" selection-end-column="67" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

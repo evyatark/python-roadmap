@@ -39,14 +39,14 @@ def omit(tag):
 
 def readAndProcess(id, url):
     ts = time()
-    print("loading", url, '...')
+    logger.info("loading %s...", url)
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
     html = response.read()
     logging.info('loading completed in %s seconds', time() - ts)
     ts = time()
-    print("souping...")
+    logger.info("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     try:
         header = bs.article.header.h1.contents[-1]
@@ -55,7 +55,7 @@ def readAndProcess(id, url):
 
     logging.info('souping completed in %s seconds', time() - ts)
     ts = time()
-    print("processing...", end=' ')
+    logger.info("processing...")
     sections = bs.article.findAll(name='section', class_='b-entry')
     if len(sections) == 0:
         return Article(id, header, '', '', '', '', '')
@@ -63,19 +63,19 @@ def readAndProcess(id, url):
     publishedAt = ""
     updatedAt = ""
     try:
-        print("1", end=' ')
+        logger.debug("1")
         published = bs.article.find(name='meta', attrs={"property": "article:published"})
         if (published is not None):
-            print("1.1", end=' ')
+            logger.debug("1.1")
             publishedAt = bs.article.find(name='meta', attrs={"property": "article:published"}).attrs['content']
         if bs.article.find(name='meta', attrs={"property": "article:modified"}) is not None:
-            print("1.2", end=' ')
+            logger.debug("1.2")
             updatedAt = bs.article.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
     except:
         pass
     if (publishedAt=='' and updatedAt==''):
         try:
-            print("1.3", end=' ')
+            logger.debug("1.3")
             updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
             publishedAt = updatedAt
         except:
@@ -92,47 +92,47 @@ def readAndProcess(id, url):
     if len(header_crumbs) > 1:
         sub_subject = header_crumbs[1].text.rstrip().lstrip()
 
-    print("2", end=' ')
+    logger.debug("2")
     if first.find(class_='c-quick-nl-reg') is not None:
         first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
-    print("3", end=' ')
+    logger.debug("3")
     if first.find(class_='c-related-article-text-only-wrapper') is not None:
         first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
-    print("4", end=' ')
+    logger.debug("4")
     all_figures = first.find_all(name='figure')
     while (len(all_figures) > 0):
         first.find(name='figure').replace_with(omit('figure'))
         all_figures = first.find_all(name='figure')
 
-    print("5", end=' ')
+    logger.debug("5")
     while (first.find(class_="c-dfp-ad") is not None):
         first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
-    print("6", end=' ')
+    logger.debug("6")
     bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
     bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
     #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
-    print("7", end=' ')
+    logger.debug("7")
     bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
     while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
         bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
 
 # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
 # to     <section amp-access="TRUE">
-    print("8", end=' ')
+    logger.debug("8")
     list_of_sections = bs.html.findAll(
         lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
     for section in list_of_sections:
-        print(".", end='')
+        logger.debug(".", end='')
         section.attrs['amp-access'] = "TRUE"
 
-    print("9", end=' ')
+    logger.debug("9")
     bs.html.body.attrs['style'] = "border:2px solid"
     # assuming that 3rd child of <head> is not needed and can be changed...
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
     logging.info('processing completed in %s seconds', time() - ts)
-    print("!")
+    logger.debug("!")
     return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 
 
@@ -152,7 +152,7 @@ def saveToFile(id, counter, htmlText):
     f.write(htmlText)
     f.close()
 
-    print("file: ", fileName)
+    logger.info("file: %s", fileName)
     return name, fileName
 
 
@@ -175,7 +175,7 @@ def doSomeIds(ids):
             url = 'https://www.haaretz.co.il/amp/' + id
             articleObject = readAndProcess(id, url)
             so_far = so_far + 1
-            print("completed", so_far, "out of", numberOfIds)
+            logger.info("completed %d out of %d", so_far, numberOfIds)
             if articleObject.fullHtml=='':
                 continue
             file_relative_path, file_full_path = saveToFile(articleObject.id, counter, articleObject.fullHtml)
@@ -191,14 +191,14 @@ def doSomeIds(ids):
                     today.day - parser.parse(articleObject.publishedAt).day < DELTA):
                 key = generate_key(articleObject)
                 articles[key] = articleObject
-                print("article added to index of today")
+                logger.info("article added to index of today")
                 counter = counter + 1
                 if counter > LIMIT:
                     break
         except:
-            print("some exception with id", id)
+            logger.error("some exception with id %s", id)
 
-    print('generating index for',len(articles), 'articles...')
+    logger.info('generating index for %d articles...',len(articles))
     html = generate_index(articles)
     # html = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>' + \
     #        body + existing_body + '</body></html>'
@@ -211,12 +211,12 @@ def generate_key(articleObject):
 
 def first_page():
     url = 'https://www.haaretz.co.il'
-    print("loading first page", url, '...')
+    logger.info("loading first page %s...", url)
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
     html = response.read()
-    print("souping...")
+    logger.info("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     list_of_articles = bs.html.findAll(
         lambda tag: tag.name == "article" and "id" in tag.attrs['class'])
@@ -236,7 +236,7 @@ def first_page():
             id = link[start:]
             ids.append(id)
     for id in ids:
-        print(id)
+        logger.debug(id)
     return ids
 
 
@@ -262,16 +262,16 @@ def find_existing_articles(path):
     return body
 
 def process_page(url):
-    print("loading url", url, '...')
+    logger.info("loading url %s...", url)
     try:
         user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         request = Request(url, headers={'User-Agent': user_agent})
         response = urlopen(request)
         html = response.read()
     except:
-        print("some exception when trying to retrieve URL", url)
+        logger.error("some exception when trying to retrieve URL %s", url)
         return []
-    print("souping...")
+    logger.info("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     list_of_articles = bs.html.find_all(
         lambda tag: (tag.name == "a") and ('href' in tag.attrs.keys()) and ("1.86" in tag.attrs['href']), recursive=True)
@@ -288,7 +288,7 @@ def process_page(url):
             id = link[start:]
             ids.append(id)
     for id in ids:
-        print(id)
+        logger.debug(id)
     return ids
 
 
@@ -337,5 +337,5 @@ if __name__ == "__main__":
         more_article_ids = process_page(url)
         article_ids.extend(more_article_ids)
         article_ids = remove_duplicates(article_ids)
-    print("now reading",len(article_ids),"articles")
+    logger.info("now reading %d articles",len(article_ids))
     doSomeIds(article_ids)

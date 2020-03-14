@@ -10,15 +10,15 @@ WAIT_AFTER_SECTION = True
 WAIT_INTERVAL_AFTER_SECTION = 30
 
 courses = [
-     ['https://git.ir/linkedin-building-a-small-business-website-with-wordpress/', 'Linkedin Learning - Building a Small Business Website with WordPress', 'wp1']
-    ,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
+     #['https://git.ir/linkedin-building-a-small-business-website-with-wordpress/', 'Linkedin Learning - Building a Small Business Website with WordPress', 'wp1']
+    #,['https://git.ir/linkedin-essentials-of-css-for-react-developers/','Linkedin Learning - Essentials of Using CSS in React','reactcss']
     , ['https://git.ir/linkedin-installing-and-running-wordpress-local-by-flywheel/', 'Linkedin Learning - Installing and Running WordPress Local by Flywheel', 'wp2']
-    ,['https://git.ir/linkedin-wordpress-backing-up-your-site/','Linkedin Learning - WordPress Backing Up Your Site','wp3']
+    #,['https://git.ir/linkedin-wordpress-backing-up-your-site/','Linkedin Learning - WordPress Backing Up Your Site','wp3']
     ,['https://git.ir/linkedin-cloud-native-development-with-node-js-docker-and-kubernetes/','Linkedin Learning - Cloud Native Development with Node.js Docker and Kubernetes','node1']
     ,['https://git.ir/codewithmosh-complete-sql-mastery/','CodeWithMosh - Complete SQL Mastery','sql1']
     , ['https://git.ir/codewithmosh-the-complete-nodejs-course/', 'Codewithmosh - The Complete Node.js Course', 'moshnode0']
     ,['https://git.ir/linkedin-building-vue-and-node-apps-with-authentication/','Linkedin Learning - Learn How to Build Vue and Node Applications with Authentication','vue1']
-    , ['https://git.ir/packtpub-creating-smart-contracts-with-ethereum/', 'Packt - Creating Smart Contracts with Ethereum', 'blockchain1']
+    #, ['https://git.ir/packtpub-creating-smart-contracts-with-ethereum/', 'Packt - Creating Smart Contracts with Ethereum', 'blockchain1']
     , ['https://git.ir/packtpub-blockchain-and-bitcoins-a-complete-package/', 'Packt - Blockchain and Bitcoins A Complete Package', 'blockchain2']
 
     #['https://git.ir/linkedin-learn-apache-kafka-for-beginners/', 'Apache Kafka Training for Beginners', 'kafka1']
