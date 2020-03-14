@@ -99,7 +99,7 @@ def load_html(request):
 
 def readAndProcess(id, url):
     ts = time()
-    logger.info("loading %s...", url)
+    logger.info("[%s] loading %s...", id, url)
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     ##
@@ -119,8 +119,10 @@ def readAndProcess(id, url):
     logger.info('[%s] souping completed in %s seconds', id, time() - ts)
     ts = time()
     logger.info("[%s] processing...", id)
+    if (bs.article is None):
+        return Article(id, header, '', '', '', '', '')
     sections = bs.article.findAll(name='section', class_='b-entry')
-    if len(sections) == 0:
+    if (sections is None) or len(sections) == 0:
         return Article(id, header, '', '', '', '', '')
     first = sections[0]
     publishedAt = ""
@@ -227,17 +229,17 @@ def generate_index(articles):
     return construct_html(body, "")
 
 
+def send_url_to_queue(ids_queue, id):
+    url = 'https://www.haaretz.co.il/amp/' + id
+    logger.info("[%s] inserting id %s in ids queue", id, id)
+    ids_queue.put((id, url))  # will cause calling readAndProcess(id, url)
 
-def send_urls_to_queue(ids):
-    logger.info("starting queue 1")
-    queue = start_queue_with_workers(8, lambda x: DownloadWorker(x))
+
+def send_urls_to_queue(ids_queue, ids):
     for id in ids:
-        url = 'https://www.haaretz.co.il/amp/' + id
-        logger.info("[%s] inserting id %s in queue 1", id, id)
-        queue.put((id, url))    # will cause calling readAndProcess(id, url)
-    logger.info("completed inserting all IDs to queue")
-    queue.join()
-    logger.info("queue 1 joined")
+        send_url_to_queue(ids_queue, id)
+    logger.info("completed inserting %d IDs to queue", len(ids))
+
 
 def do_with_article(articleObject):
     try:
@@ -275,48 +277,16 @@ def add_article(key, article):
     logger.info("[%s] article added to index of today with key %s", article.id, key)
 
 
-def doSomeIds(ids):
-    articles = {}
-    counter = 0
-    so_far = 0
-    body = ''
-    today = date.today()
-    numberOfIds = len(ids)
-    send_urls_to_queue(ids)
-    for id in ids:
-        try:
-            url = 'https://www.haaretz.co.il/amp/' + id
-            articleObject = readAndProcess(id, url)
-            so_far = so_far + 1
-            logger.info("completed %d out of %d", so_far, numberOfIds)
-            if articleObject.fullHtml=='':
-                continue
-            file_relative_path, file_full_path = saveToFile(articleObject.id, counter, articleObject.fullHtml)
-            time = articleObject.updatedAt
-            if (time == ''):
-                time = articleObject.publishedAt
-            articleObject.link = '<p>['+articleObject.subject+'/'+articleObject.sub_subject +']<b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(articleObject.header) + '</a></p>'
-            body = body + articleObject.link
-            logger.info("published at %s, updated at: %s", articleObject.publishedAt, articleObject.updatedAt)
-            if (articleObject.publishedAt.startswith('2020-') and
-                    today.day - parser.parse(articleObject.publishedAt).day < DELTA):
-                key = generate_key(articleObject)
-                articles[key] = articleObject
-                logger.info("article added to index of today")
-                counter = counter + 1
-                if counter > LIMIT:
-                    break
-        except:
-            logger.error("some exception with id %s", id)
-    when_all_articles_added()
 
 
 def when_all_articles_added():
     logger.info('generating index for %d articles...', len(articles))
     html = generate_index(articles)
+    logger.info("...done. writing to file...")
     f = open(base_dir + 'index.html', "w")
     f.write(html)
     f.close()
+    logger.info("...done.")
 
 
 def generate_key(articleObject):
@@ -443,14 +413,28 @@ def urls():
        ]
 
 if __name__ == "__main__":
+    logger.info("starting queue 1")
+    ids_queue = start_queue_with_workers(8, lambda x: DownloadWorker(x))
     article_ids = first_page()
     for url in urls():
         more_article_ids = process_page(url)
+        logger.info("url %s has %d ids", url, len(more_article_ids))
+        for id in more_article_ids:
+            if (id in article_ids):
+                more_article_ids.remove(id)
+        logger.info("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
+        logger.info("now sending %d articles", len(more_article_ids))
+        send_urls_to_queue(ids_queue, more_article_ids)
+
+        #updating list of all IDs
         article_ids.extend(more_article_ids)
         article_ids = remove_duplicates(article_ids)
-    logger.info("now sending %d articles",len(article_ids))
-    send_urls_to_queue(article_ids)
-    # at this point queue1 was joined (done inside send_urls_to_queue)
+
+    logger.info("all %d articles were sent",len(article_ids))
+    #send_urls_to_queue(ids_queue, article_ids)
+
+    ids_queue.join()
+    logger.info("ids queue joined")
 
     articles_queue.join()   # this will wait for queue2 completing?
     logger.info("articles queue joined")
