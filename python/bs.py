@@ -10,7 +10,7 @@ from threading import Thread
 
 
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
-LIMIT = 50
+LIMIT = 5000
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
