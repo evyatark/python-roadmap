@@ -10,9 +10,23 @@ from threading import Thread
 
 
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
-LIMIT = 500
-HTML_START = '<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
-HTML_END = '</body></html>'
+LIMIT = 50
+HTML_START = '''
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <!-- Metro 4 -->
+        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"/>
+    </head>
+    <body>
+'''
+    #'<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
+HTML_END = '''
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    </body>
+</html>'''
 base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -40,7 +54,7 @@ class ArticleWorker(Thread):
             # Get the work from the queue and expand the tuple
             article = self.queue.get()
             try:
-                do_with_article(article)
+                result = do_with_article(article)
             finally:
                 self.queue.task_done()
 
@@ -79,6 +93,7 @@ class Article:
         self.fullHtml = fullHtml
         self.subject = subject
         self.sub_subject = sub_subject
+        self.href = ''
 
     # other fields: subject
 
@@ -204,7 +219,6 @@ def readAndProcess(id, url):
 
 
 
-
 article_ids = []
 
 #urls = [ 'https://www.haaretz.co.il/amp/1.8600567',
@@ -241,6 +255,20 @@ def send_urls_to_queue(ids_queue, ids):
     logger.info("completed inserting %d IDs to queue", len(ids))
 
 
+def create_link(articleObject):
+    articleObject.href = "h" + articleObject.id + ".html"
+    return '''<div class=" w-100" data-role="collapse" data-toggle-element="#collapse_toggle_1">
+            <div class="frame border border-size-1 pt-2 bd-black">
+                <div class="p-2 d-inline">{0}</div>  
+                <a href="{2}" class="h5 fg-green bg-white d-inline">{1}</a>
+                <div class="content">
+                        <p class="p-2">{3}</p>
+                </div>
+            </div>
+        </div>'''.format(articleObject.publishedAt, articleObject.header, articleObject.href, articleObject.subject)
+
+
+
 def do_with_article(articleObject):
     try:
         today = date.today()
@@ -249,13 +277,18 @@ def do_with_article(articleObject):
         #so_far = so_far + 1
         #logger.info("completed %d out of %d", so_far, numberOfIds)
         if articleObject.fullHtml == '':
-            return
+            return 0
         file_relative_path, file_full_path = saveToFile(articleObject.id, articleObject.fullHtml)
         time = articleObject.updatedAt
         if (time == ''):
             time = articleObject.publishedAt
-        articleObject.link = '<p>[' + articleObject.subject + '/' + articleObject.sub_subject + ']<b>' + articleObject.publishedAt + '</b><a href="' + file_relative_path + '">' + str(
-            articleObject.header) + '</a></p>'
+        articleObject.link = '<p>[' + \
+                             articleObject.subject + \
+                             '/' + articleObject.sub_subject + \
+                             ']<b>' + articleObject.publishedAt + \
+                             '</b><a href="' + file_relative_path + \
+                             '">' + str(articleObject.header) + '</a></p>'
+        articleObject.link = create_link(articleObject)
         #body = body + articleObject.link
         logger.info("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
 
@@ -265,11 +298,12 @@ def do_with_article(articleObject):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
             logger.info("[%s] article added to index of today", articleObject.id)
-            #counter = counter + 1
-            #if counter > LIMIT:
-            #    break
+            return 1
+
     except:
         logger.error("some exception with id %s", id)
+    return 0
+
 
 articles = {}
 def add_article(key, article):
@@ -429,6 +463,8 @@ if __name__ == "__main__":
         #updating list of all IDs
         article_ids.extend(more_article_ids)
         article_ids = remove_duplicates(article_ids)
+        if (len(article_ids) > LIMIT):
+            break
 
     logger.info("all %d articles were sent",len(article_ids))
     #send_urls_to_queue(ids_queue, article_ids)
