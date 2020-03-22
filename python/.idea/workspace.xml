@@ -14,7 +14,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1584031201637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1584876756607" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1584891297861" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1584165354149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -58,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="43" lean-forward="true" selection-start-column="43" selection-end-line="222" />
+              <caret column="43" lean-forward="true" selection-end-line="57" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -148,7 +148,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="y" value="81" />
     <option name="width" value="3840" />
     <option name="height" value="1969" />
@@ -161,6 +161,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -181,7 +182,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,7 +378,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="35" width="3840" height="2015" extended-state="6" />
+    <frame x="0" y="35" width="3840" height="2015" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -388,11 +388,11 @@
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38987923" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4948162" visible="true" weight="0.10181237" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4948162" visible="true" weight="0.102878466" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.5051838" side_tool="true" visible="true" weight="0.10181237" />
+      <window_info id="Structure" order="1" sideWeight="0.5051838" side_tool="true" visible="true" weight="0.102878466" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.48180494" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.24967825" />
@@ -926,7 +926,7 @@
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="43" lean-forward="true" selection-start-column="43" selection-end-line="222" />
+          <caret column="43" lean-forward="true" selection-end-line="57" selection-end-column="10" />
         </state>
       </provider>
     </entry>
