@@ -3,14 +3,18 @@ from bs4 import BeautifulSoup
 from datetime import date,timedelta
 import glob
 import logging
-from time import time,strptime
+import time as time1
+from time import time
 from dateutil import parser
 from queue import Queue
 from threading import Thread
+import tenacity
 
 
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
+NUMBER_OF_Q1_WORKERS=8
+NUMBER_OF_Q2_WORKERS=30
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
@@ -43,6 +47,8 @@ def start_queue_with_workers(number_of_workers, f):
         worker.start()
     return queue
 
+'''=========================================
+====='''
 class ArticleWorker(Thread):
 
     def __init__(self, queue):
@@ -58,12 +64,9 @@ class ArticleWorker(Thread):
             finally:
                 self.queue.task_done()
 
-articles_queue = start_queue_with_workers(8, lambda x: ArticleWorker(x))
 
-def send_article_to_queue(article):
-    articles_queue.put(article)
-
-
+'''=========================================
+====='''
 class DownloadWorker(Thread):
 
     def __init__(self, queue):
@@ -77,11 +80,23 @@ class DownloadWorker(Thread):
             try:
                 article = readAndProcess(id, url)
                 send_article_to_queue(article)
+            except:
+                pass
             finally:
                 self.queue.task_done()
 
+'''=========================================
+====='''
+
+articles_queue = start_queue_with_workers(NUMBER_OF_Q2_WORKERS, lambda x: ArticleWorker(x))
+ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
 
 
+'''=========================================
+====='''
+
+def send_article_to_queue(article):
+    articles_queue.put(article)
 
 
 class Article:
@@ -144,22 +159,27 @@ def readAndProcess(id, url):
     updatedAt = ""
     try:
         logger.debug("1")
-        published = bs.article.find(name='meta', attrs={"property": "article:published"})
+        published = bs.head.find(name='meta', attrs={"property": "article:published"})
         if (published is not None):
             logger.debug("1.1")
-            publishedAt = bs.article.find(name='meta', attrs={"property": "article:published"}).attrs['content']
-        if bs.article.find(name='meta', attrs={"property": "article:modified"}) is not None:
+            publishedAt = bs.head.find(name='meta', attrs={"property": "article:published"}).attrs['content']
+        if bs.head.find(name='meta', attrs={"property": "article:modified"}) is not None:
             logger.debug("1.2")
-            updatedAt = bs.article.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
+            updatedAt = bs.head.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
     except:
         pass
     if (publishedAt=='' and updatedAt==''):
         try:
+            publishedAt = bs.head.find(name='meta', attrs={"property": "og:pubdate"}).attrs['content']
             logger.debug("1.3")
             updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
-            publishedAt = updatedAt
+            #publishedAt = updatedAt
         except:
             pass
+    if (publishedAt == ''):
+        publishedAt='2020-03-25T00:01:00+0200'
+    if (updatedAt == ''):
+        updatedAt='2020-03-25T00:01:00+0200'
 
     #sections[0].replace_with(omit('section 0'))
 
@@ -326,6 +346,7 @@ def when_all_articles_added():
 def generate_key(articleObject):
     return articleObject.subject + articleObject.sub_subject + articleObject.publishedAt + articleObject.id
 
+@tenacity.retry
 def first_page():
     url = 'https://www.haaretz.co.il'
     logger.info("loading first page %s...", url)
@@ -348,8 +369,8 @@ def first_page():
     ids = []
     for link in links:
         #print(link)
-        if "1.86" in link:
-            start = link.find("1.86")
+        if "1.8" in link:
+            start = link.find("1.8")
             id = link[start:]
             ids.append(id)
     for id in ids:
@@ -422,7 +443,8 @@ def remove_duplicates(article_ids):
 
 
 def urls():
-    return [    'https://www.haaretz.co.il/magazine'
+    return [
+        'https://www.haaretz.co.il/magazine'
     ,   'https://www.haaretz.co.il/news'
     , 'https://www.themarker.com/allnews'
     , 'https://www.themarker.com/wallstreet'
@@ -446,18 +468,23 @@ def urls():
     , 'https://www.haaretz.co.il/literature'
        ]
 
+
+def remove_same(article_ids, more_article_ids):
+    for id in more_article_ids:
+        if (id in article_ids):
+            more_article_ids.remove(id)
+    return more_article_ids
+
 if __name__ == "__main__":
     logger.info("starting queue 1")
-    ids_queue = start_queue_with_workers(8, lambda x: DownloadWorker(x))
+    #defined in globalscope: ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
     article_ids = first_page()
+    send_urls_to_queue(ids_queue, article_ids)
     for url in urls():
         more_article_ids = process_page(url)
-        logger.info("url %s has %d ids", url, len(more_article_ids))
-        for id in more_article_ids:
-            if (id in article_ids):
-                more_article_ids.remove(id)
-        logger.info("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
-        logger.info("now sending %d articles", len(more_article_ids))
+        more_article_ids = remove_same(article_ids, more_article_ids)
+        logger.debug("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
+        logger.debug("now sending %d articles", len(more_article_ids))
         send_urls_to_queue(ids_queue, more_article_ids)
 
         #updating list of all IDs
@@ -467,8 +494,8 @@ if __name__ == "__main__":
             break
 
     logger.info("all %d articles were sent",len(article_ids))
-    #send_urls_to_queue(ids_queue, article_ids)
 
+    time1.sleep(10)
     ids_queue.join()
     logger.info("ids queue joined")
 
