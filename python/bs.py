@@ -13,8 +13,8 @@ import tenacity
 
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
-NUMBER_OF_Q1_WORKERS=8
-NUMBER_OF_Q2_WORKERS=30
+NUMBER_OF_Q1_WORKERS=1
+NUMBER_OF_Q2_WORKERS=10
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
@@ -126,6 +126,39 @@ def load_html(request):
     html = response.read()
     return html
 
+def fined_times(bs):
+    publishedAt = ""
+    updatedAt = ""
+    try:
+        logger.debug("1")
+        elements = bs.find_all('time')
+        if (elements is not None) and (len(elements) > 0):
+            publishedAt = elements[0]['datetime']
+            updatedAt = elements[1]['datetime']
+        else:
+            published = bs.head.find(name='meta', attrs={"property": "article:published"})
+            if (published is not None):
+                logger.debug("1.1")
+                publishedAt = bs.head.find(name='meta', attrs={"property": "article:published"}).attrs['content']
+            if bs.head.find(name='meta', attrs={"property": "article:modified"}) is not None:
+                logger.debug("1.2")
+                updatedAt = bs.head.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
+    except:
+        pass
+    if (publishedAt=='' and updatedAt==''):
+        try:
+            publishedAt = bs.head.find(name='meta', attrs={"property": "og:pubdate"}).attrs['content']
+            logger.debug("1.3")
+            updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
+            #publishedAt = updatedAt
+        except:
+            pass
+    if (publishedAt == ''):
+        publishedAt = todayAsStr()  #'2020-03-25T00:01:00+0200'
+    if (updatedAt == ''):
+        updatedAt = todayAsStr() # '2020-03-25T00:01:00+0200'
+    return publishedAt, updatedAt
+
 
 def readAndProcess(id, url):
     ts = time()
@@ -139,7 +172,7 @@ def readAndProcess(id, url):
     ##
     logger.info('[%s] loading completed in %s seconds', id, time() - ts)
     ts = time()
-    logger.info("[%s] souping...", id)
+    logger.debug("[%s] souping...", id)
     bs = BeautifulSoup(html, 'html.parser')
     try:
         header = bs.article.header.h1.contents[-1]
@@ -148,40 +181,15 @@ def readAndProcess(id, url):
 
     logger.info('[%s] souping completed in %s seconds', id, time() - ts)
     ts = time()
-    logger.info("[%s] processing...", id)
+    logger.debug("[%s] processing...", id)   # TODO use bs.find_all('time')[0]['datetime'] and bs.find_all('time')[1]['datetime']
     if (bs.article is None):
         return Article(id, header, '', '', '', '', '')
     sections = bs.article.findAll(name='section', class_='b-entry')
     if (sections is None) or len(sections) == 0:
         return Article(id, header, '', '', '', '', '')
     first = sections[0]
-    publishedAt = ""
-    updatedAt = ""
-    try:
-        logger.debug("1")
-        published = bs.head.find(name='meta', attrs={"property": "article:published"})
-        if (published is not None):
-            logger.debug("1.1")
-            publishedAt = bs.head.find(name='meta', attrs={"property": "article:published"}).attrs['content']
-        if bs.head.find(name='meta', attrs={"property": "article:modified"}) is not None:
-            logger.debug("1.2")
-            updatedAt = bs.head.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
-    except:
-        pass
-    if (publishedAt=='' and updatedAt==''):
-        try:
-            publishedAt = bs.head.find(name='meta', attrs={"property": "og:pubdate"}).attrs['content']
-            logger.debug("1.3")
-            updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
-            #publishedAt = updatedAt
-        except:
-            pass
-    if (publishedAt == ''):
-        publishedAt='2020-03-25T00:01:00+0200'
-    if (updatedAt == ''):
-        updatedAt='2020-03-25T00:01:00+0200'
 
-    #sections[0].replace_with(omit('section 0'))
+    publishedAt, updatedAt = fined_times(bs)
 
     header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
     header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
@@ -236,6 +244,9 @@ def readAndProcess(id, url):
     return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 
 
+def todayAsStr():
+    # temporary
+    return ''
 
 
 
@@ -251,7 +262,7 @@ def saveToFile(id, htmlText):
     f.write(htmlText)
     f.close()
 
-    logger.info("[%s] file: %s", id, fileName)
+    logger.debug("[%s] file: %s", id, fileName)
     return name, fileName
 
 
@@ -265,14 +276,14 @@ def generate_index(articles):
 
 def send_url_to_queue(ids_queue, id):
     url = 'https://www.haaretz.co.il/amp/' + id
-    logger.info("[%s] inserting id %s in ids queue", id, id)
+    logger.debug("[%s] inserting id %s in ids queue", id, id)
     ids_queue.put((id, url))  # will cause calling readAndProcess(id, url)
 
 
 def send_urls_to_queue(ids_queue, ids):
     for id in ids:
         send_url_to_queue(ids_queue, id)
-    logger.info("completed inserting %d IDs to queue", len(ids))
+    logger.debug("completed inserting %d IDs to queue", len(ids))
 
 
 def create_link(articleObject):
@@ -310,14 +321,14 @@ def do_with_article(articleObject):
                              '">' + str(articleObject.header) + '</a></p>'
         articleObject.link = create_link(articleObject)
         #body = body + articleObject.link
-        logger.info("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
+        logger.debug("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
 
         # delta = today.day - parser.parse(articleObject.publishedAt).day
         if (articleObject.publishedAt.startswith('2020-') and
                 today.day - parser.parse(articleObject.publishedAt).day < DELTA):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
-            logger.info("[%s] article added to index of today", articleObject.id)
+            logger.debug("[%s] article added to index of today", articleObject.id)
             return 1
 
     except:
@@ -354,7 +365,7 @@ def first_page():
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
     html = response.read()
-    logger.info("souping...")
+    logger.debug("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     list_of_articles = bs.html.findAll(
         lambda tag: tag.name == "article" and "id" in tag.attrs['class'])
@@ -409,7 +420,7 @@ def process_page(url):
     except:
         logger.error("some exception when trying to retrieve URL %s", url)
         return []
-    logger.info("souping...")
+    logger.debug("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     list_of_articles = bs.html.find_all(
         lambda tag: (tag.name == "a") and ('href' in tag.attrs.keys()) and ("1.86" in tag.attrs['href']), recursive=True)
@@ -476,7 +487,7 @@ def remove_same(article_ids, more_article_ids):
     return more_article_ids
 
 if __name__ == "__main__":
-    logger.info("starting queue 1")
+    logger.debug("starting queue 1")
     #defined in globalscope: ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
     article_ids = first_page()
     send_urls_to_queue(ids_queue, article_ids)
@@ -493,12 +504,12 @@ if __name__ == "__main__":
         if (len(article_ids) > LIMIT):
             break
 
-    logger.info("all %d articles were sent",len(article_ids))
+    logger.debug("all %d articles were sent",len(article_ids))
 
     time1.sleep(10)
     ids_queue.join()
-    logger.info("ids queue joined")
+    logger.debug("ids queue joined")
 
     articles_queue.join()   # this will wait for queue2 completing?
-    logger.info("articles queue joined")
+    logger.debug("articles queue joined")
     when_all_articles_added()
