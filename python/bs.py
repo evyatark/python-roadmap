@@ -10,11 +10,14 @@ from queue import Queue
 from threading import Thread
 import tenacity
 
-
+'''
+ static variables:
+'''
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
 NUMBER_OF_Q1_WORKERS=1
 NUMBER_OF_Q2_WORKERS=50
+HEADER_OF_UNKNOWN = "@@@"
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
@@ -32,6 +35,7 @@ HTML_END = '''
     </body>
 </html>'''
 base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
+minimalAllowedDateAsStr = str(date.today())
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -126,7 +130,15 @@ def load_html(request):
     html = response.read()
     return html
 
-def fined_times(bs):
+
+def fast_find_times(bs):
+    try:
+        publishedAt = bs.head.find(name='meta', attrs={"property": "og:pubdate"}).attrs['content']
+        return publishedAt
+    except:
+        return ''
+
+def find_times(bs):
     publishedAt = ""
     updatedAt = ""
     try:
@@ -174,10 +186,17 @@ def readAndProcess(id, url):
     ts = time()
     logger.debug("[%s] souping...", id)
     bs = BeautifulSoup(html, 'html.parser')
+
+    # first find publish time, if too old, we don't need to continue parsing
+    if not decide_include_article(fast_find_times(bs)):
+        logger.info("stopped processing this article - too old")
+        return Article(id, HEADER_OF_UNKNOWN, '', '', '', '', '')
+
+
     try:
         header = bs.article.header.h1.contents[-1]
     except:
-        header = "@@@"
+        header = HEADER_OF_UNKNOWN
 
     logger.debug('[%s] souping completed in %s seconds', id, time() - ts)
     ts = time()
@@ -189,7 +208,7 @@ def readAndProcess(id, url):
         return Article(id, header, '', '', '', '', '')
     first = sections[0]
 
-    publishedAt, updatedAt = fined_times(bs)
+    publishedAt, updatedAt = find_times(bs)
 
     header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
     header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
@@ -245,8 +264,7 @@ def readAndProcess(id, url):
 
 
 def todayAsStr():
-    # temporary
-    return ''
+    return str(date.today())
 
 
 
@@ -266,23 +284,53 @@ def saveToFile(id, htmlText):
     return name, fileName
 
 
-def keyed_by_subject(articles):
+def sort_by_subject(articles):
     sorted = []
-    list_of_subjects = [article.subject for article in articles.values() if article.subject is not None]
-    list_of_subjects_without_duplicates = list(set(list_of_subjects))
-    list_of_subjects_without_duplicates.sort()
-    for subject in list_of_subjects_without_duplicates:
-        articles_with_that_subject = [article for article in articles.values() if article.subject==subject]
+    # list_of_subjects = [article.subject for article in articles.values() if article.subject is not None]
+    # list_of_subjects_without_duplicates = list(set(list_of_subjects))
+    # list_of_subjects_without_duplicates.sort()
+    for subject in subjects().keys():
+        keys_of_articles_with_that_subject = [key for key in articles.keys() if articles[key].subject==subject]
+        keys_of_articles_with_that_subject.sort(reverse=True)
+        articles_with_that_subject = [articles[key] for key in keys_of_articles_with_that_subject]
         sorted.extend(articles_with_that_subject)
+    articles_with_subject_not_in_list = [article for article in articles.values() if article.subject not in subjects().keys()]
+    sorted.extend(articles_with_subject_not_in_list)
+    if (len(articles_with_subject_not_in_list) == 0):
+        logger.warn("unknown subjects: %s", str(articles_with_subject_not_in_list).strip('[]'))
+
     return sorted
 
 def generate_index(articles):
     body = ''
-    sortedBySubject = keyed_by_subject(articles)
+    sortedBySubject = sort_by_subject(articles)
     for articleObject in sortedBySubject:
         body = body + articleObject.link
     return construct_html(body, "")
 
+def subjects():
+    priorities = {}
+    list = [
+        'חדשות'
+        ,'ספורט'
+        , 'TheMarker'
+        , 'סוף שבוע'
+        , 'דעות'
+        , 'בריאות'
+        , 'קפטן אינטרנט'
+        , 'מדע'
+        , 'בלוגים'
+        , 'אוכל'
+        , 'תרבות'
+        , 'ספרים'
+        # , ''
+        # , ''
+        # , ''
+        # , ''
+    ]
+    for i in range(0, len(list)):
+        priorities[list[i]] = i
+    return priorities
 
 def send_url_to_queue(ids_queue, id):
     url = 'https://www.haaretz.co.il/amp/' + id
@@ -309,6 +357,14 @@ def create_link(articleObject):
         </div>'''.format(articleObject.publishedAt, articleObject.header, articleObject.href, articleObject.subject)
 
 
+def decide_include_article(publishTime):
+    if (publishTime == ''):
+        return True         # could not find publishedTime in HTML, so include it in results
+    # minimalAllowedDateAsStr was already calculated in main()
+    publishedDateAsStr = str(parser.parse(publishTime).date())
+    logger.info("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
+    return (publishedDateAsStr >= minimalAllowedDateAsStr)
+
 
 def do_with_article(articleObject):
     try:
@@ -333,16 +389,9 @@ def do_with_article(articleObject):
         #body = body + articleObject.link
         logger.debug("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
 
-        # delta = today.day - parser.parse(articleObject.publishedAt).day
-        publishedDateAsStr = str(parser.parse(articleObject.publishedAt).date())
-        minimalAllowedDateAsStr = str(today - timedelta(days=DELTA))
-        logger.info("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
-        if (publishedDateAsStr >= minimalAllowedDateAsStr):
-                #(articleObject.publishedAt.startswith('2020-') and
-                #today.day - parser.parse(articleObject.publishedAt).day < DELTA):
+        if decide_include_article(articleObject.publishedAt):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
-            #logger.debug("[%s] article added to index of today", articleObject.id)
             return 1
         else:
             logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
@@ -372,9 +421,11 @@ def when_all_articles_added():
 
 
 def generate_key(articleObject):
-    return articleObject.subject + articleObject.sub_subject + articleObject.publishedAt + articleObject.id
+    return articleObject.subject + articleObject.publishedAt + articleObject.id
+           # articleObject.sub_subject + \
 
-@tenacity.retry
+
+@tenacity.retry(wait=tenacity.wait_fixed(1))
 def first_page(limit):
     url = 'https://www.haaretz.co.il'
     logger.debug("loading first page %s...", url)
@@ -438,8 +489,10 @@ def find_existing_articles(path):
         body = body + link
     return body
 
+@tenacity.retry(wait=tenacity.wait_fixed(1),
+                stop=tenacity.stop_after_delay(30))
 def process_page(url, limit):
-    logger.debug("loading url %s...", url)
+    logger.info("loading url %s...", url)
     try:
         user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         request = Request(url, headers={'User-Agent': user_agent})
@@ -523,6 +576,7 @@ def remove_same(article_ids, more_article_ids):
 
 if __name__ == "__main__":
     logger.debug("starting queue 1")
+    minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
     #defined in globalscope: ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
     article_ids = first_page(LIMIT)
     send_urls_to_queue(ids_queue, article_ids)
