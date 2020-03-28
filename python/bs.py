@@ -14,7 +14,7 @@ import tenacity
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
 NUMBER_OF_Q1_WORKERS=1
-NUMBER_OF_Q2_WORKERS=10
+NUMBER_OF_Q2_WORKERS=50
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
@@ -162,7 +162,7 @@ def fined_times(bs):
 
 def readAndProcess(id, url):
     ts = time()
-    logger.info("[%s] loading %s...", id, url)
+    logger.debug("[%s] loading %s...", id, url)
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     ##
@@ -170,7 +170,7 @@ def readAndProcess(id, url):
     html = load_html(request)
     #
     ##
-    logger.info('[%s] loading completed in %s seconds', id, time() - ts)
+    logger.debug('[%s] loading completed in %s seconds', id, time() - ts)
     ts = time()
     logger.debug("[%s] souping...", id)
     bs = BeautifulSoup(html, 'html.parser')
@@ -179,7 +179,7 @@ def readAndProcess(id, url):
     except:
         header = "@@@"
 
-    logger.info('[%s] souping completed in %s seconds', id, time() - ts)
+    logger.debug('[%s] souping completed in %s seconds', id, time() - ts)
     ts = time()
     logger.debug("[%s] processing...", id)   # TODO use bs.find_all('time')[0]['datetime'] and bs.find_all('time')[1]['datetime']
     if (bs.article is None):
@@ -239,7 +239,7 @@ def readAndProcess(id, url):
     # assuming that 3rd child of <head> is not needed and can be changed...
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
-    logger.info('[%s] processing completed in %s seconds', id, time() - ts)
+    logger.debug('[%s] processing completed in %s seconds', id, time() - ts)
     logger.debug("!")
     return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 
@@ -266,10 +266,20 @@ def saveToFile(id, htmlText):
     return name, fileName
 
 
+def keyed_by_subject(articles):
+    sorted = []
+    list_of_subjects = [article.subject for article in articles.values() if article.subject is not None]
+    list_of_subjects_without_duplicates = list(set(list_of_subjects))
+    list_of_subjects_without_duplicates.sort()
+    for subject in list_of_subjects_without_duplicates:
+        articles_with_that_subject = [article for article in articles.values() if article.subject==subject]
+        sorted.extend(articles_with_that_subject)
+    return sorted
+
 def generate_index(articles):
     body = ''
-    for key in reversed(sorted(articles.keys())):
-        articleObject = articles[key]
+    sortedBySubject = keyed_by_subject(articles)
+    for articleObject in sortedBySubject:
         body = body + articleObject.link
     return construct_html(body, "")
 
@@ -302,7 +312,7 @@ def create_link(articleObject):
 
 def do_with_article(articleObject):
     try:
-        today = date.today()
+        today = date.today()  # str(date.today()) returnes '2020-03-27'
         #url = 'https://www.haaretz.co.il/amp/' + id
         #articleObject = readAndProcess(id, url)
         #so_far = so_far + 1
@@ -324,12 +334,18 @@ def do_with_article(articleObject):
         logger.debug("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
 
         # delta = today.day - parser.parse(articleObject.publishedAt).day
-        if (articleObject.publishedAt.startswith('2020-') and
-                today.day - parser.parse(articleObject.publishedAt).day < DELTA):
+        publishedDateAsStr = str(parser.parse(articleObject.publishedAt).date())
+        minimalAllowedDateAsStr = str(today - timedelta(days=DELTA))
+        logger.info("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
+        if (publishedDateAsStr >= minimalAllowedDateAsStr):
+                #(articleObject.publishedAt.startswith('2020-') and
+                #today.day - parser.parse(articleObject.publishedAt).day < DELTA):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
-            logger.debug("[%s] article added to index of today", articleObject.id)
+            #logger.debug("[%s] article added to index of today", articleObject.id)
             return 1
+        else:
+            logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
 
     except:
         logger.error("some exception with id %s", id)
@@ -339,7 +355,8 @@ def do_with_article(articleObject):
 articles = {}
 def add_article(key, article):
     articles[key] = article
-    logger.info("[%s] article added to index of today with key %s", article.id, key)
+    date = article.publishedAt[:10]
+    logger.info("[%s] %s added to index of today with key %s", article.id, date, key)
 
 
 
@@ -358,9 +375,9 @@ def generate_key(articleObject):
     return articleObject.subject + articleObject.sub_subject + articleObject.publishedAt + articleObject.id
 
 @tenacity.retry
-def first_page():
+def first_page(limit):
     url = 'https://www.haaretz.co.il'
-    logger.info("loading first page %s...", url)
+    logger.debug("loading first page %s...", url)
     user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     response = urlopen(request)
@@ -371,23 +388,34 @@ def first_page():
         lambda tag: tag.name == "article" and "id" in tag.attrs['class'])
     links = {"1"}
     for article in list_of_articles:
+        if (limit <= 0):
+            break
         hrefs = article.find_all("a")
         for href in hrefs:
-            #print (href.attrs["href"])
-            links.add(href.attrs["href"])
+            link = href.attrs["href"]
+            links.add(link)
+            if (is_link(link)):
+                limit = limit - 1
+                if (limit <= 0):
+                    break
     links.remove("1")
     #print("links:")
     ids = []
     for link in links:
         #print(link)
-        if "1.8" in link:
-            start = link.find("1.8")
+        if is_link(link):
+            start = start_link(link)
             id = link[start:]
             ids.append(id)
     for id in ids:
         logger.debug(id)
     return ids
 
+def is_link(link):
+    return (link.find("1.8") >= 0)
+
+def start_link(link):
+    return link.find("1.8")
 
 def scan(name):
     bs = BeautifulSoup(urlopen("file://" + name), 'html.parser')
@@ -410,8 +438,8 @@ def find_existing_articles(path):
         body = body + link
     return body
 
-def process_page(url):
-    logger.info("loading url %s...", url)
+def process_page(url, limit):
+    logger.debug("loading url %s...", url)
     try:
         user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
         request = Request(url, headers={'User-Agent': user_agent})
@@ -423,17 +451,24 @@ def process_page(url):
     logger.debug("souping...")
     bs = BeautifulSoup(html, 'html.parser')
     list_of_articles = bs.html.find_all(
-        lambda tag: (tag.name == "a") and ('href' in tag.attrs.keys()) and ("1.86" in tag.attrs['href']), recursive=True)
+        lambda tag: (tag.name == "a") and
+                    ('href' in tag.attrs.keys()) and
+                    (is_link(tag.attrs['href'])), recursive=True)
     links = {"1"}
     for href in list_of_articles:
-        links.add(href.attrs["href"])
+        link = href.attrs["href"]
+        if is_link(link):
+            links.add(link)
+            limit = limit - 1
+            if (limit <= 0):
+                break
     links.remove("1")
     #print("links:")
     ids = []
     for link in links:
         #print(link)
-        if "1.86" in link:
-            start = link.find("1.86")
+        if is_link(link):
+            start = start_link(link)
             id = link[start:]
             ids.append(id)
     for id in ids:
@@ -489,10 +524,12 @@ def remove_same(article_ids, more_article_ids):
 if __name__ == "__main__":
     logger.debug("starting queue 1")
     #defined in globalscope: ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
-    article_ids = first_page()
+    article_ids = first_page(LIMIT)
     send_urls_to_queue(ids_queue, article_ids)
     for url in urls():
-        more_article_ids = process_page(url)
+        if (len(article_ids) > LIMIT):
+            break
+        more_article_ids = process_page(url, LIMIT - len(article_ids))
         more_article_ids = remove_same(article_ids, more_article_ids)
         logger.debug("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
         logger.debug("now sending %d articles", len(more_article_ids))
@@ -501,8 +538,6 @@ if __name__ == "__main__":
         #updating list of all IDs
         article_ids.extend(more_article_ids)
         article_ids = remove_duplicates(article_ids)
-        if (len(article_ids) > LIMIT):
-            break
 
     logger.debug("all %d articles were sent",len(article_ids))
 

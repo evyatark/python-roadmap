@@ -2,38 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8624881.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8624881.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8632229.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8632229.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8638259.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8638259.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8664648.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8664648.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8669994.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8669994.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8677540.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8677540.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8679159.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8679159.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8679847.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8679847.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8682737.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8682737.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8689066.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8689066.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8689784.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8689784.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8689864.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8689864.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8692963.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8692963.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8695890.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8695890.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697075.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697075.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697978#7010228992.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697978#7010228992.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697978#7010229934.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697978#7010229934.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697978#7010230121.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697978#7010230121.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697978#7010230309.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697978#7010230309.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8697978.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8697978.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8698230.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8698230.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8698355.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8698355.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8698841.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8698841.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8699700.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8699700.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8699948.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8699948.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8704428.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8704428.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8708509.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8708509.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8709290.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8709290.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8710327.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8710327.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/h1.8710632.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/h1.8710632.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../haaretz/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,7 +14,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1584031201637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1585288188779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1585397907022" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1584165354149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -55,11 +23,20 @@
       <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+            <state relative-caret-position="214">
+              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
+        <entry file="file:///usr/lib/python3.6/codecs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="308" selection-start-line="308" selection-end-line="308" />
             </state>
           </provider>
         </entry>
@@ -75,14 +52,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>link</find>
-      <find>&quot;h&quot;</find>
-      <find>LIMIT</find>
-      <find>base_dir</find>
-      <find>counter</find>
-      <find>article_ids</find>
-      <find>do_with_article</find>
-      <find>ArticleWorker</find>
       <find>start_queue_with_workers</find>
       <find>send_article_to_queue</find>
       <find>self.queue</find>
@@ -105,6 +74,14 @@
       <find>souping...</find>
       <find>insert</find>
       <find>info</find>
+      <find>logger.info</find>
+      <find>add_article</find>
+      <find>articles</find>
+      <find>sorted</find>
+      <find>gene</find>
+      <find>lam</find>
+      <find>LIMIT</find>
+      <find>1.8</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -369,13 +346,13 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.5371179" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.63027656" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4811321" visible="true" weight="0.22651222" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.22651222" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info id="Structure" order="1" sideWeight="0.5188679" side_tool="true" visible="true" weight="0.22651222" />
+      <window_info id="Structure" order="1" sideWeight="0.5208333" side_tool="true" weight="0.22651222" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.48034933" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.08608742" />
@@ -438,33 +415,33 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="id=='1.8708970'" language="Python" />
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>283</line>
+          <line>293</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>175</line>
-          <option name="timeStamp" value="67" />
+          <line>276</line>
+          <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>185</line>
-          <option name="timeStamp" value="69" />
+          <line>271</line>
+          <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>189</line>
-          <option name="timeStamp" value="70" />
+          <line>283</line>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>193</line>
-          <option name="timeStamp" value="71" />
+          <line>272</line>
+          <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>230</line>
-          <option name="timeStamp" value="72" />
+          <line>273</line>
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -477,7 +454,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="73" />
+      <option name="time" value="100" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -505,60 +482,53 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>bs.head.find_all('meta',attrs={'name':'twitter:title'})[0]['content']</expression-string>
+        <expression-string>[article for article in articles.values()][5].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.article.header.h1.contents[-1]</expression-string>
+        <expression-string>[article for article in articles.values()][4].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.find_all('time')[0]['datetime']</expression-string>
+        <expression-string>[article for article in articles.values()][3].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.find_all('time')[1]['datetime']</expression-string>
+        <expression-string>[article for article in articles.values()][2].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.find_all('time')</expression-string>
+        <expression-string>[article for article in articles.values()][1].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.time</expression-string>
+        <expression-string>[article for article in articles.values()][0].subject</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.article.time</expression-string>
+        <expression-string>[article for article in articles.values()][0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.article</expression-string>
+        <expression-string>[article for article in articles.values()]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>bs.head.find_all(name='meta')</expression-string>
+        <expression-string>[article for article in articles]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lcrux.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2354">
-          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/selenium1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -860,13 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python3.6/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13244">
-          <caret line="308" selection-start-line="308" selection-end-line="308" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lcrux.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2508">
@@ -920,13 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-320577021/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104434">
-          <caret line="4747" column="8" selection-start-line="4747" selection-start-column="8" selection-end-line="4747" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/PycharmProjects/HelloWorld/venv/lib/python3.6/site-packages/bs4/element.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36938">
@@ -934,10 +890,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.1/system/python_stubs/-320577021/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="4735" column="8" selection-start-line="4735" selection-start-column="8" selection-end-line="4735" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/HelloWorld/venv/lib/python3.6/site-packages/tenacity/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="394" selection-start-line="394" selection-end-line="394" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="16" column="23" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+        <state relative-caret-position="214">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
