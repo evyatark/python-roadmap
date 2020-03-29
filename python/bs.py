@@ -286,11 +286,14 @@ def saveToFile(id, htmlText):
 
 def sort_by_subject(articles):
     sorted = []
+    existing_subjects = []
     # list_of_subjects = [article.subject for article in articles.values() if article.subject is not None]
     # list_of_subjects_without_duplicates = list(set(list_of_subjects))
     # list_of_subjects_without_duplicates.sort()
     for subject in subjects().keys():
         keys_of_articles_with_that_subject = [key for key in articles.keys() if articles[key].subject==subject]
+        if len(keys_of_articles_with_that_subject) > 0:
+            existing_subjects.append(subject)
         keys_of_articles_with_that_subject.sort(reverse=True)
         articles_with_that_subject = [articles[key] for key in keys_of_articles_with_that_subject]
         sorted.extend(articles_with_that_subject)
@@ -299,13 +302,38 @@ def sort_by_subject(articles):
     if (len(articles_with_subject_not_in_list) == 0):
         logger.warn("unknown subjects: %s", str(articles_with_subject_not_in_list).strip('[]'))
 
-    return sorted
+    return sorted, existing_subjects
 
 def generate_index(articles):
     body = ''
-    sortedBySubject = sort_by_subject(articles)
-    for articleObject in sortedBySubject:
-        body = body + articleObject.link
+    sortedBySubject, existing_subjects = sort_by_subject(articles)
+
+    #assume for now that existing_subjects is sorted correctly
+    counter = 0
+    for subject in existing_subjects:
+        counter = counter + 1
+        idStr = "collapse_toggle_" + str(counter)
+        # before each subject add this:
+        body = body + '<button class="button" id="' + idStr + '">[' \
+           + subject + ''']</button>
+            <div class="pos-relative w-75 border border-size-4 bd-black">    
+            '''
+
+        for articleObject in sortedBySubject:
+            if (articleObject.subject == subject):
+                # for all items inside:
+                # the value of data-toggle-element should be same as the id of button above
+                # and the id should change for each subject: collapse_toggle_1, collapse_toggle_2, ...
+                # <div class=" w-100" data-role="collapse" data-toggle-element="#collapse_toggle_2">
+                #replace "COLLAPSE_ID" with idStr
+                link = str(articleObject.link).replace("COLLAPSE_ID", idStr)
+                body = body + link
+
+        # after each subject add this:
+        body = body + '</div>'
+    # end of outer for loop
+
+    
     return construct_html(body, "")
 
 def subjects():
@@ -346,7 +374,7 @@ def send_urls_to_queue(ids_queue, ids):
 
 def create_link(articleObject):
     articleObject.href = "h" + articleObject.id + ".html"
-    return '''<div class=" w-100" data-role="collapse" data-toggle-element="#collapse_toggle_1">
+    return '''<div class=" w-100" data-role="collapse" data-toggle-element="#COLLAPSE_ID">
             <div class="frame border border-size-1 pt-2 bd-black">
                 <div class="p-2 d-inline">{0}</div>  
                 <a href="{2}" class="h5 fg-green bg-white d-inline">{1}</a>

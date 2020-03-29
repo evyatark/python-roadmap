@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,7 +15,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1584031201637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1585414114345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1585510510059" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1584165354149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -23,8 +24,8 @@
       <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="133" column="4" selection-start-line="133" selection-start-column="4" selection-end-line="133" selection-end-column="4" />
+            <state relative-caret-position="655">
+              <caret line="335" column="4" selection-start-line="335" selection-start-column="4" selection-end-line="335" selection-end-column="4" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -43,8 +44,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>slee</find>
-      <find>send_urls_to_queue</find>
       <find>publishedAt</find>
       <find>published at</find>
       <find>souping...</find>
@@ -73,6 +72,8 @@
       <find>reada</find>
       <find>@@</find>
       <find>decide_include_article</find>
+      <find>sort_by_subject</find>
+      <find>collapse_t</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,7 +100,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="490" />
     <option name="y" value="204" />
     <option name="width" value="1100" />
@@ -330,19 +331,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="490" y="204" width="1100" height="630" extended-state="0" />
+    <frame x="0" y="25" width="1600" height="820" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.47283703" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.34061137" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.33396584" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.22972973" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32896653" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" sideWeight="0.5208333" side_tool="true" weight="0.22651222" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -353,6 +354,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32896653" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,27 +408,27 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="id=='1.8708970'" language="Python" />
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>341</line>
+          <line>369</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>289</line>
+          <line>290</line>
           <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>308</line>
+          <line>336</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>290</line>
+          <line>291</line>
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>291</line>
+          <line>292</line>
           <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
@@ -899,8 +901,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="133" column="4" selection-start-line="133" selection-start-column="4" selection-end-line="133" selection-end-column="4" />
+        <state relative-caret-position="655">
+          <caret line="335" column="4" selection-start-line="335" selection-start-column="4" selection-end-line="335" selection-end-column="4" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>
