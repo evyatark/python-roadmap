@@ -333,7 +333,7 @@ def generate_index(articles):
         body = body + '</div>'
     # end of outer for loop
 
-    
+
     return construct_html(body, "")
 
 def subjects():
