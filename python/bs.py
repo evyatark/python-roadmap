@@ -1,3 +1,14 @@
+'''
+
+This project demonstrates web scraping of Haaretz site,
+generating an index of all articles of today.
+
+This version of the script uses 2 queues in order to split the work
+and thus increase performance by
+1. execute the retrieval from WEB in several concurrent threads
+2. separate retrieval from the processing
+
+'''
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
 from datetime import date,timedelta
