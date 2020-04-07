@@ -26,9 +26,13 @@ import tenacity
 '''
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
-NUMBER_OF_Q1_WORKERS=1
-NUMBER_OF_Q2_WORKERS=50
+
+# increasing number of download threads above 30 does not increase throughput.
+# increasing number of processing threads above 80 does not increase throughput.
+NUMBER_OF_Q1_WORKERS=30      # number of threads that download from a URL
+NUMBER_OF_Q2_WORKERS=80      # number of threads that process an article
 HEADER_OF_UNKNOWN = "@@@"
+
 HTML_START = '''
 <!DOCTYPE html>
 <html dir="rtl" lang="he">
@@ -40,7 +44,7 @@ HTML_START = '''
     </head>
     <body>
 '''
-    #'<html dir="rtl" lang="he"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/></head><body>'
+
 HTML_END = '''
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
     </body>
@@ -51,18 +55,38 @@ minimalAllowedDateAsStr = str(date.today())
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
+
+'''
+A Queue of activities, each activity is executed by one of the worker threads from the thread pool.
+The pool size is defined when initializing the queue.
+The activity takes an item from the queue and execute it.
+'''
 def start_queue_with_workers(number_of_workers, f):
     queue = Queue()
     # Create worker threads
     for x in range(number_of_workers):
-        worker = f(queue)
-        #worker = DownloadWorker(queue)
+        worker = f(queue)        #f could be DownloadWorker() or ArticleWorker
         # Setting daemon to True will let the main thread exit even though the workers are blocking
         worker.daemon = True
         worker.start()
     return queue
 
 '''=========================================
+                   +----------------+
+queue of IDs ----> | DownloadWorker |   (Network bound: generates a URL from the ID, and downloads the HTML from that URL)
+                   +----------------+
+                        |
+                        | queue of articles (each article is an HTML document)
+                        v
+                   +----------------+
+                   | ArticleWorker  |   (CPU bound: process HTML and creates a modified article, saves it to file, and adds (article ID, article link) to the 'articles' dictionary.)
+                   +----------------+
+                        |
+                        |
+                        V
+                   +----------------------+
+                   | articles dictionary  | ---> generates the index.html document and saves it to file
+                   +----------------------+
 ====='''
 class ArticleWorker(Thread):
 
@@ -200,7 +224,7 @@ def readAndProcess(id, url):
 
     # first find publish time, if too old, we don't need to continue parsing
     if not decide_include_article(fast_find_times(bs)):
-        logger.info("stopped processing this article - too old")
+        logger.debug("stopped processing this article - too old")
         return Article(id, HEADER_OF_UNKNOWN, '', '', '', '', '')
 
 
@@ -449,7 +473,7 @@ def add_article(key, article):
 
 
 
-def when_all_articles_added():
+def create_index_file():
     logger.info('generating index for %d articles...', len(articles))
     html = generate_index(articles)
     logger.info("...done. writing to file...")
@@ -579,10 +603,14 @@ def remove_duplicates(article_ids):
     set.remove('0')
     return list(set)
 
-
+'''
+A static list of URLs that are semi-index pages inside the site,
+so they are a good starting point to collect links to articles
+'''
 def urls():
     return [
-        'https://www.haaretz.co.il/magazine'
+        'https://www.haaretz.co.il'
+        ,'https://www.haaretz.co.il/magazine'
     ,   'https://www.haaretz.co.il/news'
     , 'https://www.themarker.com/allnews'
     , 'https://www.themarker.com/wallstreet'
@@ -616,9 +644,8 @@ def remove_same(article_ids, more_article_ids):
 if __name__ == "__main__":
     logger.debug("starting queue 1")
     minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
-    #defined in globalscope: ids_queue = start_queue_with_workers(NUMBER_OF_Q1_WORKERS, lambda x: DownloadWorker(x))
-    article_ids = first_page(LIMIT)
-    send_urls_to_queue(ids_queue, article_ids)
+    # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
+    article_ids = []
     for url in urls():
         if (len(article_ids) > LIMIT):
             break
@@ -626,13 +653,14 @@ if __name__ == "__main__":
         more_article_ids = remove_same(article_ids, more_article_ids)
         logger.debug("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
         logger.debug("now sending %d articles", len(more_article_ids))
+        # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
         send_urls_to_queue(ids_queue, more_article_ids)
 
         #updating list of all IDs
         article_ids.extend(more_article_ids)
         article_ids = remove_duplicates(article_ids)
 
-    logger.debug("all %d articles were sent",len(article_ids))
+    logger.info("all %d articles were sent",len(article_ids))
 
     time1.sleep(10)
     ids_queue.join()
@@ -640,4 +668,4 @@ if __name__ == "__main__":
 
     articles_queue.join()   # this will wait for queue2 completing?
     logger.debug("articles queue joined")
-    when_all_articles_added()
+    create_index_file()     # after all articles have been added to the articles dictionary
