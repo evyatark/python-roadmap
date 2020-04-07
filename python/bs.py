@@ -425,7 +425,7 @@ def decide_include_article(publishTime):
         return True         # could not find publishedTime in HTML, so include it in results
     # minimalAllowedDateAsStr was already calculated in main()
     publishedDateAsStr = str(parser.parse(publishTime).date())
-    logger.info("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
+    logger.debug("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
     return (publishedDateAsStr >= minimalAllowedDateAsStr)
 
 
@@ -468,7 +468,7 @@ articles = {}
 def add_article(key, article):
     articles[key] = article
     date = article.publishedAt[:10]
-    logger.info("[%s] %s added to index of today with key %s", article.id, date, key)
+    logger.debug("[%s] %s added to index of today with key %s", article.id, date, key)
 
 
 
@@ -488,42 +488,7 @@ def generate_key(articleObject):
            # articleObject.sub_subject + \
 
 
-@tenacity.retry(wait=tenacity.wait_fixed(1))
-def first_page(limit):
-    url = 'https://www.haaretz.co.il'
-    logger.debug("loading first page %s...", url)
-    user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-    request = Request(url, headers={'User-Agent': user_agent})
-    response = urlopen(request)
-    html = response.read()
-    logger.debug("souping...")
-    bs = BeautifulSoup(html, 'html.parser')
-    list_of_articles = bs.html.findAll(
-        lambda tag: tag.name == "article" and "id" in tag.attrs['class'])
-    links = {"1"}
-    for article in list_of_articles:
-        if (limit <= 0):
-            break
-        hrefs = article.find_all("a")
-        for href in hrefs:
-            link = href.attrs["href"]
-            links.add(link)
-            if (is_link(link)):
-                limit = limit - 1
-                if (limit <= 0):
-                    break
-    links.remove("1")
-    #print("links:")
-    ids = []
-    for link in links:
-        #print(link)
-        if is_link(link):
-            start = start_link(link)
-            id = link[start:]
-            ids.append(id)
-    for id in ids:
-        logger.debug(id)
-    return ids
+
 
 def is_link(link):
     return (link.find("1.8") >= 0)
@@ -662,7 +627,7 @@ if __name__ == "__main__":
 
     logger.info("all %d articles were sent",len(article_ids))
 
-    time1.sleep(10)
+    #time1.sleep(10)
     ids_queue.join()
     logger.debug("ids queue joined")
 
