@@ -334,8 +334,9 @@ def sort_by_subject(articles):
         sorted.extend(articles_with_that_subject)
     articles_with_subject_not_in_list = [article for article in articles.values() if article.subject not in subjects().keys()]
     sorted.extend(articles_with_subject_not_in_list)
-    if (len(articles_with_subject_not_in_list) == 0):
-        logger.warn("unknown subjects: %s", str(articles_with_subject_not_in_list).strip('[]'))
+    if (len(articles_with_subject_not_in_list) > 0):
+        subjects_not_in_list = [x.subject for x in articles_with_subject_not_in_list]
+        logger.warn("unknown subjects: %s", str(subjects_not_in_list).strip('[]'))
 
     return sorted, existing_subjects
 
@@ -386,8 +387,11 @@ def subjects():
         , 'אוכל'
         , 'תרבות'
         , 'ספרים'
-        # , ''
-        # , ''
+        , 'משפחה'
+        , 'הארץ'
+        , 'סביבה ובעלי חיים'
+        , 'טיולים'
+        , 'הזירה - الساحة'
         # , ''
         # , ''
     ]
@@ -460,7 +464,7 @@ def do_with_article(articleObject):
             logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
 
     except:
-        logger.error("some exception with id %s", id)
+        logger.error("some exception with id %s", articleObject.id)
     return 0
 
 
@@ -574,9 +578,9 @@ so they are a good starting point to collect links to articles
 '''
 def urls():
     return [
-        'https://www.haaretz.co.il'
-        ,'https://www.haaretz.co.il/magazine'
-    ,   'https://www.haaretz.co.il/news'
+     'https://www.haaretz.co.il'
+    ,'https://www.haaretz.co.il/magazine'
+    ,'https://www.haaretz.co.il/news'
     , 'https://www.themarker.com/allnews'
     , 'https://www.themarker.com/wallstreet'
     , 'https://www.themarker.com/misc/all-headlines'
@@ -593,10 +597,29 @@ def urls():
     ,'https://www.haaretz.co.il/news/local'
     ,'https://www.haaretz.co.il/gallery'
     ,'https://www.haaretz.co.il/gallery/television'
+    , 'https://www.haaretz.co.il/gallery/architecture'
+    , 'https://www.haaretz.co.il/gallery/fashion'
+    , 'https://www.haaretz.co.il/gallery/art'
+    , 'https://www.haaretz.co.il/gallery/events'
+    , 'https://www.haaretz.co.il/gallery/music'
+    , 'https://www.haaretz.co.il/gallery/cinema'
+    , 'https://www.haaretz.co.il/gallery/theater'
+    , 'https://www.haaretz.co.il/gallery/night-life'
     ,'https://www.haaretz.co.il/opinions'
     ,'https://www.haaretz.co.il/captain'
+    , 'https://www.haaretz.co.il/captain/net'
+    , 'https://www.haaretz.co.il/captain/viral'
+    , 'https://www.haaretz.co.il/captain/gadget'
+    , 'https://www.haaretz.co.il/captain/software'
+    , 'https://www.haaretz.co.il/captain/games'
     , 'https://www.haaretz.co.il/science'
     , 'https://www.haaretz.co.il/literature'
+    , 'https://www.haaretz.co.il/blogs'
+    , 'https://www.haaretz.co.il/nature'
+    , 'https://www.haaretz.co.il/travel'
+    , 'https://www.haaretz.co.il/misc/all-headlines'
+
+        #'https://www.haaretz.co.il/binge'
        ]
 
 
