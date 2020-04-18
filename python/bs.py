@@ -678,30 +678,7 @@ def main():
     create_index_file()     # after all articles have been added to the articles dictionary
 
 
-def test1(id):
-    articleObj = readAndProcess(id, 'https://www.haaretz.co.il/amp/' + id)
-    #assertThat:
-    conditions = [True
-        ,articleObj.header is not None
-        ,articleObj.id == id
-        ,articleObj.subject is not None
-        ,articleObj.sub_subject is not None
-         ]
-    counter = 0
-    incorrect = 0 ;
-    for condition in conditions:
-        if not condition:
-            incorrect = incorrect + 1
-            logger.error("condition %d not correct", counter)
-        counter = counter + 1
-    if (incorrect > 0):
-        logger.error("found %d incorrect conditions", incorrect)
-    else:
-        logger.info("%s - all is ok", id)
 
-def test_ids(ids):
-    for id in ids:
-        test1(id)
 
 
 if __name__ == "__main__":
