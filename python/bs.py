@@ -8,6 +8,11 @@ and thus increase performance by
 1. execute the retrieval from WEB in several concurrent threads
 2. separate retrieval from the processing
 
+run as a docker container:
+docker build -t pythonroadmap/scraping:v01 .
+docker run -p 5001:5000 -v /home/evyatar/GitHub/github-pages-hello-world/haaretz/:/out/ --rm --name scraping pythonroadmap/scraping:v01
+
+
 '''
 from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup
@@ -49,8 +54,13 @@ HTML_END = '''
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
     </body>
 </html>'''
-base_dir = '/home/evyatar/GitHub/github-pages-hello-world/haaretz/'
+
+# base_dir - assuming that the script is run in a docker container.
+# this dir is mapped to a directory on the host (for example '/home/evyatar/GitHub/github-pages-hello-world/haaretz/')
+base_dir = '/out/'
+
 minimalAllowedDateAsStr = str(date.today())
+user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -206,11 +216,15 @@ def find_times(bs):
         updatedAt = todayAsStr() # '2020-03-25T00:01:00+0200'
     return publishedAt, updatedAt
 
+def remove_parts_of_article(section, parts):
+    for part in parts:
+        logger.debug("2")
+        while section.find(class_=part) is not None:
+            section.find(class_=part).replace_with(omit(part))
 
 def readAndProcess(id, url):
     ts = time()
     logger.debug("[%s] loading %s...", id, url)
-    user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
     request = Request(url, headers={'User-Agent': user_agent})
     ##
     #
@@ -221,6 +235,8 @@ def readAndProcess(id, url):
     ts = time()
     logger.debug("[%s] souping...", id)
     bs = BeautifulSoup(html, 'html.parser')
+    if (bs.article is None):
+        return Article(id, HEADER_OF_UNKNOWN, '', '', '', '', '')
 
     # first find publish time, if too old, we don't need to continue parsing
     if not decide_include_article(fast_find_times(bs)):
@@ -235,9 +251,7 @@ def readAndProcess(id, url):
 
     logger.debug('[%s] souping completed in %s seconds', id, time() - ts)
     ts = time()
-    logger.debug("[%s] processing...", id)   # TODO use bs.find_all('time')[0]['datetime'] and bs.find_all('time')[1]['datetime']
-    if (bs.article is None):
-        return Article(id, header, '', '', '', '', '')
+    logger.debug("[%s] processing...", id)
     sections = bs.article.findAll(name='section', class_='b-entry')
     if (sections is None) or len(sections) == 0:
         return Article(id, header, '', '', '', '', '')
@@ -254,28 +268,32 @@ def readAndProcess(id, url):
     if len(header_crumbs) > 1:
         sub_subject = header_crumbs[1].text.rstrip().lstrip()
 
-    logger.debug("2")
-    if first.find(class_='c-quick-nl-reg') is not None:
-        first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
-    logger.debug("3")
-    if first.find(class_='c-related-article-text-only-wrapper') is not None:
-        first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
+    remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
+    # logger.debug("2")
+    # if first.find(class_='c-quick-nl-reg') is not None:
+    #     first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
+    # logger.debug("3")
+    # if first.find(class_='c-related-article-text-only-wrapper') is not None:
+    #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
     logger.debug("4")
     all_figures = first.find_all(name='figure')
-    while (len(all_figures) > 0):
+    # while (len(all_figures) > 0):
+    #     first.find(name='figure').replace_with(omit('figure'))
+    #     all_figures = first.find_all(name='figure')
+    while (first.find(name='figure') is not None):
         first.find(name='figure').replace_with(omit('figure'))
-        all_figures = first.find_all(name='figure')
 
-    logger.debug("5")
-    while (first.find(class_="c-dfp-ad") is not None):
-        first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
+    # logger.debug("5")
+    # while (first.find(class_="c-dfp-ad") is not None):
+    #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
     logger.debug("6")
     bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
     bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
     #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
-    logger.debug("7")
-    bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
+    # logger.debug("7")
+    # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
+    remove_parts_of_article(bs.html, ['amp-sidebar'])
     while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
         bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
 
@@ -564,11 +582,14 @@ def process_page(url, limit):
 def remove_duplicates(article_ids):
     set = {'0'}
     for id in article_ids:
+        newId = id
         if ('#' in id):
-            id = id[:id.find('#')]
+            newId = id[:id.find('#')]
         if ('?' in id):
-            id = id[:id.find('?')]
-        set.add(id)
+            newId = id[:id.find('?')]
+        set.add(newId)
+        if ('?' in newId):
+            logger.warn("url %s still contains ?, original was %s", newId, id)
     set.remove('0')
     return list(set)
 
@@ -629,7 +650,7 @@ def remove_same(article_ids, more_article_ids):
             more_article_ids.remove(id)
     return more_article_ids
 
-if __name__ == "__main__":
+def main():
     logger.debug("starting queue 1")
     minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
     # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
@@ -649,11 +670,48 @@ if __name__ == "__main__":
         article_ids = remove_duplicates(article_ids)
 
     logger.info("all %d articles were sent",len(article_ids))
-
-    #time1.sleep(10)
     ids_queue.join()
     logger.debug("ids queue joined")
 
     articles_queue.join()   # this will wait for queue2 completing?
     logger.debug("articles queue joined")
     create_index_file()     # after all articles have been added to the articles dictionary
+
+
+def test1(id):
+    articleObj = readAndProcess(id, 'https://www.haaretz.co.il/amp/' + id)
+    #assertThat:
+    conditions = [True
+        ,articleObj.header is not None
+        ,articleObj.id == id
+        ,articleObj.subject is not None
+        ,articleObj.sub_subject is not None
+         ]
+    counter = 0
+    incorrect = 0 ;
+    for condition in conditions:
+        if not condition:
+            incorrect = incorrect + 1
+            logger.error("condition %d not correct", counter)
+        counter = counter + 1
+    if (incorrect > 0):
+        logger.error("found %d incorrect conditions", incorrect)
+    else:
+        logger.info("%s - all is ok", id)
+
+def test_ids(ids):
+    for id in ids:
+        test1(id)
+
+
+if __name__ == "__main__":
+    main()
+    #test1('1.8765533')
+    # test_ids(['1.8765533'
+    # ,'1.8764610'
+    # ,'1.8765443'
+    # ,'1.8763785'
+    # ,'1.8764023'
+    # ,'1.8763854'
+    #  ])
+

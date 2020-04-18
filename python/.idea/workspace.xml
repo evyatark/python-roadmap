@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="use thread pools">
-      <change beforePath="$PROJECT_DIR$/../haaretz/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../haaretz/index.html" afterDir="false" />
+    <list default="true" id="4c8a599b-11da-4bfe-b2bb-1e695d844c7e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bs.py" beforeDir="false" afterPath="$PROJECT_DIR$/bs.py" afterDir="false" />
     </list>
@@ -16,7 +16,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/python$gitir.coverage" NAME="gitir Coverage Results" MODIFIED="1584031201637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$selenium.coverage" NAME="selenium Coverage Results" MODIFIED="1583674992144" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1586273555224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/python$bs.coverage" NAME="bs Coverage Results" MODIFIED="1586873232420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lp.coverage" NAME="lp Coverage Results" MODIFIED="1584165354149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$lcrux.coverage" NAME="lcrux Coverage Results" MODIFIED="1583934162844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
@@ -25,8 +25,20 @@
       <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="671" lean-forward="true" selection-start-line="671" selection-end-line="671" />
+            <state relative-caret-position="-7">
+              <caret line="360" column="4" selection-start-line="360" selection-start-column="4" selection-end-line="360" selection-end-column="4" />
+              <folding>
+                <element signature="e#530#573#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dockerfile" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dockerfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="20" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -42,25 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>generate_key</find>
-      <find>tena</find>
-      <find>first_page</find>
-      <find>read</find>
-      <find>header</find>
-      <find>fined_times</find>
-      <find>find_times</find>
-      <find>readAndProcess</find>
-      <find>today</find>
-      <find>todayA</find>
-      <find>todayAsStr</find>
-      <find>minimalAllowedDateAsStr</find>
-      <find>reada</find>
-      <find>@@</find>
-      <find>decide_include_article</find>
-      <find>sort_by_subject</find>
-      <find>collapse_t</find>
-      <find>logging</find>
-      <find>logger</find>
       <find>DownloadWorker</find>
       <find>NUMBER_OF_Q1_WORKERS</find>
       <find>articles</find>
@@ -72,6 +65,25 @@
       <find>Num</find>
       <find>all a</find>
       <find>stopped processing this article</find>
+      <find>articles were sent</find>
+      <find>generating index</find>
+      <find>articles =</find>
+      <find>first_</find>
+      <find>publishedDateAsStr</find>
+      <find>added to index</find>
+      <find>some excep</find>
+      <find>unknown subjects</find>
+      <find>subjects</find>
+      <find>base_dir</find>
+      <find>user_agent</find>
+      <find>first</find>
+      <find>title</find>
+      <find>readAndProcess</find>
+      <find>create_link</find>
+      <find>#</find>
+      <find>?</find>
+      <find>remove_duplicates</find>
+      <find>ids_queue</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -244,39 +256,52 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="selenium" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="python" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/selenium1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
+    <configuration name="python/Dockerfile" type="docker-deploy" factoryName="dockerfile" singleton="true" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="JSONFilePath" value="" />
+          <option name="command" value="" />
+          <option name="commandLineOptions" value="" />
+          <option name="containerName" value="scraping" />
+          <option name="entrypoint" value="" />
+          <option name="imageTag" value="pythonroadmap/scraping:v01" />
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="5000" />
+                <option name="hostIp" value="5001" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
+          <option name="sourceFilePath" value="Dockerfile" />
+          <option name="startBrowserSettings">
+            <browser url="http://127.0.0.1" />
+          </option>
+          <option name="volumeBindings">
+            <list>
+              <DockerVolumeBindingImpl>
+                <option name="containerPath" value="/out/" />
+                <option name="hostPath" value="$PROJECT_DIR$/../../../github-pages-hello-world/haaretz/" />
+              </DockerVolumeBindingImpl>
+            </list>
+          </option>
+        </settings>
+      </deployment>
     </configuration>
     <list>
+      <item itemvalue="Docker.python/Dockerfile" />
       <item itemvalue="Python.lp" />
       <item itemvalue="Python.bs" />
       <item itemvalue="Python.gitir" />
       <item itemvalue="Python.lcrux" />
-      <item itemvalue="Python.selenium" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.bs" />
+        <item itemvalue="Docker.python/Dockerfile" />
         <item itemvalue="Python.lp" />
         <item itemvalue="Python.gitir" />
         <item itemvalue="Python.lcrux" />
-        <item itemvalue="Python.selenium" />
       </list>
     </recent_temporary>
   </component>
@@ -326,38 +351,77 @@
       <option name="project" value="LOCAL" />
       <updated>1584224234897</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="improve code">
+      <created>1586273808099</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586273808099</updated>
+    </task>
+    <task id="LOCAL-00007" summary="improve code and reduce info logging">
+      <created>1586274339410</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586274339410</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1920" height="1000" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="25" width="1600" height="820" extended-state="6" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" visible="true" weight="0.32896653" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3644752" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36390102" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.26093918" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.2863578" />
+      <window_info anchor="bottom" id="Docker" order="7" weight="0.2183406" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32896653" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" sideWeight="0.5208333" side_tool="true" weight="0.22651222" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.48034933" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3245997" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.08608742" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32896653" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -368,7 +432,9 @@
     <MESSAGE value="python beautiful soup git.ir" />
     <MESSAGE value="remove unnecessary" />
     <MESSAGE value="use thread pools" />
-    <option name="LAST_COMMIT_MESSAGE" value="use thread pools" />
+    <MESSAGE value="improve code" />
+    <MESSAGE value="improve code and reduce info logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="improve code and reduce info logging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -401,19 +467,34 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="id=='1.8708970'" language="Python" />
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>119</line>
+          <line>129</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="id=='1.8708970'" language="Python" />
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>404</line>
+          <line>426</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/bs.py</url>
-          <line>371</line>
+          <line>390</line>
           <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bs.py</url>
+          <line>708</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bs.py</url>
+          <line>665</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bs.py</url>
+          <line>689</line>
+          <option name="timeStamp" value="106" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -426,7 +507,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="100" />
+      <option name="time" value="107" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -501,15 +582,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/selenium1.py" />
-    <entry file="file://$PROJECT_DIR$/bs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2772">
-          <caret line="131" column="28" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lp.py" />
     <entry file="file://$PROJECT_DIR$/gitir.py" />
     <entry file="file://$PROJECT_DIR$/lcrux.py" />
     <entry file="file://$PROJECT_DIR$/selenium1.py" />
@@ -625,13 +697,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/selenium1.py" />
-    <entry file="file://$USER_HOME$/PycharmProjects/HelloWorld/venv/lib/python3.6/site-packages/bs4/element.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36938">
-          <caret line="1681" column="8" selection-start-line="1681" selection-start-column="8" selection-end-line="1681" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/PycharmProjects/HelloWorld/venv/lib/python3.6/site-packages/tenacity/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="131">
@@ -653,10 +718,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Python Recipes.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/PycharmProjects/HelloWorld/venv/lib/python3.6/site-packages/bs4/element.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="1365" selection-start-line="1365" selection-end-line="1365" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="671" lean-forward="true" selection-start-line="671" selection-end-line="671" />
+        <state relative-caret-position="-7">
+          <caret line="360" column="4" selection-start-line="360" selection-start-column="4" selection-end-line="360" selection-end-column="4" />
+          <folding>
+            <element signature="e#530#573#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
