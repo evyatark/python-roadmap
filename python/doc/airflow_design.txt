@@ -1,0 +1,37 @@
+
+Airflow DAG for scraping news web sites
+---------------------------------------
+0. This DAG can be scheduled to run every 6 hours (or every 1 hour between 6am and 10pm)
+
+1. scrape first page and all other relevant pages, finding URLs of articles.
+    construct a list of all those URLs.
+    output it (to X-Com?)
+
+2. retrieve (from X-Com?) the list of URLs.
+    For each URL in this list:
+        scrape the website, retrieving the full HTML of the article.
+        (This process can be done concurrently, but I don't know yet how Airflow can be instructed to do that)
+    result is a list of articles.
+    option #1 - articles should be written to a database (ElasticSearch [to enable full text search later?], MongoDB document DB?, PostgreSQL? Redis?)
+    option #2 - articles should be written to S3 DataLake (each article as a separate object. all articles to same bucket. Each article with tags date, timestamp, subject, author?)
+
+3. for each of the articles (retrieved in the previous step - traverse the DB/S3), apply the cleaning code. This code strips DRM, google analytics, ads and commercials from the article, resulting in HTML that can be served and read by a person.
+    The resulting cleaned article should also be persisted - in this case, most probably to S3 or some other persistent store that can be accessed/linked directly from a web page.
+
+4. for each of the articles, we want to scan the HTML and find the following data: date, timestamp, author?, Header, sub-header?, description, subject, sub-subject, small image? big image?
+This task could possibly be done during the previous step (cleaning), as part of the cleaning requires (BeautifulSoup) scanning the HTML for specific tags/XPaths.
+
+5. using the details from the previous step, we construct an "index" page - HTML of  a page that has headers of all the articles, as HTML, that can be read by a person who will quickly navigate from that page to any articles they want to read.
+
+6. The index page (and possibly the articles) is uploaded to the WebSite (currently GitHub pages). Preferably, the (cleaned) articles are already in S3 and can be linked directly from the index page.
+
+
+Airflow Tutorials
+Pluralsight - Building Pipelines for Workflow Orchestration Using Google Composer (my-score 4/5)
+Udemy - The Complete Hands-On Introduction Course to Apache Airflow [MarcLamberti] (my-score 2/5)
+
+Books
+Packt (2019) - Expert Python Programming 3rd ed
+Manning (2019) - Data Science with Python and Dask
+Packt (2019) - Python parallel Programming Cookbook 2nd ed
+
