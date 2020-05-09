@@ -20,21 +20,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="bs.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="bs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1474">
-              <caret line="86" column="37" lean-forward="true" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
+            <state relative-caret-position="22">
+              <caret line="86" column="37" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
               <folding>
                 <element signature="e#530#573#0" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="test_bs.py" pinned="false" current-in-tab="false">
@@ -392,21 +387,28 @@
       <option name="project" value="LOCAL" />
       <updated>1587239660199</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="unfinished pytest improvement">
+      <created>1589038092145</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1589038092145</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1920" height="1000" extended-state="6" />
+    <frame x="0" y="25" width="1600" height="820" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" visible="true" weight="0.11764706" />
+      <window_info anchor="bottom" id="Version Control" order="7" visible="true" weight="0.11790393" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32834962" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.36390102" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32896653" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.29348987" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4764398" visible="true" weight="0.2972973" />
       <window_info anchor="bottom" id="Docker" order="7" weight="0.2183406" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -462,7 +464,8 @@
     <MESSAGE value="use thread pools" />
     <MESSAGE value="improve code" />
     <MESSAGE value="improve code and reduce info logging" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve code and reduce info logging" />
+    <MESSAGE value="unfinished pytest improvement" />
+    <option name="LAST_COMMIT_MESSAGE" value="unfinished pytest improvement" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -605,6 +608,13 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/selenium1.py" />
     <entry file="file://$PROJECT_DIR$/lp.py" />
     <entry file="file://$PROJECT_DIR$/bs.py">
@@ -780,16 +790,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1474">
-          <caret line="86" column="37" lean-forward="true" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
+        <state relative-caret-position="22">
+          <caret line="86" column="37" selection-start-line="86" selection-start-column="37" selection-end-line="86" selection-end-column="37" />
           <folding>
             <element signature="e#530#573#0" expanded="true" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
