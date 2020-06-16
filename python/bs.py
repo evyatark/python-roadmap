@@ -19,12 +19,14 @@ from bs4 import BeautifulSoup
 from datetime import date,timedelta
 import glob
 import logging
-import time as time1
 from time import time
 from dateutil import parser
 from queue import Queue
 from threading import Thread
 import tenacity
+from utils import remove_duplicates
+import os
+import subprocess
 
 '''
  static variables:
@@ -55,15 +57,23 @@ HTML_END = '''
     </body>
 </html>'''
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 # base_dir - assuming that the script is run in a docker container.
+# when running on local machine - define BASE_DIR as a real dir on the machine (like /home/evyatar/out/)
 # this dir is mapped to a directory on the host (for example '/home/evyatar/GitHub/github-pages-hello-world/haaretz/')
-base_dir = '/out/'
+base_dir = os.environ.get('BASE_DIR')
+if not base_dir:
+    base_dir = '/out/'
+    logger.warning('BASE_DIR not defined, using default %s', base_dir)
+if (not base_dir.endswith("/") ):
+    base_dir = base_dir + "/"
+logger.info('using base_dir=%s', base_dir)
 
 minimalAllowedDateAsStr = str(date.today())
 user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 
 '''
@@ -326,16 +336,35 @@ article_ids = []
 #urls = [ 'https://www.haaretz.co.il/amp/1.8600567',
 
 
+def decide_year_month():
+    return "2020_06"    # temporary implementation
+
+
+def decide_file_location(directory):
+    if not directory:
+        # directory is empty string
+        directory = "archive/" + decide_year_month() + "/"
+    return base_dir + directory
+
 def saveToFile(id, htmlText):
-    name = "h" + id + ".html"
-    fileName = base_dir + name
-    f = open(fileName, "w")
-    f.write(htmlText)
-    f.close()
-
-    logger.debug("[%s] file: %s", id, fileName)
-    return name, fileName
-
+    try:
+        # index_file_name='index_20200615', directory='archive/2020_06/'
+        name = "h" + id + ".html"
+        dir = decide_file_location('')
+        logger.debug("trying to create dir if not exist: %s", dir)
+        os.makedirs(dir, exist_ok=True)
+        logger.debug("created")
+        fileName = dir + name
+        logger.debug("trying to save file, id [%s] file: %s", id, fileName)
+        f = open(fileName, "w")
+        f.write(htmlText)
+        f.close()
+        logger.debug("saved")
+        logger.debug("[%s] file: %s", id, fileName)
+        return name, fileName
+    except Exception as inst:
+        logger.error("some exception with id %s: %s", id, inst)
+        return '',''
 
 def sort_by_subject(articles):
     sorted = []
@@ -481,8 +510,12 @@ def do_with_article(articleObject):
         else:
             logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
 
-    except:
-        logger.error("some exception with id %s", articleObject.id)
+    except Exception as inst:
+        #print(type(inst))  # the exception instance
+        #print(inst.args)  # arguments stored in .args
+        #print(inst)
+        #logger.error("Unexpected error: %s", inst)  # + sys.exc_info()[0])
+        logger.error("some exception with id %s: %s", articleObject.id, inst)
     return 0
 
 
@@ -494,12 +527,20 @@ def add_article(key, article):
 
 
 
-
-def create_index_file():
+#
+# <div id="begin_index_links"></div>
+#             <div><a href="archive/2020_06/index_20200615.html">2020-06-15</a></div>
+#
+def create_index_file(index_file_name, directory):
     logger.info('generating index for %d articles...', len(articles))
     html = generate_index(articles)
     logger.info("...done. writing to file...")
-    f = open(base_dir + 'index.html', "w")
+    dir = decide_file_location(directory)
+    full_index_file_name = dir + index_file_name + '.html'
+    if os.path.exists(full_index_file_name) and os.path.isfile(full_index_file_name):
+        logger.warning('file %s already exists, it will be overwritten!!', full_index_file_name)
+    logger.info('to file ' + full_index_file_name)
+    f = open(full_index_file_name, "w")
     f.write(html)
     f.close()
     logger.info("...done.")
@@ -579,19 +620,19 @@ def process_page(url, limit):
     return ids
 
 
-def remove_duplicates(article_ids):
-    set = {'0'}
-    for id in article_ids:
-        newId = id
-        if ('#' in id):
-            newId = id[:id.find('#')]
-        if ('?' in id):
-            newId = id[:id.find('?')]
-        set.add(newId)
-        if ('?' in newId):
-            logger.warn("url %s still contains ?, original was %s", newId, id)
-    set.remove('0')
-    return list(set)
+# def remove_duplicates(article_ids):
+#     set = {'0'}
+#     for id in article_ids:
+#         newId = id
+#         if ('#' in id):
+#             newId = id[:id.find('#')]
+#         if ('?' in id):
+#             newId = id[:id.find('?')]
+#         set.add(newId)
+#         if ('?' in newId):
+#             logger.warn("url %s still contains ?, original was %s", newId, id)
+#     set.remove('0')
+#     return list(set)
 
 '''
 A static list of URLs that are semi-index pages inside the site,
@@ -650,8 +691,126 @@ def remove_same(article_ids, more_article_ids):
             more_article_ids.remove(id)
     return more_article_ids
 
+
+def edit_master_index(index_file_name, directory, the_date):
+    # index_file_name='index_20200615', directory='archive/2020_06/', the_date='2020-06-15'
+    master_index_file = base_dir + 'index.html'
+    added_link = directory + index_file_name + ".html"
+    if os.path.exists(master_index_file) and os.path.isfile(master_index_file):
+        file = open(master_index_file, "r")
+        html = file.read()
+        bs = BeautifulSoup(html, 'html.parser')
+        link_to_today = bs.find(name='a', attrs={"href": added_link})
+        if link_to_today:
+            # link already exists, no need to create it!!
+            logger.warning("link to %s already exists in master index file", added_link)
+            file.close()
+            return
+        #<div        id = "begin_index_links" > < / div >
+        div_wrapper = bs.find(name='div', attrs={"id": "begin_index_links"})
+        div = bs.new_tag('div')
+        a = bs.new_tag('a', href=added_link)    # "archive/2020_06/index_20200615.html")
+        div.append(a)
+        a.string = the_date
+        div_wrapper.insert(0, div)
+        content = bs.prettify()
+        file.close()
+        logger.warning("write original to file: %s .old", master_index_file)
+        old = open(master_index_file+'.old', "w")
+        old.write(html)
+        old.close()
+        logger.warning("write HTML to file: \n%s", content)
+        file = open(master_index_file, "w")
+        file.write(content)
+        file.close()
+        logger.warning("done!")
+    else:
+        logger.warning("master index file %s not found!", master_index_file)
+
+
+def push_to_github(directory, the_date):
+    git_repo_password = os.environ.get('GIT_PASSWORD')
+    repo_with_credentials = "'https://USER:PASSWORD@github.com/evyatark/news.git'"
+    repo_with_credentials = repo_with_credentials.replace('USER', 'evyatark')
+    repo_with_credentials = repo_with_credentials.replace('PASSWORD', git_repo_password)
+
+    # directory='archive/2020_06/', the_date='2020-06-15'
+    archive_dir = base_dir + directory
+
+# cd ~/work/roadmap/githubPagesNews/news/news/haaretz
+# cd archive/2020_06/
+
+    os.chdir(archive_dir)
+
+    #print(subprocess.run("ls index*.html -al", check=True, shell=True))
+    logger.info('=============')
+    logger.info("performing git status...")
+    logger.info(subprocess.run("git status", check=True, shell=True))
+
+    logger.info('=============')
+    logger.info("performing git add...")
+    command = "git add *.html"
+    cp = subprocess.run(command, check=True, shell=True)
+    logger.info(cp)
+
+    logger.info(subprocess.run("git status", check=True, shell=True))
+
+    command = 'git commit -m"automated commit of ' + the_date + '"'
+    try:
+        logger.info('=============')
+        logger.info("performing git commit...")
+        cp = subprocess.run(command, check=True, shell=True)
+        logger.info("command=" + command + ", cp=")
+        logger.info(cp)
+    except subprocess.CalledProcessError as ex:
+        # no changes added to commit (use "git add" and/or "git commit -a")
+        #print('absorbing: ' + str(ex))
+        logger.warning('absorbing: ' + str(ex))
+
+    #return
+
+    os.chdir(base_dir)
+
+    logger.info('=============')
+    logger.info("performing git add...")
+    command = 'git add index.html'
+    cp = subprocess.run(command, check=True, shell=True)
+    logger.info(cp)
+
+    try:
+        logger.info('=============')
+        logger.info("performing git commit...")
+        command = 'git commit -m"automated add of ' + the_date + ' to master index"'
+        cp = subprocess.run(command, check=True, shell=True)
+        logger.info("command=" + command + ", cp=")
+        logger.info(cp)
+    except subprocess.CalledProcessError as ex:
+        # nothing to commit, working tree clean
+        logger.info('absorbing: ' + str(ex))
+
+        logger.info('=============')
+        logger.info(subprocess.run("git status", check=True, shell=True))
+
+
+    #git push 'https://evyatark:password@myrepository.biz/file.git'
+    logger.info('=============')
+    try:
+        logger.info("performing git push...")
+        command = 'git push ' + repo_with_credentials
+        cp = subprocess.run(command, check=True, shell=True)
+        ## do NOT print cp, because it prints the password to the git repository
+        logger.info('git push. return-code=' + str(cp.returncode))
+    except Exception as ex:
+        # nothing to commit, working tree clean
+        logger.info('absorbing: ' + str(ex))
+
+    return
+
+
 def main():
     logger.debug("starting queue 1")
+    today = date.today()
+    global minimalAllowedDateAsStr
     minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
     # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
     article_ids = []
@@ -675,7 +834,20 @@ def main():
 
     articles_queue.join()   # this will wait for queue2 completing?
     logger.debug("articles queue joined")
-    create_index_file()     # after all articles have been added to the articles dictionary
+    year = str(today)[0:4]
+    month = str(today)[5:7]
+    day = str(today)[8:10]
+    new_index_file_name = 'index_' + year + month + day
+    archive_directory = 'archive/' + year + '_' + month + '/'
+    logger.info("archive_directory=" + archive_directory + ", the_date=" + str(today))
+
+    create_index_file(index_file_name=new_index_file_name, directory=archive_directory)     # after all articles have been added to the articles dictionary
+    #create_index_file(index_file_name='index_20200615', directory='archive/2020_06/')     # after all articles have been added to the articles dictionary
+    edit_master_index(index_file_name=new_index_file_name, directory=archive_directory, the_date=str(today))    # change master index
+    #push_to_github(directory='archive/2020_06/', the_date='2020-06-16')
+    logger.info("pushing to github...           (archive_directory=" + archive_directory + ", the_date=" + str(today) + ")")
+    push_to_github(directory=archive_directory, the_date=str(today))
+    logger.info("pushing to github completed!")
 
 
 def test1(id):
