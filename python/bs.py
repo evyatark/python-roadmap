@@ -33,6 +33,8 @@ import subprocess
 '''
 DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
+if os.environ.get('LIMIT_ARTICLES'):
+    LIMIT = int(os.environ.get('LIMIT_ARTICLES'))
 
 # increasing number of download threads above 30 does not increase throughput.
 # increasing number of processing threads above 80 does not increase throughput.
@@ -729,6 +731,9 @@ def edit_master_index(index_file_name, directory, the_date):
 
 
 def push_to_github(directory, the_date):
+    if base_dir == '/out/':
+        logger.warning("running inside docker, skip commit and push to GitHub")
+        return
     git_repo_password = os.environ.get('GIT_PASSWORD')
     repo_with_credentials = "'https://USER:PASSWORD@github.com/evyatark/news.git'"
     repo_with_credentials = repo_with_credentials.replace('USER', 'evyatark')
@@ -744,7 +749,7 @@ def push_to_github(directory, the_date):
 
     #print(subprocess.run("ls index*.html -al", check=True, shell=True))
     logger.info('=============')
-    logger.info("performing git status...")
+    logger.info("performing git status... (archive_dir=" + archive_dir)
     logger.info(subprocess.run("git status", check=True, shell=True))
 
     logger.info('=============')

@@ -1,3 +1,8 @@
+cd ~/GitHub/PythonRoadmap/python-roadmap/python
 docker build -t pythonroadmap/scraping:v01 .
 docker run --rm -it -p 5001:5000 pythonroadmap/scraping:v01
 
+cd ~/GitHub/PythonRoadmap/python-roadmap/ && docker run -p 5001:5000 -v /home/evyatar/GitHub/github-pages-hello-world/haaretz/:/out/ --rm --name scraping pythonroadmap/scraping:v01
+cd ~/GitHub/github-pages-hello-world/haaretz/ &&  git add * && git commit -m"new day" && git push
+
+cd ~/GitHub/PythonRoadmap/python-roadmap/ && docker run -p 5001:5000 -v /home/evyatar/work/roadmap/githubPagesNews/news/news/haaretz/:/out/ --rm --name scraping pythonroadmap/scraping:v01
