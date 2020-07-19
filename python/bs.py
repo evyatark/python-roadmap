@@ -339,7 +339,7 @@ article_ids = []
 
 
 def decide_year_month():
-    return "2020_06"    # temporary implementation
+    return "2020_07"    # temporary implementation
 
 
 def decide_file_location(directory):
@@ -556,10 +556,14 @@ def generate_key(articleObject):
 
 
 def is_link(link):
-    return (link.find("1.8") >= 0)
+    return ((link.find("1.8") >= 0) or (link.find("1.9") >= 0))
 
 def start_link(link):
-    return link.find("1.8")
+    index = link.find("1.8")
+    if index >= 0:
+        return index
+    else:
+        return link.find("1.9")
 
 def scan(name):
     bs = BeautifulSoup(urlopen("file://" + name), 'html.parser')
