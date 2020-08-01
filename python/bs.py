@@ -339,7 +339,7 @@ article_ids = []
 
 
 def decide_year_month():
-    return "2020_07"    # temporary implementation
+    return "2020_08"    # temporary implementation
 
 
 def decide_file_location(directory):
