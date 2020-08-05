@@ -56,6 +56,51 @@ HTML_START = '''
 
 HTML_END = '''
     <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script>
+
+        function setDisplay(element, val) {
+            if (element.style) {
+                element.style.display = val;
+            }
+        }
+
+        function toggleAllSiblingChildren(buttons, element, key) {
+            const children = element.nextElementSibling.children;
+            const size = children.length;
+            for (index = 0 ; index < size; index++) {
+                if (buttons[key] == true) {                    
+                    setDisplay(children[index], "none");
+                }
+                else {
+                    setDisplay(children[index], "block");
+                }
+            }
+        }
+
+        function initButtonsArray(numberOfButtons) {
+            let b = {};
+            for (index = 1 ; index <= numberOfButtons; index ++) {
+                b['collapse_toggle_'+index] = false;
+            }
+            return b;
+        }
+
+        const numberOfButtons = document.getElementsByTagName("button").length;
+        if (!sessionStorage.getItem("buttons")) {
+            sessionStorage.setItem("buttons",JSON.stringify(initButtonsArray(numberOfButtons)));
+        }
+
+        const buttons = JSON.parse(sessionStorage.getItem("buttons"));
+        keys = Object.keys(buttons);
+        keys.forEach(key => {
+            const element = document.getElementById(key);
+            element.onclick = () => {
+                buttons[key] = !buttons[key];
+                sessionStorage.setItem("buttons",JSON.stringify(buttons));
+            }
+            toggleAllSiblingChildren(buttons, element, key);
+        });
+    </script>
     </body>
 </html>'''
 
