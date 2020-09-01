@@ -384,7 +384,9 @@ article_ids = []
 
 
 def decide_year_month():
-    return "2020_08"    # temporary implementation
+    month = str(date.today())[5:7]
+    year = str(date.today())[0:4]
+    return year + "_" + month    
 
 
 def decide_file_location(directory):
@@ -430,7 +432,7 @@ def sort_by_subject(articles):
     sorted.extend(articles_with_subject_not_in_list)
     if (len(articles_with_subject_not_in_list) > 0):
         subjects_not_in_list = [x.subject for x in articles_with_subject_not_in_list]
-        logger.warn("unknown subjects: %s", str(subjects_not_in_list).strip('[]'))
+        logger.warning("unknown subjects: %s", str(subjects_not_in_list).strip('[]'))
 
     return sorted, existing_subjects
 
