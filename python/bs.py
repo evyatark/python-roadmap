@@ -104,9 +104,10 @@ HTML_END = '''
     </body>
 </html>'''
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
+logger.debug('====================> started!')
+logger.debug ('/home/evyatar/GitHub/PythonRoadmap/python-roadmap/python/bs.py')
 # base_dir - assuming that the script is run in a docker container.
 # when running on local machine - define BASE_DIR as a real dir on the machine (like /home/evyatar/out/)
 # this dir is mapped to a directory on the host (for example '/home/evyatar/GitHub/github-pages-hello-world/haaretz/')
@@ -934,12 +935,4 @@ def test_ids(ids):
 
 if __name__ == "__main__":
     main()
-    #test1('1.8765533')
-    # test_ids(['1.8765533'
-    # ,'1.8764610'
-    # ,'1.8765443'
-    # ,'1.8763785'
-    # ,'1.8764023'
-    # ,'1.8763854'
-    #  ])
 
