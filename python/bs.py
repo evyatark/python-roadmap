@@ -31,10 +31,11 @@ import subprocess
 '''
  static variables:
 '''
-DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
+DEBUG_LEVEL=logging.DEBUG
+DELTA = 3   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
-if os.environ.get('LIMIT_ARTICLES'):
-    LIMIT = int(os.environ.get('LIMIT_ARTICLES'))
+# if os.environ.get('LIMIT_ARTICLES'):
+#     LIMIT = int(os.environ.get('LIMIT_ARTICLES'))
 
 # increasing number of download threads above 30 does not increase throughput.
 # increasing number of processing threads above 80 does not increase throughput.
@@ -104,7 +105,8 @@ HTML_END = '''
     </body>
 </html>'''
 
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename='1.log',level=DEBUG_LEVEL, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+#filename='1.log',
 logger = logging.getLogger(__name__)
 logger.debug('====================> started!')
 logger.debug ('/home/evyatar/GitHub/PythonRoadmap/python-roadmap/python/bs.py')
@@ -166,10 +168,15 @@ class ArticleWorker(Thread):
         while True:
             # Get the work from the queue and expand the tuple
             article = self.queue.get()
+            logger.debug('ArticlesQueue: get article ' + article.id + ' from queue')
+            if not article.fullHtml:
+                logger.debug('===> article fullHtml already empty at this stage')
             try:
                 result = do_with_article(article)
+                logger.debug('ArticlesQueue: article ' + article.id + ' processing completed with result ' + str(result))
             finally:
                 self.queue.task_done()
+                logger.debug('ArticlesQueue: task done (' + article.id + ')')
 
 
 '''=========================================
@@ -184,13 +191,24 @@ class DownloadWorker(Thread):
         while True:
             # Get the work from the queue and expand the tuple
             id, url = self.queue.get()
+            logger.debug('DownloadQueue: get item ' + id + ' from queue')
             try:
                 article = readAndProcess(id, url)
-                send_article_to_queue(article)
+                logger.debug('DownloadQueue: item ' + id + ' readAndProcess completed')
+                if article.fullHtml:
+                    logger.debug('fullHtml has length ' + str(len(article.fullHtml)))
+                    # continue to articles queue only if html not empty
+                    send_article_to_queue(article)
+                    logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
+                else:
+                    logger.warning('===> already empty fullHTML for id ' + id)
+                # send_article_to_queue(article)
+                # logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
             except:
                 pass
             finally:
                 self.queue.task_done()
+                logger.debug('DownloadQueue: item ' + id + ' task done')
 
 '''=========================================
 ====='''
@@ -231,7 +249,9 @@ def omit(tag):
 def load_html(request):
     response = urlopen(request)
     html = response.read()
-    return html
+    # convert from bytes to String:
+    htmlText = html.decode(encoding='UTF-8')
+    return htmlText
 
 
 def fast_find_times(bs):
@@ -245,7 +265,7 @@ def find_times(bs):
     publishedAt = ""
     updatedAt = ""
     try:
-        logger.debug("1")
+        #logger.debug("1")
         elements = bs.find_all('time')
         if (elements is not None) and (len(elements) > 0):
             publishedAt = elements[0]['datetime']
@@ -253,17 +273,17 @@ def find_times(bs):
         else:
             published = bs.head.find(name='meta', attrs={"property": "article:published"})
             if (published is not None):
-                logger.debug("1.1")
+                #logger.debug("1.1")
                 publishedAt = bs.head.find(name='meta', attrs={"property": "article:published"}).attrs['content']
             if bs.head.find(name='meta', attrs={"property": "article:modified"}) is not None:
-                logger.debug("1.2")
+                #logger.debug("1.2")
                 updatedAt = bs.head.find(name='meta', attrs={"property": "article:modified"}).attrs['content']
     except:
         pass
     if (publishedAt=='' and updatedAt==''):
         try:
             publishedAt = bs.head.find(name='meta', attrs={"property": "og:pubdate"}).attrs['content']
-            logger.debug("1.3")
+            #logger.debug("1.3")
             updatedAt = bs.html.find(lambda tag: tag.name == "time" and "datetime" in tag.attrs.keys()).attrs['datetime']
             #publishedAt = updatedAt
         except:
@@ -276,7 +296,7 @@ def find_times(bs):
 
 def remove_parts_of_article(section, parts):
     for part in parts:
-        logger.debug("2")
+        #logger.debug("2")
         while section.find(class_=part) is not None:
             section.find(class_=part).replace_with(omit(part))
 
@@ -290,11 +310,22 @@ def readAndProcess(id, url):
     #
     ##
     logger.debug('[%s] loading completed in %s seconds', id, time() - ts)
+    if html:
+        logger.debug(' html of article ' + id + ' has length ' + str(len(html)))
+    else:
+        logger.warning('!!!!!==> empty html for article ' + id)
+    # temporary - return here without doing BeutifulSoup!
+    ##return Article(id, '', '', '', html, '', '')
+
+
     ts = time()
     logger.debug("[%s] souping...", id)
     bs = BeautifulSoup(html, 'html.parser')
     if (bs.article is None):
+        logger.debug('bs.article is NONE for id ' + id)
         return Article(id, HEADER_OF_UNKNOWN, '', '', '', '', '')
+    else:
+        logger.debug('Surprise!!! article ' + id)
 
     # first find publish time, if too old, we don't need to continue parsing
     if not decide_include_article(fast_find_times(bs)):
@@ -307,15 +338,20 @@ def readAndProcess(id, url):
     except:
         header = HEADER_OF_UNKNOWN
 
-    logger.debug('[%s] souping completed in %s seconds', id, time() - ts)
+    logger.debug('[%s] souping completed in %s seconds, header=%s', id, time() - ts, header)
     ts = time()
     logger.debug("[%s] processing...", id)
     sections = bs.article.findAll(name='section', class_='b-entry')
     if (sections is None) or len(sections) == 0:
+        logger.debug("bs.article.findAll(name='section', class_='b-entry') produced 0 results for id " + id)
         return Article(id, header, '', '', '', '', '')
+    else:
+        logger.debug("[%s] bs.article.findAll(name='section', class_='b-entry') produced " + str(len(sections)), id)
     first = sections[0]
 
+    logger.debug("[%s] before find_times", id)
     publishedAt, updatedAt = find_times(bs)
+    logger.debug("[%s] after find_times. publishedAt=%s, updatedAt=%s", id, publishedAt, updatedAt)
 
     header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
     header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
@@ -326,6 +362,8 @@ def readAndProcess(id, url):
     if len(header_crumbs) > 1:
         sub_subject = header_crumbs[1].text.rstrip().lstrip()
 
+    logger.debug("[%s] after header_crumbs. subject=%s, sub_subject=%s", id, subject, sub_subject)
+
     remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
     # logger.debug("2")
     # if first.find(class_='c-quick-nl-reg') is not None:
@@ -333,7 +371,7 @@ def readAndProcess(id, url):
     # logger.debug("3")
     # if first.find(class_='c-related-article-text-only-wrapper') is not None:
     #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
-    logger.debug("4")
+    #logger.debug("4")
     all_figures = first.find_all(name='figure')
     # while (len(all_figures) > 0):
     #     first.find(name='figure').replace_with(omit('figure'))
@@ -345,7 +383,7 @@ def readAndProcess(id, url):
     # while (first.find(class_="c-dfp-ad") is not None):
     #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
-    logger.debug("6")
+    #logger.debug("6")
     bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
     bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
     #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
@@ -357,20 +395,25 @@ def readAndProcess(id, url):
 
 # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
 # to     <section amp-access="TRUE">
-    logger.debug("8")
+    #logger.debug("8")
     list_of_sections = bs.html.findAll(
         lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
     for section in list_of_sections:
         logger.debug(".", end='')
         section.attrs['amp-access'] = "TRUE"
 
-    logger.debug("9")
+    #logger.debug("9")
     bs.html.body.attrs['style'] = "border:2px solid"
     # assuming that 3rd child of <head> is not needed and can be changed...
     bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
     htmlText=bs.html.prettify()
-    logger.debug('[%s] processing completed in %s seconds', id, time() - ts)
-    logger.debug("!")
+    if not htmlText:
+        logger.warning('!!!!!!!==> empty HTML for article ' + id)
+        logger.debug('[%s] processing completed in %s seconds.')
+    else:
+        logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
+
+    #logger.debug("!")
     return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
 
 
@@ -401,16 +444,17 @@ def saveToFile(id, htmlText):
         # index_file_name='index_20200615', directory='archive/2020_06/'
         name = "h" + id + ".html"
         dir = decide_file_location('')
-        logger.debug("trying to create dir if not exist: %s", dir)
+        #logger.debug("trying to create dir if not exist: %s", dir)
         os.makedirs(dir, exist_ok=True)
-        logger.debug("created")
+        #logger.debug("created")
         fileName = dir + name
-        logger.debug("trying to save file, id [%s] file: %s", id, fileName)
+        #logger.debug("trying to save file, id [%s] file: %s", id, fileName)
         f = open(fileName, "w")
+        #htmlAsString = htmlText.decode(encoding='UTF-8')
         f.write(htmlText)
         f.close()
-        logger.debug("saved")
-        logger.debug("[%s] file: %s", id, fileName)
+        #logger.debug("saved")
+        #logger.debug("[%s] file: %s", id, fileName)
         return name, fileName
     except Exception as inst:
         logger.error("some exception with id %s: %s", id, inst)
@@ -438,8 +482,14 @@ def sort_by_subject(articles):
     return sorted, existing_subjects
 
 def generate_index(articles):
+    if articles:
+        logger.debug('generate_index started, ' + str(len(articles)) + ' articles')
+    else:
+        logger.warning("!!!!!!!!!!!!!!!!!!!===>   no articles will be inserted to index!!")
     body = ''
     sortedBySubject, existing_subjects = sort_by_subject(articles)
+    if existing_subjects:
+        logger.debug('sorted, ' + len(existing_subjects) + ' existing subjects')
 
     #assume for now that existing_subjects is sorted correctly
     counter = 0
@@ -522,12 +572,16 @@ def create_link(articleObject):
 
 
 def decide_include_article(publishTime):
-    if (publishTime == ''):
-        return True         # could not find publishedTime in HTML, so include it in results
-    # minimalAllowedDateAsStr was already calculated in main()
-    publishedDateAsStr = str(parser.parse(publishTime).date())
-    logger.debug("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
-    return (publishedDateAsStr >= minimalAllowedDateAsStr)
+    return True
+    # logger.debug("decide_include_article started   " + str(publishTime))
+    # if (publishTime == ''):
+    #     return True         # could not find publishedTime in HTML, so include it in results
+    # # minimalAllowedDateAsStr was already calculated in main()
+    # publishedDateAsStr = str(parser.parse(publishTime).date())
+    # logger.debug("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
+    # decide = (publishedDateAsStr >= minimalAllowedDateAsStr)
+    # logger.debug(" decide=" + decide)
+    # return decide
 
 
 def do_with_article(articleObject):
@@ -538,7 +592,15 @@ def do_with_article(articleObject):
         #so_far = so_far + 1
         #logger.info("completed %d out of %d", so_far, numberOfIds)
         if articleObject.fullHtml == '':
+            logger.debug('==================>  empty full HTML for article ' + articleObject.id)
             return 0
+        logger.debug('do_with_article: html not empty for article ' + articleObject.id +
+                     ' with header=' + articleObject.header +
+                     ', updatedAt=' + articleObject.updatedAt +
+                     ', publishedAt=' + articleObject.publishedAt +
+                     ', subject=' + articleObject.subject +
+                     ', sub_subject=' + articleObject.sub_subject)
+
         file_relative_path, file_full_path = saveToFile(articleObject.id, articleObject.fullHtml)
         time = articleObject.updatedAt
         if (time == ''):
@@ -549,13 +611,18 @@ def do_with_article(articleObject):
                              ']<b>' + articleObject.publishedAt + \
                              '</b><a href="' + file_relative_path + \
                              '">' + str(articleObject.header) + '</a></p>'
+        logger.debug('do_with_article: article ' + articleObject.id +
+                     ' the link is: ' + articleObject.link)
         articleObject.link = create_link(articleObject)
+        logger.debug('do_with_article: article ' + articleObject.id +
+                     ' the revised link is: ' + articleObject.link)
         #body = body + articleObject.link
         logger.debug("[%s] published at %s, updated at: %s", articleObject.id, articleObject.publishedAt, articleObject.updatedAt)
 
         if decide_include_article(articleObject.publishedAt):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
+            logger.debug("[%s] article %s added", articleObject.id, key)
             return 1
         else:
             logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
@@ -565,7 +632,7 @@ def do_with_article(articleObject):
         #print(inst.args)  # arguments stored in .args
         #print(inst)
         #logger.error("Unexpected error: %s", inst)  # + sys.exc_info()[0])
-        logger.error("some exception with id %s: %s", articleObject.id, inst)
+        logger.error("do_with_article: some exception with id %s: %s", articleObject.id, inst)
     return 0
 
 
@@ -659,6 +726,7 @@ def process_page(url, limit):
             links.add(link)
             limit = limit - 1
             if (limit <= 0):
+                logger.error("reached limit in process_page()")
                 break
     links.remove("1")
     #print("links:")
@@ -871,8 +939,9 @@ def main():
     minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
     # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
     article_ids = []
-    for url in urls():
+    for url in urls()[:10]:
         if (len(article_ids) > LIMIT):
+            logger.error("number of article_ids " + str(len(article_ids)) + " reached limit " + str(LIMIT) + " in main()")
             break
         more_article_ids = process_page(url, LIMIT - len(article_ids))
         more_article_ids = remove_same(article_ids, more_article_ids)
