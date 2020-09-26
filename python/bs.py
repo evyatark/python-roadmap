@@ -165,19 +165,22 @@ class ArticleWorker(Thread):
         self.queue = queue
 
     def run(self):
-        while True:
-            # Get the work from the queue and expand the tuple
-            article = self.queue.get()
-            logger.debug('ArticlesQueue: get article ' + article.id + ' from queue')
-            if not article.fullHtml:
-                logger.debug('===> article fullHtml already empty at this stage')
-            try:
-                result = do_with_article(article)
-                logger.debug('ArticlesQueue: article ' + article.id + ' processing completed with result ' + str(result))
-            finally:
-                self.queue.task_done()
-                logger.debug('ArticlesQueue: task done (' + article.id + ')')
+        try:
+            while True:
+                try:
+                    # Get the work from the queue and expand the tuple
+                    article = self.queue.get()
+                    logger.debug('ArticlesQueue: get article ' + article.id + ' from queue')
+                    if not article.fullHtml:
+                        logger.debug('===> article fullHtml already empty at this stage')
 
+                    result = do_with_article(article)
+                    logger.debug('ArticlesQueue: article ' + article.id + ' processing completed with result ' + str(result))
+                finally:
+                    self.queue.task_done()
+                    logger.debug('ArticlesQueue: task done (' + str(article.id) + ')')
+        finally:
+            pass
 
 '''=========================================
 ====='''
@@ -188,27 +191,30 @@ class DownloadWorker(Thread):
         self.queue = queue
 
     def run(self):
-        while True:
-            # Get the work from the queue and expand the tuple
-            id, url = self.queue.get()
-            logger.debug('DownloadQueue: get item ' + id + ' from queue')
-            try:
-                article = readAndProcess(id, url)
-                logger.debug('DownloadQueue: item ' + id + ' readAndProcess completed')
-                if article.fullHtml:
-                    logger.debug('fullHtml has length ' + str(len(article.fullHtml)))
-                    # continue to articles queue only if html not empty
-                    send_article_to_queue(article)
-                    logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
-                else:
-                    logger.warning('===> already empty fullHTML for id ' + id)
-                # send_article_to_queue(article)
-                # logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
-            except:
-                pass
-            finally:
-                self.queue.task_done()
-                logger.debug('DownloadQueue: item ' + id + ' task done')
+        try:
+            while True:
+                # Get the work from the queue and expand the tuple
+                try:
+                    id, url = self.queue.get()
+                    logger.debug('DownloadQueue: get item ' + id + ' from queue')
+                    article = readAndProcess(id, url)
+                    logger.debug('DownloadQueue: item ' + id + ' readAndProcess completed')
+                    if article.fullHtml:
+                        logger.debug('fullHtml has length ' + str(len(article.fullHtml)))
+                        # continue to articles queue only if html not empty
+                        send_article_to_queue(article)
+                        logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
+                    else:
+                        logger.warning('===> already empty fullHTML for id ' + id)
+                    # send_article_to_queue(article)
+                    # logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
+                except:
+                    pass
+                finally:
+                    self.queue.task_done()
+                    logger.debug('DownloadQueue: item ' + id + ' task done')
+        finally:
+            pass
 
 '''=========================================
 ====='''
@@ -364,6 +370,66 @@ def readAndProcess(id, url):
 
     logger.debug("[%s] after header_crumbs. subject=%s, sub_subject=%s", id, subject, sub_subject)
 
+## remove()
+    try:
+        remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
+        # logger.debug("2")
+        # if first.find(class_='c-quick-nl-reg') is not None:
+        #     first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
+        # logger.debug("3")
+        # if first.find(class_='c-related-article-text-only-wrapper') is not None:
+        #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
+        #logger.debug("4")
+        all_figures = first.find_all(name='figure')
+        # while (len(all_figures) > 0):
+        #     first.find(name='figure').replace_with(omit('figure'))
+        #     all_figures = first.find_all(name='figure')
+        while (first.find(name='figure') is not None):
+            first.find(name='figure').replace_with(omit('figure'))
+
+        # logger.debug("5")
+        # while (first.find(class_="c-dfp-ad") is not None):
+        #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
+
+        #logger.debug("6")
+        bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
+        bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
+        #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
+        # logger.debug("7")
+        # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
+        remove_parts_of_article(bs.html, ['amp-sidebar'])
+        while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
+            bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
+
+    # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
+    # to     <section amp-access="TRUE">
+        #logger.debug("8")
+        list_of_sections = bs.html.findAll(
+            lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
+        for section in list_of_sections:
+            logger.debug(".", end='')
+            section.attrs['amp-access'] = "TRUE"
+
+        #logger.debug("9")
+        bs.html.body.attrs['style'] = "border:2px solid"
+        # assuming that 3rd child of <head> is not needed and can be changed...
+        bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
+        htmlText=bs.html.prettify()
+        if not htmlText:
+            logger.warning('!!!!!!!==> empty HTML for article ' + id)
+            logger.debug('[%s] processing completed in %s seconds.')
+        else:
+            logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
+    except:
+        print("unknown exception 2 when removing parts of article")
+        pass
+    finally:
+        pass
+
+    #logger.debug("!")
+    return Article(id, header, publishedAt, updatedAt, html, subject, sub_subject)
+
+def remove():
     remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
     # logger.debug("2")
     # if first.find(class_='c-quick-nl-reg') is not None:
@@ -371,7 +437,7 @@ def readAndProcess(id, url):
     # logger.debug("3")
     # if first.find(class_='c-related-article-text-only-wrapper') is not None:
     #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
-    #logger.debug("4")
+    # logger.debug("4")
     all_figures = first.find_all(name='figure')
     # while (len(all_figures) > 0):
     #     first.find(name='figure').replace_with(omit('figure'))
@@ -383,39 +449,36 @@ def readAndProcess(id, url):
     # while (first.find(class_="c-dfp-ad") is not None):
     #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
-    #logger.debug("6")
-    bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
-    bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
-    #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
+    # logger.debug("6")
+    bs.html.find(name='div', attrs={"hidden": ""}).replace_with(omit('hidden'))
+    bs.html.find(attrs={"id": "amp-web-push"}).replace_with(omit('amp-web-push'))
+    # bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
     # logger.debug("7")
     # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
     remove_parts_of_article(bs.html, ['amp-sidebar'])
-    while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
+    while (bs.html.find(name='div', attrs={"class": "delayHeight"}) is not None):
         bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
 
-# convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
-# to     <section amp-access="TRUE">
-    #logger.debug("8")
+    # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
+    # to     <section amp-access="TRUE">
+    # logger.debug("8")
     list_of_sections = bs.html.findAll(
         lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
     for section in list_of_sections:
         logger.debug(".", end='')
         section.attrs['amp-access'] = "TRUE"
 
-    #logger.debug("9")
+    # logger.debug("9")
     bs.html.body.attrs['style'] = "border:2px solid"
     # assuming that 3rd child of <head> is not needed and can be changed...
-    bs.html.head.contents[3].attrs={"name":"viewport","content":"width=device-width, initial-scale=1"}
-    htmlText=bs.html.prettify()
+    bs.html.head.contents[3].attrs = {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+    htmlText = bs.html.prettify()
     if not htmlText:
         logger.warning('!!!!!!!==> empty HTML for article ' + id)
         logger.debug('[%s] processing completed in %s seconds.')
     else:
         logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
-
-    #logger.debug("!")
-    return Article(id, header, publishedAt, updatedAt, htmlText, subject, sub_subject)
-
+    return htmlText
 
 def todayAsStr():
     return str(date.today())
@@ -489,7 +552,7 @@ def generate_index(articles):
     body = ''
     sortedBySubject, existing_subjects = sort_by_subject(articles)
     if existing_subjects:
-        logger.debug('sorted, ' + len(existing_subjects) + ' existing subjects')
+        logger.debug('sorted, ' + str(len(existing_subjects)) + ' existing subjects')
 
     #assume for now that existing_subjects is sorted correctly
     counter = 0
@@ -939,20 +1002,25 @@ def main():
     minimalAllowedDateAsStr = str(date.today() - timedelta(days=DELTA)) # change value of global scope variables defined at beginning of file
     # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
     article_ids = []
-    for url in urls()[:10]:
-        if (len(article_ids) > LIMIT):
-            logger.error("number of article_ids " + str(len(article_ids)) + " reached limit " + str(LIMIT) + " in main()")
-            break
-        more_article_ids = process_page(url, LIMIT - len(article_ids))
-        more_article_ids = remove_same(article_ids, more_article_ids)
-        logger.debug("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
-        logger.debug("now sending %d articles", len(more_article_ids))
-        # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
-        send_urls_to_queue(ids_queue, more_article_ids)
+    for url in urls():
+        try:
+            if (len(article_ids) > LIMIT):
+                logger.error("number of article_ids " + str(len(article_ids)) + " reached limit " + str(LIMIT) + " in main()")
+                break
+            more_article_ids = process_page(url, LIMIT - len(article_ids))
+            more_article_ids = remove_same(article_ids, more_article_ids)
+            logger.debug("after removing duplicates, url %s has %d ids", url, len(more_article_ids))
+            logger.debug("now sending %d articles", len(more_article_ids))
+            # ids_queue is defined in globalscope (queue of NUMBER_OF_Q1_WORKERS DownloadWorkers)
+            send_urls_to_queue(ids_queue, more_article_ids)
 
-        #updating list of all IDs
-        article_ids.extend(more_article_ids)
-        article_ids = remove_duplicates(article_ids)
+            #updating list of all IDs
+            article_ids.extend(more_article_ids)
+            article_ids = remove_duplicates(article_ids)
+        except:
+            print("unknown exception 1")
+        finally:
+            print("for url " + str(url))
 
     logger.info("all %d articles were sent",len(article_ids))
     ids_queue.join()
