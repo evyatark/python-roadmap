@@ -19,7 +19,7 @@ from bs4 import BeautifulSoup
 from datetime import date,timedelta
 import glob
 import logging
-from time import time
+from time import time, sleep
 from dateutil import parser
 from queue import Queue
 from threading import Thread
@@ -32,7 +32,7 @@ import subprocess
  static variables:
 '''
 DEBUG_LEVEL=logging.DEBUG
-DELTA = 3   # in days. if article date is less than DELTA days ago, it will be added to index
+DELTA = 2   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
 # if os.environ.get('LIMIT_ARTICLES'):
 #     LIMIT = int(os.environ.get('LIMIT_ARTICLES'))
@@ -194,6 +194,7 @@ class DownloadWorker(Thread):
         try:
             while True:
                 # Get the work from the queue and expand the tuple
+                id = '0'
                 try:
                     id, url = self.queue.get()
                     logger.debug('DownloadQueue: get item ' + id + ' from queue')
@@ -209,11 +210,13 @@ class DownloadWorker(Thread):
                     # send_article_to_queue(article)
                     # logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
                 except:
+                    logger.debug("unknown exception 4 in DownloadWorker for id " + id)
                     pass
                 finally:
                     self.queue.task_done()
                     logger.debug('DownloadQueue: item ' + id + ' task done')
         finally:
+            logger.debug("unknown exception 5 in DownloadWorker outside loop")
             pass
 
 '''=========================================
@@ -635,16 +638,19 @@ def create_link(articleObject):
 
 
 def decide_include_article(publishTime):
-    return True
-    # logger.debug("decide_include_article started   " + str(publishTime))
-    # if (publishTime == ''):
-    #     return True         # could not find publishedTime in HTML, so include it in results
-    # # minimalAllowedDateAsStr was already calculated in main()
-    # publishedDateAsStr = str(parser.parse(publishTime).date())
-    # logger.debug("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
-    # decide = (publishedDateAsStr >= minimalAllowedDateAsStr)
-    # logger.debug(" decide=" + decide)
-    # return decide
+    try:
+        logger.debug("decide_include_article started   " + str(publishTime))
+        if (publishTime == ''):
+            return True         # could not find publishedTime in HTML, so include it in results
+        # minimalAllowedDateAsStr was already calculated in main()
+        publishedDateAsStr = str(parser.parse(publishTime).date())
+        logger.debug("publishedDateAsStr=%s minimalAllowedDateAsStr=%s", publishedDateAsStr, minimalAllowedDateAsStr)
+        decide = (publishedDateAsStr >= minimalAllowedDateAsStr)
+        logger.debug(" decide=" + decide)
+        return decide
+    except:
+        print("unknown exception 3")
+        return True
 
 
 def do_with_article(articleObject):
@@ -1023,20 +1029,23 @@ def main():
             print("for url " + str(url))
 
     logger.info("all %d articles were sent",len(article_ids))
-    ids_queue.join()
-    logger.debug("ids queue joined")
-
-    articles_queue.join()   # this will wait for queue2 completing?
-    logger.debug("articles queue joined")
+    #ids_queue.join()
+    #logger.debug("ids queue joined")
+    logger.info("sleeping 5 minutes...")
+    sleep(60 * 5)
+    logger.info("completed sleeping 5 minutes.")
+    #articles_queue.join()   # this will wait for queue2 completing?
+    #logger.debug("articles queue joined")
     year = str(today)[0:4]
     month = str(today)[5:7]
     day = str(today)[8:10]
     new_index_file_name = 'index_' + year + month + day
     archive_directory = 'archive/' + year + '_' + month + '/'
-    logger.info("archive_directory=" + archive_directory + ", the_date=" + str(today))
+    logger.info("create_index_file, archive_directory=" + archive_directory + ", the_date=" + str(today))
 
     create_index_file(index_file_name=new_index_file_name, directory=archive_directory)     # after all articles have been added to the articles dictionary
     #create_index_file(index_file_name='index_20200615', directory='archive/2020_06/')     # after all articles have been added to the articles dictionary
+    logger.info("edit_master_index")
     edit_master_index(index_file_name=new_index_file_name, directory=archive_directory, the_date=str(today))    # change master index
     #push_to_github(directory='archive/2020_06/', the_date='2020-06-16')
     logger.info("pushing to github...           (archive_directory=" + archive_directory + ", the_date=" + str(today) + ")")
