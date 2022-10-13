@@ -27,6 +27,7 @@ import tenacity
 from utils import remove_duplicates
 import os
 import subprocess
+import json
 
 '''
  static variables:
@@ -34,14 +35,14 @@ import subprocess
 DEBUG_LEVEL=logging.DEBUG
 DELTA = 3   # in days. if article date is less than DELTA days ago, it will be added to index
 LIMIT = 5000
-SLEEP=5
+SLEEP=10
 # if os.environ.get('LIMIT_ARTICLES'):
 #     LIMIT = int(os.environ.get('LIMIT_ARTICLES'))
 
 # increasing number of download threads above 30 does not increase throughput.
 # increasing number of processing threads above 80 does not increase throughput.
-NUMBER_OF_Q1_WORKERS=30      # number of threads that download from a URL
-NUMBER_OF_Q2_WORKERS=80      # number of threads that process an article
+NUMBER_OF_Q1_WORKERS=5 #30      # number of threads that download from a URL
+NUMBER_OF_Q2_WORKERS=5 #80      # number of threads that process an article
 HEADER_OF_UNKNOWN = "@@@"
 
 HTML_START = '''
@@ -123,9 +124,11 @@ if (not base_dir.endswith("/") ):
 logger.info('using base_dir=%s', base_dir)
 
 minimalAllowedDateAsStr = str(date.today())
-user_agent='Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Mobile Safari/537.36'
+user_agent = 'Mozilla/5.0 (compatible; adidxbot/2.0;  http://www.bing.com/bingbot.htm)'
+#user_agent='Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Mobile Safari/537.36'
 #user_agent = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
+count_articles_added = 0
 
 
 '''
@@ -142,24 +145,27 @@ def start_queue_with_workers(number_of_workers, f):
         worker.daemon = True
         worker.start()
     return queue
-
-'''=========================================
-                   +----------------+
-queue of IDs ----> | DownloadWorker |   (Network bound: generates a URL from the ID, and downloads the HTML from that URL)
-                   +----------------+
-                        |
-                        | queue of articles (each article is an HTML document)
-                        v
-                   +----------------+
-                   | ArticleWorker  |   (CPU bound: process HTML and creates a modified article, saves it to file, and adds (article ID, article link) to the 'articles' dictionary.)
-                   +----------------+
-                        |
-                        |
-                        V
-                   +----------------------+
-                   | articles dictionary  | ---> generates the index.html document and saves it to file
-                   +----------------------+
-====='''
+#
+#                    | articles dictionary  | ---> generates the index.html document and saves it to file
+#                    +----------------------+
+# ====='''
+#
+#
+def fix_article_id(article_id):
+#     """
+#     article_id should be like 00000182-e081-dc3e-abf7-e09ded090000
+#     but sometimes it is like /gallery/television/tv-review/2022-09-05/ty-article/.premium/00000183-09fe-dd6f-abdb-7fff8d7d0000
+#     :param article_id:
+#     :return:
+#     """
+    fixed_id = article_id
+    index = article_id.find("0000018")
+    if index >= 0:
+        fixed_id = article_id[index:]
+    #print("article id=", article_id, ", fixed=", fixed_id)
+    return fixed_id
+#
+#
 class ArticleWorker(Thread):
 
     def __init__(self, queue):
@@ -171,9 +177,11 @@ class ArticleWorker(Thread):
             while True:
                 article_id = ""
                 try:
-                    # Get the work from the queue and expand the tuple
+                    #Get the work from the queue and expand the tuple
                     article = self.queue.get()
                     article_id = str(article.id)
+                    article_id = fix_article_id(article_id)
+                    article.id = article_id
                     logger.debug('ArticlesQueue: get article ' + article.id + ' from queue')
                     if not article.fullHtml:
                         logger.debug('===> article fullHtml already empty at this stage')
@@ -182,12 +190,12 @@ class ArticleWorker(Thread):
                     logger.debug('ArticlesQueue: article ' + article.id + ' processing completed with result ' + str(result))
                 finally:
                     self.queue.task_done()
-                    logger.debug('ArticlesQueue: task done (' + article_id + ')')
+                    logger.debug('ArticlesQueue: task done (' + article.id + ')')
         finally:
             pass
-
-'''=========================================
-====='''
+#
+# '''=========================================
+# ====='''
 class DownloadWorker(Thread):
 
     def __init__(self, queue):
@@ -196,8 +204,8 @@ class DownloadWorker(Thread):
 
     def run(self):
         try:
-            while True:
-                # Get the work from the queue and expand the tuple
+             while True:
+                #Get the work from the queue and expand the tuple
                 id = '0'
                 try:
                     id, url = self.queue.get()
@@ -206,13 +214,13 @@ class DownloadWorker(Thread):
                     logger.debug('DownloadQueue: item ' + id + ' readAndProcess completed')
                     if article.fullHtml:
                         logger.debug('fullHtml has length ' + str(len(article.fullHtml)))
-                        # continue to articles queue only if html not empty
+                #        continue to articles queue only if html not empty
                         send_article_to_queue(article)
                         logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
                     else:
                         logger.warning('===> already empty fullHTML for id ' + id)
-                    # send_article_to_queue(article)
-                    # logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
+                        send_article_to_queue(article)
+                        logger.debug('DownloadQueue: item ' + id + ' send_article_to_queue completed')
                 except:
                     logger.debug("unknown exception 4 in DownloadWorker for id " + id)
                     pass
@@ -275,19 +283,38 @@ def fast_find_times(bs):
     except:
         return ''
 
+def find_alternative_authors(bs):
+    author = ''
+    try:
+        contents = bs.head.find(name='script', attrs={"type": "application/ld+json"}).contents[0]
+        asJson = json.loads(contents)
+        if "author" in asJson.keys():
+            authors = asJson["author"]
+            logger.debug("=== %s ===", authors)
+            author0 = authors[0]
+            author_name = author0["name"]
+            logger.debug("=== %s ===", author_name)
+            author = author_name
+    except:
+        pass
+    return author
+
 
 def find_author(bs):
+    logger.debug("starting find_author.")
+    author = ''
     try:
-        author = ''
         author = bs.head.find(name='meta', attrs={"name": "author"}).attrs['content']
-        return author
     except:
-        return ''
+        pass
+    logger.debug("find_author completed, author=%s", author)
+    return author
 
 
 def find_times(bs):
     publishedAt = ""
     updatedAt = ""
+    author = "++"
     try:
         #logger.debug("1")
         elements = bs.find_all('time')
@@ -316,8 +343,10 @@ def find_times(bs):
         publishedAt = todayAsStr()  #'2020-03-25T00:01:00+0200'
     if (updatedAt == ''):
         updatedAt = todayAsStr() # '2020-03-25T00:01:00+0200'
-    author = find_author(bs)
+    #author = find_author(bs)
+    author = find_alternative_authors(bs)
     return publishedAt, updatedAt, author
+
 
 def remove_parts_of_article(section, parts):
     for part in parts:
@@ -325,14 +354,14 @@ def remove_parts_of_article(section, parts):
         while section.find(class_=part) is not None:
             section.find(class_=part).replace_with(omit(part))
 
+
 def readAndProcess(id, url):
     ts = time()
     logger.debug("[%s] loading %s...", id, url)
     
     request = Request(url, headers={'User-Agent': user_agent})
-    #request = Request(url)
-    
-    # CCC#
+
+    ##
     #
     html = load_html(request)
     #
@@ -342,9 +371,6 @@ def readAndProcess(id, url):
         logger.debug(' html of article ' + id + ' has length ' + str(len(html)))
     else:
         logger.warning('!!!!!==> empty html for article ' + id)
-    # temporary - return here without doing BeutifulSoup!
-    ##return Article(id, '', '', '', html, '', '')
-
 
     ts = time()
     logger.debug("[%s] souping...", id)
@@ -360,7 +386,6 @@ def readAndProcess(id, url):
         logger.debug("stopped processing this article - too old")
         return Article(id, HEADER_OF_UNKNOWN, '', '', '', '', '', '')
 
-
     try:
         header = bs.article.header.h1.contents[-1]
     except:
@@ -369,7 +394,9 @@ def readAndProcess(id, url):
     logger.debug('[%s] souping completed in %s seconds, header=%s', id, time() - ts, header)
     ts = time()
     logger.debug("[%s] processing...", id)
-    sections = bs.article.findAll(name='section', class_='b-entry')
+    #sections = bs.article.findAll(name='section', class_='b-entry')
+    sections = bs.findAll(name='div', attrs={'data-test': 'articleBody'})
+
     if (sections is None) or len(sections) == 0:
         logger.debug("bs.article.findAll(name='section', class_='b-entry') produced 0 results for id " + id)
         return Article(id, header, '', '', '', '', '', '')
@@ -379,16 +406,26 @@ def readAndProcess(id, url):
 
     logger.debug("[%s] before find_times", id)
     publishedAt, updatedAt, author = find_times(bs)
-    logger.debug("[%s] after find_times. publishedAt=%s, updatedAt=%s", id, publishedAt, updatedAt)
+    logger.debug("[%s] after find_times. publishedAt=%s, updatedAt=%s, author=%s", id, publishedAt, updatedAt, author)
 
-    header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
-    header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
-    subject = ''
-    sub_subject = ''
-    if len(header_crumbs) > 0:
-        subject = header_crumbs[0].text.rstrip().lstrip()
-    if len(header_crumbs) > 1:
-        sub_subject = header_crumbs[1].text.rstrip().lstrip()
+    # header_crumbs_root = bs.article.find(name='ol', class_='c-article-header__crumbs')
+    # header_crumbs = header_crumbs_root.find_all('li', class_='c-article-header__crumb')
+    # subject = ''
+    # sub_subject = ''
+    # if len(header_crumbs) > 0:
+    #     subject = header_crumbs[0].text.rstrip().lstrip()
+    # if len(header_crumbs) > 1:
+    #     sub_subject = header_crumbs[1].text.rstrip().lstrip()
+
+    article = bs.find(name='main', id='pageRoot').article
+    subject = '1'
+    sub_subject = '2'
+    if len(article.findAll('nav')) > 0:
+        subs = article.findAll('nav')[0].findAll('a')
+        if len(subs) > 0:
+            subject = subs[0].text.rstrip().lstrip()
+            if len(subs) > 1:
+                sub_subject = subs[1].text.rstrip().lstrip()
 
     logger.debug("[%s] after header_crumbs. subject=%s, sub_subject=%s", id, subject, sub_subject)
 
@@ -414,14 +451,14 @@ def readAndProcess(id, url):
         #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
 
         #logger.debug("6")
-        bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
-        bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
+        #bs.html.find(name='div',attrs={"hidden":""}).replace_with(omit('hidden'))
+        #bs.html.find(attrs={"id":"amp-web-push"}).replace_with(omit('amp-web-push'))
         #bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
         # logger.debug("7")
         # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
-        remove_parts_of_article(bs.html, ['amp-sidebar'])
-        while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
-            bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
+        #remove_parts_of_article(bs.html, ['amp-sidebar'])
+        #while (bs.html.find(name='div', attrs={"class":"delayHeight"}) is not None):
+        #    bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
 
     # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
     # to     <section amp-access="TRUE">
@@ -443,7 +480,7 @@ def readAndProcess(id, url):
         else:
             logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
     except:
-        print("unknown exception 2 when removing parts of article")
+        print("readAndProcess: absorbing unknown exception 2 when removing parts of article")
         pass
     finally:
         pass
@@ -451,56 +488,58 @@ def readAndProcess(id, url):
     #logger.debug("!")
     return Article(id, header, publishedAt, updatedAt, html, subject, sub_subject, author)
 
-def remove():
-    remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
-    # logger.debug("2")
-    # if first.find(class_='c-quick-nl-reg') is not None:
-    #     first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
-    # logger.debug("3")
-    # if first.find(class_='c-related-article-text-only-wrapper') is not None:
-    #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
-    # logger.debug("4")
-    all_figures = first.find_all(name='figure')
-    # while (len(all_figures) > 0):
-    #     first.find(name='figure').replace_with(omit('figure'))
-    #     all_figures = first.find_all(name='figure')
-    while (first.find(name='figure') is not None):
-        first.find(name='figure').replace_with(omit('figure'))
 
-    # logger.debug("5")
-    # while (first.find(class_="c-dfp-ad") is not None):
-    #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
+# def remove():
+#     remove_parts_of_article(first, ['c-quick-nl-reg', 'c-related-article-text-only-wrapper', 'c-dfp-ad'])
+#     # logger.debug("2")
+#     # if first.find(class_='c-quick-nl-reg') is not None:
+#     #     first.find(class_='c-quick-nl-reg').replace_with(omit('c-quick-nl-reg'))
+#     # logger.debug("3")
+#     # if first.find(class_='c-related-article-text-only-wrapper') is not None:
+#     #     first.find(class_='c-related-article-text-only-wrapper').replace_with(omit('c-related-article-text-only-wrapper'))
+#     # logger.debug("4")
+#     all_figures = first.find_all(name='figure')
+#     # while (len(all_figures) > 0):
+#     #     first.find(name='figure').replace_with(omit('figure'))
+#     #     all_figures = first.find_all(name='figure')
+#     while (first.find(name='figure') is not None):
+#         first.find(name='figure').replace_with(omit('figure'))
+#
+#     # logger.debug("5")
+#     # while (first.find(class_="c-dfp-ad") is not None):
+#     #     first.find(class_="c-dfp-ad").replace_with(omit("c-dfp-ad"))
+#
+#     # logger.debug("6")
+#     bs.html.find(name='div', attrs={"hidden": ""}).replace_with(omit('hidden'))
+#     bs.html.find(attrs={"id": "amp-web-push"}).replace_with(omit('amp-web-push'))
+#     # bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
+#     # logger.debug("7")
+#     # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
+#     remove_parts_of_article(bs.html, ['amp-sidebar'])
+#     while (bs.html.find(name='div', attrs={"class": "delayHeight"}) is not None):
+#         bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
+#
+#     # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
+#     # to     <section amp-access="TRUE">
+#     # logger.debug("8")
+#     list_of_sections = bs.html.findAll(
+#         lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
+#     for section in list_of_sections:
+#         logger.debug(".", end='')
+#         section.attrs['amp-access'] = "TRUE"
+#
+#     # logger.debug("9")
+#     bs.html.body.attrs['style'] = "border:2px solid"
+#     # assuming that 3rd child of <head> is not needed and can be changed...
+#     bs.html.head.contents[3].attrs = {"name": "viewport", "content": "width=device-width, initial-scale=1"}
+#     htmlText = bs.html.prettify()
+#     if not htmlText:
+#         logger.warning('!!!!!!!==> empty HTML for article ' + id)
+#         logger.debug('[%s] processing completed in %s seconds.')
+#     else:
+#         logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
+#     return htmlText
 
-    # logger.debug("6")
-    bs.html.find(name='div', attrs={"hidden": ""}).replace_with(omit('hidden'))
-    bs.html.find(attrs={"id": "amp-web-push"}).replace_with(omit('amp-web-push'))
-    # bs.html.find(name='section',attrs={"amp-access":"TRUE"}).replace_with(omit('amp-access'))
-    # logger.debug("7")
-    # bs.html.find(name='amp-sidebar').replace_with(omit('amp-sidebar'))
-    remove_parts_of_article(bs.html, ['amp-sidebar'])
-    while (bs.html.find(name='div', attrs={"class": "delayHeight"}) is not None):
-        bs.html.find(name='div', attrs={"class": "delayHeight"}).replace_with(omit("delayHeight"))
-
-    # convert every <section amp-access="NOT ampConf.activation OR currentViews &lt; ampConf.maxViews OR subscriber">
-    # to     <section amp-access="TRUE">
-    # logger.debug("8")
-    list_of_sections = bs.html.findAll(
-        lambda tag: tag.name == "section" and "amp-access" in tag.attrs.keys() and tag.attrs['amp-access'] != "TRUE")
-    for section in list_of_sections:
-        logger.debug(".", end='')
-        section.attrs['amp-access'] = "TRUE"
-
-    # logger.debug("9")
-    bs.html.body.attrs['style'] = "border:2px solid"
-    # assuming that 3rd child of <head> is not needed and can be changed...
-    bs.html.head.contents[3].attrs = {"name": "viewport", "content": "width=device-width, initial-scale=1"}
-    htmlText = bs.html.prettify()
-    if not htmlText:
-        logger.warning('!!!!!!!==> empty HTML for article ' + id)
-        logger.debug('[%s] processing completed in %s seconds.')
-    else:
-        logger.debug('[%s] processing completed successfully in %s seconds. html=%s', id, time() - ts, htmlText[:50])
-    return htmlText
 
 def todayAsStr():
     return str(date.today())
@@ -526,6 +565,7 @@ def decide_file_location(directory):
 
 def saveToFile(id, htmlText):
     try:
+        #print("saveToFile: id=", id)
         # index_file_name='index_20200615', directory='archive/2020_06/'
         name = "h" + id + ".html"
         dir = decide_file_location('')
@@ -542,7 +582,7 @@ def saveToFile(id, htmlText):
         #logger.debug("[%s] file: %s", id, fileName)
         return name, fileName
     except Exception as inst:
-        logger.error("some exception with id %s: %s", id, inst)
+        logger.error("saveToFile: some exception with id %s: %s", id, inst)
         return '',''
 
 def sort_by_subject(articles):
@@ -631,10 +671,19 @@ def subjects():
         priorities[list[i]] = i
     return priorities
 
-def send_url_to_queue(ids_queue, id):
-    url = 'https://www.haaretz.co.il/amp/' + id
-    logger.debug("[%s] inserting id %s in ids queue", id, id)
-    ids_queue.put((id, url))  # will cause calling readAndProcess(id, url)
+
+def extract_id(link):
+    idd = link
+    if '00182' in link:
+        idd = link.split("/")[-1]
+    return idd
+
+
+def send_url_to_queue(ids_queue, link):
+    url = 'https://www.haaretz.co.il/amp' + link
+    idd = extract_id(link)
+    logger.debug("[%s] inserting id %s in ids queue", link, idd)
+    ids_queue.put((idd, url))  # will cause calling readAndProcess(id, url)
 
 
 def send_urls_to_queue(ids_queue, ids):
@@ -648,9 +697,9 @@ def create_link(articleObject):
     return '''<div class=" w-100" data-role="collapse" data-toggle-element="#COLLAPSE_ID">
             <div class="frame border border-size-1 pt-2 bd-black">
                 <div class="p-2 d-inline">{0}</div>  
-                <a href="{2}" class="h5 fg-green bg-white d-inline">{1}-{4}</a>
+                <a href="{2}" class="h5 fg-green bg-white d-inline">{1}</a>
                 <div class="content">
-                        <p class="p-2">{3}</p>
+                        <p class="p-2">{4}</p>
                 </div>
             </div>
         </div>'''.format(articleObject.publishedAt, articleObject.header, articleObject.href, articleObject.subject, articleObject.author)
@@ -663,9 +712,9 @@ def decide_include_article(publishTime):
             return True         # could not find publishedTime in HTML, so include it in results
         publishedDateAsStr = ''
         if ('IST' in publishTime):
-            print("publishTime=" + publishTime)
+            #print("publishTime=" + publishTime)
             publishedDateAsStr = publishTime.split('IST', 2)[0]
-            print("publishedDateAsStr=" + publishedDateAsStr)
+            #print("publishedDateAsStr=" + publishedDateAsStr)
         else:
             publishedDateAsStr = str(parser.parse(publishTime).date())
         # minimalAllowedDateAsStr was already calculated in main()
@@ -674,11 +723,17 @@ def decide_include_article(publishTime):
         logger.debug(" decide=" + str(decide))
         return decide
     except:
-        print("unknown exception 3, publishTime=" + publishTime)
+        print("decide_include_article: absorbing unknown exception 3, publishTime=" + publishTime)
         return True
 
 
+def print_if_count(number_of_articles):
+    if number_of_articles%10==0:
+        print("", str(number_of_articles), "articles added to index")
+
+
 def do_with_article(articleObject):
+    global count_articles_added
     try:
         today = date.today()  # str(date.today()) returnes '2020-03-27'
         #url = 'https://www.haaretz.co.il/amp/' + id
@@ -718,6 +773,8 @@ def do_with_article(articleObject):
             key = generate_key(articleObject)
             add_article(key, articleObject)      #articles[key] = articleObject
             logger.debug("[%s] article %s added", articleObject.id, key)
+            count_articles_added = count_articles_added + 1
+            print_if_count(count_articles_added)
             return 1
         else:
             logger.info("[%s] %s not added to index, subject=%s", articleObject.id, articleObject.publishedAt[:10], articleObject.subject + articleObject.sub_subject)
@@ -745,6 +802,7 @@ def add_article(key, article):
 #
 def create_index_file(index_file_name, directory):
     logger.info('generating index for %d articles...', len(articles))
+    print('generating index for', len(articles), 'articles...')
     html = generate_index(articles)
     logger.info("...done. writing to file...")
     dir = decide_file_location(directory)
@@ -756,6 +814,7 @@ def create_index_file(index_file_name, directory):
     f.write(html)
     f.close()
     logger.info("...done.")
+    print('index file written to', full_index_file_name)
 
 
 def generate_key(articleObject):
@@ -766,7 +825,8 @@ def generate_key(articleObject):
 
 
 def is_link(link):
-    return ((link.find("1.8") >= 0) or (link.find("1.9") >= 0) or (link.find("1.10") >= 0))
+    #return ((link.find("1.8") >= 0) or (link.find("1.9") >= 0) or (link.find("1.10") >= 0))
+    return (link.find("00181") >= 0) or (link.find("00182") >= 0) or (link.find("00183") >= 0)
 
 def start_link(link):
     index = link.find("1.8")
@@ -802,6 +862,28 @@ def find_existing_articles(path):
         body = body + link
     return body
 
+
+def fix_link(orig_link):
+    """
+    link should be like /news/elections/2022-08-24/ty-article/00000182-d09b-d765-adf3-db9b3d0a0000
+    but sometimes link is https://www.themarker.com/dynamo/2022-08-01/ty-article-magazine/.premium/00000182-393f-dfe2-abab-797ff6720000
+    and then we want it to be /dynamo/2022-08-01/ty-article-magazine/.premium/00000182-393f-dfe2-abab-797ff6720000
+    :param orig_link:
+    :return:
+    """
+    #print("fix_link", orig_link)
+    result = orig_link
+    possible_prefixes = ["https://www.themarker.com", 'https://www.haaretz.com', 'https://www.haaretz.co.il']
+    for prefix in possible_prefixes:
+        index = orig_link.find(prefix)
+        if index == 0:
+            link = orig_link[len(prefix):]
+            result = link
+            break
+    #print("fix_link", orig_link, " ==> result=", result)
+    return result
+
+
 @tenacity.retry(wait=tenacity.wait_fixed(1),
                 stop=tenacity.stop_after_delay(30))
 def process_page(url, limit):
@@ -822,27 +904,33 @@ def process_page(url, limit):
         lambda tag: (tag.name == "a") and
                     ('href' in tag.attrs.keys()) and
                     (is_link(tag.attrs['href'])), recursive=True)
-    links = {"1"}
+    #links = {"1"}
+    links = []
     for href in list_of_articles:
         logger.debug("considering url %s", str(href))
         link = href.attrs["href"]
+        link = fix_link(link)
         if is_link(link):
-            links.add(link)
+            #links.add(link)
+            links.append(link)
             limit = limit - 1
             if (limit <= 0):
                 logger.error("reached limit in process_page()")
                 break
-    links.remove("1")
+    #links.remove("1")
     #print("links:")
     ids = []
     for link in links:
         #print(link)
         if is_link(link):
-            start = start_link(link)
-            id = link[start:]
-            ids.append(id)
+            # from July 2022: link is like '/magazine/panim/ty-article-face/.premium/00000182-38ee-ddb5-ad8e-fbeffee80000'
+            ids.append(link)
+            # start = start_link(link)
+            # id = link[start:]
+            # ids.append(id)
     for id in ids:
         logger.debug(id)
+    print("processed", len(ids), "articles")
     return ids
 
 
@@ -1074,11 +1162,13 @@ def main():
             print("for url " + str(url))
 
     logger.info("all %d articles were sent",len(article_ids))
+    print("all", len(article_ids), "articles were sent, sleeping ", str(SLEEP), "minutes...")
     #ids_queue.join()
     #logger.debug("ids queue joined")
     logger.info("sleeping %s minutes...", str(SLEEP))
     sleep(60 * SLEEP)
     logger.info("completed sleeping %s minutes.", str(SLEEP))
+    print("completed sleeping")
     #articles_queue.join()   # this will wait for queue2 completing?
     #logger.debug("articles queue joined")
     year = str(today)[0:4]
@@ -1096,6 +1186,7 @@ def main():
     logger.info("pushing to github...           (archive_directory=" + archive_directory + ", the_date=" + str(today) + ")")
     push_to_github(directory=archive_directory, the_date=str(today))
     logger.info("pushing to github completed!")
+    print("main completed")
 
 
 def test1(id):
